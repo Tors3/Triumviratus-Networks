@@ -165,3 +165,50 @@ BATCH=524288 ROOT=/root/moe/run P_EPOCHS=450 F_EPOCHS=22 nohup /root/tt/Training
   0,0122 all'epoca 1, 0,0104 all'epoca 2.
 - **Fine prevista:** P verso le 15:15 UTC del 29/09, F verso le 16:40 UTC del 29/09 (circa 27 ore). Poi si spegne
   la VM, lo fa l'utente.
+
+## Andamento (28/09, 13:40–21:15 UTC)
+- **Velocità:** da circa 9,25 a circa 8,95 it/s (da 3:26 a 3:32 per epoca), il 3% in meno.
+  - Le GPU sono al 97–99%, a 63–68 °C, con consumo tra 265 e 310 W su 575 di limite.
+  - Il calo viene dal boost, sceso di circa 40 MHz, e dal limite di potenza software, che scatta a intermittenza.
+  - Nessun problema di temperatura o di loader.
+  - **Nuova fine prevista:** P verso le 16:20 UTC del 29/09, F con la conversione verso le 17:50 UTC.
+- **Learning rate:** `OneCycleLR` di torch a coseno, picco 8e-4 verso l'epoca 22.
+  - Oltre il 90% del picco fino all'epoca circa 110.
+  - 84% all'epoca 135, 54% alla 225, 23% alla 315.
+- **Loss per epoca:**
+
+  | epoca | loss |
+  |---|---|
+  | 7 | 0,0081 |
+  | 20 | 0,0047 |
+  | 27 | 0,0041 |
+  | 42 | 0,0038 |
+  | 80 | 0,0042 |
+  | 110 | 0,0044 |
+
+  Sale perché il ciclo di λ sposta il peso sul risultato della partita.
+- **Esportazioni:** ogni 45 epoche in `nets/` (`P_epoch=44`, `P_epoch=89`, …). Più il checkpoint corrente su
+  richiesta, con `serialize_last.sh`, che serializza sulla CPU senza toccare le GPU (circa 3 minuti).
+- **Forza contro legio-septima:** stessa ricerca 8.0 da entrambe le parti, build MinGW non-PGO, 1 thread, 64 MB, UHO
+  2024. Dettaglio in `Tors3/Triumviratus` NETWORKS.md.
+
+  | epoca | TC | partite | Elo |
+  |---|---|---|---|
+  | 30 | 20+0.2 | 589 | −121 ± 21 |
+  | 35 | 20+0.2 | 2.000 | −113 ± 11 |
+  | 44 | 20+0.2 | 2.000 | −86 ± 11 |
+  | 53 | 30+0.3 | 1.774 | −76 ± 11 |
+  | 64 | 30+0.3 | 1.001 | −56 ± 14 |
+  | 71 | 30+0.3 | 1.012 | −70 ± 14 |
+  | 80 | 30+0.3 | 2.000 | −56 ± 11 |
+  | 99 | 30+0.3 | 1.159 | −44 ± 14 |
+  | 110 | 30+0.3 | 2.000 | −58 ± 11 |
+
+  La forza sale in fretta fino all'epoca circa 60, poi resta su un altopiano col learning rate al picco. Una
+  previsione con la curva logaritmica (−32 all'epoca 71) è fallita: il risultato è stato −70.
+- **Criteri fissati in anticipo:**
+  - all'epoca 225 almeno −30, altrimenti il run va esaminato;
+  - all'epoca 315 vicino alla parità;
+  - il verdetto è sulla rete finale.
+- **Credito vast.ai:** circa 2,98 $/h. Il 28/09 sera il saldo era di circa 57 $, che bastano fino alle 13:50 UTC circa
+  del 29/09. L'utente ricarica la mattina del 29.
