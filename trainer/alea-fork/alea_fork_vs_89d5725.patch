@@ -1,0 +1,541 @@
+diff --git a/data_loader/config.py b/data_loader/config.py
+index 2b7204d..b4b973a 100644
+--- a/data_loader/config.py
++++ b/data_loader/config.py
+@@ -43,6 +43,9 @@ class DataloaderSkipConfig:
+     """Ply soft filter control point x4."""
+     ply_y4: float = 0.75
+     """Ply soft filter control point y4."""
++    min_passed_pawns: int = 0
++    """v3 PassedPawns screening: skip positions with fewer than this many passed
++    pawns (either side). 0 = disabled (default, no behavior change)."""
+ 
+ 
+ @dataclass
+@@ -72,6 +75,7 @@ class CDataloaderSkipConfig(ctypes.Structure):
+         ("ply_y3", ctypes.c_double),
+         ("ply_x4", ctypes.c_double),
+         ("ply_y4", ctypes.c_double),
++        ("min_passed_pawns", ctypes.c_int),
+     ]
+ 
+     def __init__(self, config: DataloaderSkipConfig):
+@@ -96,6 +100,7 @@ class CDataloaderSkipConfig(ctypes.Structure):
+             ply_y3=config.ply_y3,
+             ply_x4=config.ply_x4,
+             ply_y4=config.ply_y4,
++            min_passed_pawns=config.min_passed_pawns,
+         )
+ 
+ 
+diff --git a/data_loader/cpp/training_data_loader.cpp b/data_loader/cpp/training_data_loader.cpp
+index 8eeec8e..00579fd 100644
+--- a/data_loader/cpp/training_data_loader.cpp
++++ b/data_loader/cpp/training_data_loader.cpp
+@@ -314,6 +314,289 @@ struct FullThreatsExtractor: IFeatureExtractor {
+     }
+ };
+ 
++// Pawn-pair inputs (grafting rubicon-alea-v2): unordered pairs of pawns on the
++// same or adjacent files. 96 pawn slots (48 own + 48 enemy, ranks 2-7 oriented
++// per perspective, file-mirrored with the king exactly like HalfKA/threats via
++// OrientTBL) -> index hi*(hi-1)/2 + lo, 96*95/2 = 4560 features. Spec identical
++// to Stormphrax (threats.cpp ppFeatureIndex / kPpMasks file-band, the 7->8 Elo
++// jump), also adopted by Viridithas and Pawnocchio. Captures phalanx/chains/
++// doubled/isolated pawns as LEARNED patterns - pawn-pawn geometry that threat
++// features cannot see (side-by-side pawns attack nothing).
++struct PawnPair {
++    static constexpr std::string_view NAME = "PawnPair";
++
++    static constexpr int INPUTS              = 4560;
++    static constexpr int MAX_ACTIVE_FEATURES = 120;  // C(16,2): all pawns in one file band
++
++    static int pawn_id(Color persp, Square ksq, Color pc, Square sq) {
++        // Same orientation as FullThreats/HalfKA: rank-flip for black perspective,
++        // file-flip when the perspective king sits on files e-h.
++        int o = int(sq) ^ int(FullThreats::OrientTBL[(int) persp][(int) ksq]);
++        return (pc != persp ? 48 : 0) + o - 8;  // oriented pawns live on 8..55 -> 0..47
++    }
++
++    static std::pair<int, int>
++    fill_features_sparse(const TrainingDataEntry& e, int* features, float* values, Color color) {
++        auto&  pos = e.pos;
++        Square ksq = pos.kingSquare(color);
++
++        Square sqs[16];
++        Color  cols[16];
++        int    n = 0;
++        for (Square s : pos.piecesBB(whitePawn))
++        {
++            sqs[n]  = s;
++            cols[n] = Color::White;
++            n++;
++        }
++        for (Square s : pos.piecesBB(blackPawn))
++        {
++            sqs[n]  = s;
++            cols[n] = Color::Black;
++            n++;
++        }
++
++        int k = 0;
++        for (int i = 0; i < n; i++)
++        {
++            for (int j = i + 1; j < n; j++)
++            {
++                // File band: pair is active only if the pawns are on the same or
++                // adjacent files (Stormphrax kPpMasks). File distance is invariant
++                // under the orientation flips, so check on raw squares.
++                int df = (int(sqs[i]) & 7) - (int(sqs[j]) & 7);
++                if (df < -1 || df > 1)
++                    continue;
++                int a  = pawn_id(color, ksq, cols[i], sqs[i]);
++                int b  = pawn_id(color, ksq, cols[j], sqs[j]);
++                int hi = a > b ? a : b;
++                int lo = a > b ? b : a;
++
++                features[k] = hi * (hi - 1) / 2 + lo;
++                values[k]   = 1.0f;
++                k++;
++            }
++        }
++        return {k, INPUTS};
++    }
++};
++
++struct PawnPairExtractor: IFeatureExtractor {
++    int inputs() const override { return PawnPair::INPUTS; }
++    int max_active_features() const override { return PawnPair::MAX_ACTIVE_FEATURES; }
++    std::pair<int, int> fill_features_sparse(const TrainingDataEntry& e,
++                                             int*                     features,
++                                             float*                   values,
++                                             Color                    color) const override {
++        return PawnPair::fill_features_sparse(e, features, values, color);
++    }
++};
++
++// Passed-pawn inputs (grafting rubicon-alea-v3): one feature per passed pawn.
++// 96 slots (48 own + 48 enemy, ranks 2-7 oriented per perspective and
++// file-mirrored with the king like HalfKA/threats/PawnPair). "Passed" = no
++// enemy pawn on the same or adjacent files ahead AND no own pawn directly
++// ahead on the same file (a rear doubled pawn is not a passer). Deliberately
++// square-only (no blocked/king/connected flags): those interactions are
++// learnable through the SFNNv13 pairwise-multiplied L1 against the HalfKA
++// and PawnPair blocks. Must match the engine (nnue/features/passed_pawns.cpp)
++// and the pure-python reference (graft/verify_passedpawns.py).
++struct PassedPawns {
++    static constexpr std::string_view NAME = "PassedPawns";
++
++    static constexpr int INPUTS              = 96;
++    static constexpr int MAX_ACTIVE_FEATURES = 16;  // all pawns passed (theoretical bound)
++
++    // Same slot encoding as PawnPair's pawn_id: 0..47 own, 48..95 enemy.
++    static int pawn_id(Color persp, Square ksq, Color pc, Square sq) {
++        int o = int(sq) ^ int(FullThreats::OrientTBL[(int) persp][(int) ksq]);
++        return (pc != persp ? 48 : 0) + o - 8;  // oriented pawns live on 8..55 -> 0..47
++    }
++
++    // Passed check on RAW squares (orientation enters only at index time).
++    static bool is_passed(int s, bool white, const int* own, int nOwn, const int* opp, int nOpp) {
++        const int f = s & 7, r = s >> 3;
++        for (int i = 0; i < nOpp; i++)
++        {
++            const int of = opp[i] & 7, orr = opp[i] >> 3;
++            const int df = of - f;
++            if (df >= -1 && df <= 1 && (white ? orr > r : orr < r))
++                return false;
++        }
++        for (int i = 0; i < nOwn; i++)
++        {
++            if (own[i] == s)
++                continue;
++            const int orr = own[i] >> 3;
++            if ((own[i] & 7) == f && (white ? orr > r : orr < r))
++                return false;
++        }
++        return true;
++    }
++
++    // Conta i pedoni passati (entrambi i lati) di una posizione: riusata dal
++    // filtro dataloader min_passed_pawns (stessa verita' di fill_features_sparse,
++    // un solo posto dove "passato" e' definito).
++    static int count_passed(const TrainingDataEntry& e) {
++        auto& pos = e.pos;
++        int   wp[8], bp[8];
++        int   nw = 0, nb = 0;
++        for (Square s : pos.piecesBB(whitePawn))
++            wp[nw++] = int(s);
++        for (Square s : pos.piecesBB(blackPawn))
++            bp[nb++] = int(s);
++        int cnt = 0;
++        for (int i = 0; i < nw; i++)
++            if (is_passed(wp[i], true, wp, nw, bp, nb))
++                cnt++;
++        for (int i = 0; i < nb; i++)
++            if (is_passed(bp[i], false, bp, nb, wp, nw))
++                cnt++;
++        return cnt;
++    }
++
++    static std::pair<int, int>
++    fill_features_sparse(const TrainingDataEntry& e, int* features, float* values, Color color) {
++        auto&  pos = e.pos;
++        Square ksq = pos.kingSquare(color);
++
++        int wp[8], bp[8];
++        int nw = 0, nb = 0;
++        for (Square s : pos.piecesBB(whitePawn))
++            wp[nw++] = int(s);
++        for (Square s : pos.piecesBB(blackPawn))
++            bp[nb++] = int(s);
++
++        int k = 0;
++        for (int i = 0; i < nw; i++)
++            if (is_passed(wp[i], true, wp, nw, bp, nb))
++            {
++                features[k] = pawn_id(color, ksq, Color::White, Square(wp[i]));
++                values[k]   = 1.0f;
++                k++;
++            }
++        for (int i = 0; i < nb; i++)
++            if (is_passed(bp[i], false, bp, nb, wp, nw))
++            {
++                features[k] = pawn_id(color, ksq, Color::Black, Square(bp[i]));
++                values[k]   = 1.0f;
++                k++;
++            }
++        return {k, INPUTS};
++    }
++};
++
++// Candidate-passer inputs (grafting rubicon-alea, v4 slot): one feature per
++// candidate passed pawn. 96 slots (48 own + 48 enemy, oriented per
++// perspective and file-mirrored with the king like HalfKA/threats/PawnPair/
++// PassedPawns; same pawn_id math as PassedPawns). A pawn of color C on sq is
++// a candidate passer iff (1) NOT already passed (the PassedPawns block
++// covers those), (2) its file is semi-open ahead (no pawn of either color on
++// the same file strictly ahead: no doubled pawn in front, no enemy blocker),
++// and (3) majority count: own pawns on adjacent files behind-or-level >=
++// enemy pawns on adjacent files strictly ahead (helpers vs sentinels).
++// Given (2), "not passed" reduces to: at least one sentinel exists.
++// Deliberately square-only. Must match the engine
++// (nnue/features/candidate_passers.cpp) and the pure-python reference
++// (Training_NNUE/TrainingV5_CandidatePassers/graft/candidate_passers.py).
++struct CandidatePassers {
++    static constexpr std::string_view NAME = "CandidatePassers";
++
++    static constexpr int INPUTS              = 96;
++    static constexpr int MAX_ACTIVE_FEATURES = 16;  // every pawn a candidate (theoretical bound)
++
++    // Candidate check on RAW squares (orientation enters only at index time).
++    // white = the color of the pawn on s; own contains s itself.
++    static bool
++    is_candidate(int s, bool white, const int* own, int nOwn, const int* opp, int nOpp) {
++        const int f = s & 7, r = s >> 3;
++        // (2) semi-open file ahead: no pawn of either color on file f strictly ahead
++        for (int i = 0; i < nOwn; i++)
++        {
++            const int orr = own[i] >> 3;
++            if ((own[i] & 7) == f && (white ? orr > r : orr < r))
++                return false;
++        }
++        for (int i = 0; i < nOpp; i++)
++        {
++            const int orr = opp[i] >> 3;
++            if ((opp[i] & 7) == f && (white ? orr > r : orr < r))
++                return false;
++        }
++        // (1) not already passed: given (2), passed <=> zero sentinels
++        int sentinels = 0;
++        for (int i = 0; i < nOpp; i++)
++        {
++            const int of = opp[i] & 7, orr = opp[i] >> 3;
++            if ((of == f - 1 || of == f + 1) && (white ? orr > r : orr < r))
++                sentinels++;
++        }
++        if (sentinels == 0)
++            return false;
++        // (3) majority: helpers behind-or-equal >= sentinels ahead
++        int helpers = 0;
++        for (int i = 0; i < nOwn; i++)
++        {
++            const int of = own[i] & 7, orr = own[i] >> 3;
++            if ((of == f - 1 || of == f + 1) && !(white ? orr > r : orr < r))
++                helpers++;
++        }
++        return helpers >= sentinels;
++    }
++
++    static std::pair<int, int>
++    fill_features_sparse(const TrainingDataEntry& e, int* features, float* values, Color color) {
++        auto&  pos = e.pos;
++        Square ksq = pos.kingSquare(color);
++
++        int wp[8], bp[8];
++        int nw = 0, nb = 0;
++        for (Square s : pos.piecesBB(whitePawn))
++            wp[nw++] = int(s);
++        for (Square s : pos.piecesBB(blackPawn))
++            bp[nb++] = int(s);
++
++        int k = 0;
++        for (int i = 0; i < nw; i++)
++            if (is_candidate(wp[i], true, wp, nw, bp, nb))
++            {
++                features[k] = PassedPawns::pawn_id(color, ksq, Color::White, Square(wp[i]));
++                values[k]   = 1.0f;
++                k++;
++            }
++        for (int i = 0; i < nb; i++)
++            if (is_candidate(bp[i], false, bp, nb, wp, nw))
++            {
++                features[k] = PassedPawns::pawn_id(color, ksq, Color::Black, Square(bp[i]));
++                values[k]   = 1.0f;
++                k++;
++            }
++        return {k, INPUTS};
++    }
++};
++
++struct CandidatePassersExtractor: IFeatureExtractor {
++    int inputs() const override { return CandidatePassers::INPUTS; }
++    int max_active_features() const override { return CandidatePassers::MAX_ACTIVE_FEATURES; }
++    std::pair<int, int> fill_features_sparse(const TrainingDataEntry& e,
++                                             int*                     features,
++                                             float*                   values,
++                                             Color                    color) const override {
++        return CandidatePassers::fill_features_sparse(e, features, values, color);
++    }
++};
++
++struct PassedPawnsExtractor: IFeatureExtractor {
++    int inputs() const override { return PassedPawns::INPUTS; }
++    int max_active_features() const override { return PassedPawns::MAX_ACTIVE_FEATURES; }
++    std::pair<int, int> fill_features_sparse(const TrainingDataEntry& e,
++                                             int*                     features,
++                                             float*                   values,
++                                             Color                    color) const override {
++        return PassedPawns::fill_features_sparse(e, features, values, color);
++    }
++};
++
+ struct ComposedFeatureExtractor: IFeatureExtractor {
+     std::vector<std::unique_ptr<IFeatureExtractor>> extractors;
+     int                                             m_inputs;
+@@ -362,6 +645,12 @@ static std::unique_ptr<IFeatureExtractor> make_single_extractor(std::string_view
+         return std::make_unique<HalfKAv2_hmExtractor>();
+     if (name == "Full_Threats")
+         return std::make_unique<FullThreatsExtractor>();
++    if (name == "PawnPair")
++        return std::make_unique<PawnPairExtractor>();
++    if (name == "PassedPawns")
++        return std::make_unique<PassedPawnsExtractor>();
++    if (name == "CandidatePassers")
++        return std::make_unique<CandidatePassersExtractor>();
+     return nullptr;
+ }
+ 
+@@ -926,6 +1215,13 @@ std::function<bool(const TrainingDataEntry&)> make_skip_predicate(DataloaderSkip
+             return true;
+         }
+ 
++        // v3 PassedPawns screening: opt-in enrichment, riusa la STESSA definizione
++        // di "passato" del blocco (PassedPawns::count_passed) -> nessun rischio di
++        // train/eval mismatch. Applicato PER ULTIMO cosi' le statistiche del filtro
++        // piece-count sopra restano quelle dell'intero stream, non del sotto-set.
++        if (config.min_passed_pawns > 0 && PassedPawns::count_passed(e) < config.min_passed_pawns)
++            return true;
++
+         pc_history_passed[pc] += 1.0;
+         pc_history_passed_total += 1.0;
+ 
+diff --git a/data_loader/cpp/training_data_loader_structs.h b/data_loader/cpp/training_data_loader_structs.h
+index 67a92d3..38a9ae8 100644
+--- a/data_loader/cpp/training_data_loader_structs.h
++++ b/data_loader/cpp/training_data_loader_structs.h
+@@ -11,6 +11,9 @@ struct DataloaderSkipConfig {
+     double pc_y0, pc_y1, pc_y2, pc_y3, pc_y4;
+     double ply_x1, ply_y1, ply_x2, ply_y2,
+            ply_x3, ply_y3, ply_x4, ply_y4;
++    // v3 PassedPawns screening: skip positions with fewer than this many passed
++    // pawns (either side). 0 = disabled (default, no behavior change).
++    int    min_passed_pawns;
+ };
+ 
+ struct DataloaderDDPConfig {
+diff --git a/model/lightning_module.py b/model/lightning_module.py
+index 5e4d16f..34b3b1e 100644
+--- a/model/lightning_module.py
++++ b/model/lightning_module.py
+@@ -83,6 +83,14 @@ class NNUE(L.LightningModule):
+             }
+         )
+ 
++        # no-sync loss accounting (2026-07-13): torchmetrics MeanMetric.update() fa
++        # isnan().any() = una sync GPU->CPU per OGNI batch (main thread in busy-wait
++        # dentro _cast_and_nan_check_input ~tutto il tempo, misurato con py-spy).
++        # Accumuliamo a mano su GPU e sincronizziamo una volta per epoca.
++        # loss_metrics resta definito (inutilizzato) per compatibilita' checkpoint.
++        self._loss_sums = {}
++        self._loss_cnts = {}
++
+     # --- setup optimizers and training hooks ---
+     def configure_optimizers(self):
+         optimizer_config = self.config.optimizer_config
+@@ -94,13 +102,52 @@ class NNUE(L.LightningModule):
+         dense_wd = optimizer_config.dense_weight_decay
+         factorized_wd = optimizer_config.factorized_weight_decay
+ 
+-        train_params = [
+-            # Feature Transformer
+-            {
+-                "params": _get_parameters([self.model.input], get_biases=False),
+-                "lr": LRs[0],
+-                "weight_decay": ft_wd,
+-            },
++        # Multi-group LR sui blocchi FT: un blocco graftato parte da zero (di
++        # fatto si allena da scratch) e vuole un lr suo, piu' alto; i blocchi
++        # pre-allenati fine-tunano al lr base. StepLR moltiplica ogni gruppo
++        # per gamma, quindi il rapporto resta costante per tutto il run.
++        # Con tutti i *_lr == 0 (default) si riduce ESATTAMENTE al vecchio
++        # comportamento single-group. Frozen-base screening: --lr 0 +
++        # --passedpawns-lr X allena SOLO il blocco nuovo.
++        block_lrs = {
++            "PawnPair": getattr(optimizer_config, "pawnpair_lr", 0.0),
++            "PassedPawns": getattr(optimizer_config, "passedpawns_lr", 0.0),
++            "CandidatePassers": getattr(optimizer_config, "candidatepassers_lr", 0.0),
++        }
++        block_lrs = {name: lr for name, lr in block_lrs.items() if lr > 0.0}
++        present = {f.FEATURE_NAME for f in self.model.input.features}
++        block_lrs = {name: lr for name, lr in block_lrs.items() if name in present}
++        if block_lrs:
++            base_mods = [
++                f for f in self.model.input.features if f.FEATURE_NAME not in block_lrs
++            ]
++            ft_weight_groups = [
++                {
++                    "params": _get_parameters(base_mods, get_biases=False),
++                    "lr": LRs[0],
++                    "weight_decay": ft_wd,
++                },
++            ]
++            for name, blk_lr in block_lrs.items():
++                mods = [f for f in self.model.input.features if f.FEATURE_NAME == name]
++                ft_weight_groups.append(
++                    {
++                        "params": _get_parameters(mods, get_biases=False),
++                        "lr": blk_lr,
++                        "weight_decay": ft_wd,
++                    }
++                )
++                print(f"[configure_optimizers] {name} block lr={blk_lr} (base lr={LRs[0]})")
++        else:
++            ft_weight_groups = [
++                {
++                    "params": _get_parameters([self.model.input], get_biases=False),
++                    "lr": LRs[0],
++                    "weight_decay": ft_wd,
++                },
++            ]
++
++        train_params = ft_weight_groups + [
+             {
+                 "params": _get_parameters([self.model.input], get_biases=True),
+                 "lr": LRs[1],
+@@ -200,9 +247,13 @@ class NNUE(L.LightningModule):
+         self.optimizer_wrapper.on_train_batch_start(self, batch, batch_idx)
+ 
+     def _log_epoch_end(self, loss_type):
++        s = self._loss_sums.pop(loss_type, None)
++        n = self._loss_cnts.pop(loss_type, 0)
++        if s is None or n == 0:
++            return
+         self.log(
+             f"{loss_type}",
+-            self.loss_metrics[f"{loss_type}"],
++            s / n,
+             prog_bar=False,
+             sync_dist=True,
+             on_epoch=True,
+@@ -267,7 +318,15 @@ class NNUE(L.LightningModule):
+             scorenet, score, outcome, self.config.loss_params, actual_lambda
+         )
+ 
+-        self.loss_metrics[f"{loss_type}_epoch"].update(sf_loss)
++        # no-sync (vedi __init__): somma su GPU, media una volta a fine epoca
++        _k = f"{loss_type}_epoch"
++        _d = sf_loss.detach()
++        if _k in self._loss_sums:
++            self._loss_sums[_k] += _d
++            self._loss_cnts[_k] += 1
++        else:
++            self._loss_sums[_k] = _d.clone()
++            self._loss_cnts[_k] = 1
+         self.log(
+             loss_type,
+             sf_loss,
+diff --git a/model/modules/features/__init__.py b/model/modules/features/__init__.py
+index e34e252..44c335d 100644
+--- a/model/modules/features/__init__.py
++++ b/model/modules/features/__init__.py
+@@ -2,10 +2,13 @@ import argparse
+ from collections.abc import Callable
+ from dataclasses import dataclass
+ 
++from .candidate_passers import CandidatePassers
+ from .composed import ComposedFeatureTransformer
+ from .full_threats import FullThreats
+ from .halfka_v2_hm import HalfKav2Hm
+ from .input_feature import InputFeature
++from .passed_pawns import PassedPawns
++from .pawn_pair import PawnPair
+ 
+ import tyro
+ from typing import Annotated
+@@ -14,6 +17,9 @@ from typing import Annotated
+ _FEATURE_COMPONENTS: dict[str, type[InputFeature]] = {
+     "HalfKAv2_hm^": HalfKav2Hm,
+     "Full_Threats": FullThreats,
++    "PawnPair": PawnPair,
++    "PassedPawns": PassedPawns,
++    "CandidatePassers": CandidatePassers,
+ }
+ 
+ 
+@@ -53,6 +59,9 @@ __all__ = [
+     "ComposedFeatureTransformer",
+     "HalfKav2Hm",
+     "FullThreats",
++    "PawnPair",
++    "PassedPawns",
++    "CandidatePassers",
+     "InputFeature",
+     "get_feature_cls",
+     "get_available_features",
+diff --git a/model/optimizers/config.py b/model/optimizers/config.py
+index 5cfbb74..63a1747 100644
+--- a/model/optimizers/config.py
++++ b/model/optimizers/config.py
+@@ -22,6 +22,22 @@ class OptimizerConfig(RangerLiteConfig, ScheduleFreeConfig):
+     lr: float = 8.75e-4
+     """Initial learning rate."""
+ 
++    pawnpair_lr: float = 0.0
++    """Dedicated learning rate for the PawnPair feature block (grafted zero-init:
++    it trains from scratch and wants a from-scratch-scale lr, while the pre-trained
++    blocks fine-tune at the base lr). 0 = disabled (PawnPair uses the base lr)."""
++
++    passedpawns_lr: float = 0.0
++    """Dedicated learning rate for the PassedPawns feature block (v3 graft, same
++    rationale as pawnpair_lr). 0 = disabled (PassedPawns uses the base lr).
++    Frozen-base screening: --lr 0 --passedpawns-lr 1e-3 trains ONLY the new block."""
++
++    candidatepassers_lr: float = 0.0
++    """Dedicated learning rate for the CandidatePassers feature block (v4-slot
++    graft, same rationale as pawnpair_lr). 0 = disabled (CandidatePassers uses
++    the base lr). Frozen-base screening: --lr 0 --candidatepassers-lr 1e-3
++    trains ONLY the new block."""
++
+     def get_optimizer_wrapper(self):
+         optimizer_name = self.optimizer_name.lower().strip()
+         if optimizer_name == "schedulefree":
