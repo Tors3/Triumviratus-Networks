@@ -59,7 +59,7 @@ COMMON=(--features "$FEATURES" --l1 1024 --threads 1 --num-workers "$WORKERS" --
   --epoch-size "$EPOCH_SIZE" --random-fen-skipping "$SKIP"
   --early-fen-skipping "$EARLY_SKIP" --soft-early-fen-skipping "$SOFT_EARLY_SKIP"
   --pc-y0 -0.20 --pc-y1 0.45 --pc-y2 1.0 --pc-y3 0.95 --pc-y4 0.75
-  --start-lambda 1.0 --end-lambda 1.0 --lambda-cycle-delta -0.3 --lambda-cycle-warmup-pct 0.25 --lambda-cycle-jitter
+  --lambda-cycle-warmup-pct 0.25 --lambda-cycle-jitter
   --jitter-lambda-sample 0.0035 --jitter-lambda-batch 0.0070 --jitter-decay-lambda-batch 0.999
   --one-cycle-warmup-pct 0.05 --one-cycle-final-div 1000
   --validation-size 1000000 --check-val-every-n-epoch 20 --save-last-network True --seed 42)
@@ -75,7 +75,7 @@ run() {  # $1 = fase, $2 = batch, $3 = epoche, $4 = lr, resto = argomenti extra
   "$PY" -m torch.distributed.run --standalone --nproc_per_node="$NGPU" ddp_launcher.py train.py \
     "${DATASETS[@]}" "${COMMON[@]}" \
     --batch-size "$batch" --max-epochs "$epochs" --lr "$lr" \
-    --one-cycle-steps "$steps" --lambda-schedule-steps "$steps" \
+    --one-cycle-steps "$steps" \
     --network-save-period $(( epochs / 10 > 0 ? epochs / 10 : 1 )) --save-top-k -1 \
     --default-root-dir "$dir" "${resume[@]}" "$@"
 }
@@ -85,8 +85,23 @@ run() {  # $1 = fase, $2 = batch, $3 = epoche, $4 = lr, resto = argomenti extra
 EXPORTER=$!
 trap 'kill $EXPORTER 2>/dev/null' EXIT
 
+# 🔴 LAMBDA CAMBIATO IL 29/09 all'epoca 292 (decisione dell'utente). Era il ciclo SFNNv16: 1,0 -> 0,7 all'epoca 112 ->
+# di nuovo 1,0 a fine P, e lo stesso ciclo ripartiva in F: la rete finale sarebbe stata allenata sulla sola eval. Tutte
+# le reti della linea (alea, legio) finiscono invece a 0,75 FISSO (Training70 train_phase2.sh: 700 epoche su 800 a
+# 0,75), e il plateau contro legio (epoche ~250-285) coincide con lambda risalito sopra 0,80.
+# Ora: P scende LINEARE da 0,865 (valore all'epoca 292, step 556844) a 0,75 in 40 epoche (step 633124, epoca 332, lr
+# ~27%), poi fisso a 0,75 fino alla fine; F tutta a 0,75 fisso. Il trainer calcola lambda = start + (end - start) *
+# step / schedule_steps con lo step ASSOLUTO (ripristinato da last.ckpt). --lambda-cycle-delta 0 spegne il ciclo; il
+# jitter resta, scalato dal coseno, e si annulla a fine discesa.
+# Storia: epoca 292 girata con discesa su 80 epoche (start 1,2845, step 709404); dall'epoca 293 (step 558751,
+# lambda 0,8635) discesa su 40: start 1,71627 rende 0,8635 allo step 558751 e 0,75 allo step 633124.
+# ⚠️ Il trainer, riprendendo, RIFA' l'epoca salvata in last.ckpt ("epoch" = ultima completata): prima di ogni ripresa
+# a mano va portata a epoca+1, altrimenti gli step superano --one-cycle-steps e OneCycleLR va in errore a fine P.
+LAMBDA_P=(--start-lambda 1.71627 --end-lambda 0.75 --lambda-cycle-delta 0 --lambda-schedule-steps 633124)
+LAMBDA_F=(--start-lambda 0.75 --end-lambda 0.75 --lambda-cycle-delta 0)
+
 if [ ! -f "$ROOT/P.done" ]; then
-  run P "$BATCH" "$P_EPOCHS" "$LR_P"
+  run P "$BATCH" "$P_EPOCHS" "$LR_P" "${LAMBDA_P[@]}"
   touch "$ROOT/P.done"
 fi
 
@@ -95,9 +110,9 @@ P_PT="$ROOT/P_final.pt"
 [ -f "$P_PT" ] || "$PY" serialize.py "$P_LAST" "$P_PT" --features "$FEATURES" --l1 1024
 if [ ! -f "$ROOT/F.done" ]; then
   if find "$ROOT/F" -name last.ckpt -type f 2>/dev/null | grep -q .; then
-    run F $(( BATCH / 2 )) "$F_EPOCHS" "$LR_F"
+    run F $(( BATCH / 2 )) "$F_EPOCHS" "$LR_F" "${LAMBDA_F[@]}"
   else
-    run F $(( BATCH / 2 )) "$F_EPOCHS" "$LR_F" --resume-from-model "$P_PT"
+    run F $(( BATCH / 2 )) "$F_EPOCHS" "$LR_F" "${LAMBDA_F[@]}" --resume-from-model "$P_PT"
   fi
   touch "$ROOT/F.done"
 fi
