@@ -99,4 +99,4 @@ Against `rubicon-alea-v3`, network isolated, 15+0.15 unless noted:
 
 The network is treated as **saturated for its size**: no gain between stage-1 epochs 249 and 416, a stage-3 tail at
 zero, validation loss never above training loss. The next step was more capacity, not more epochs — see
-[06](../06_moe-1024/).
+[06](../06_consilium/).

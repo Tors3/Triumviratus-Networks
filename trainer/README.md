@@ -9,7 +9,7 @@ Every network is trained with Stockfish's [`nnue-pytorch`](https://github.com/of
 | `rubicon-alea-v1` | master of June 2026 | none |
 | `rubicon-alea-v2`, `v3`, experiments | `89d5725` ("Towards Perfect Cross Eval (#477)") | [`alea-fork/`](alea-fork/) |
 | `legio-septima` | `9f72946` (2026-07-26) | [`../recipes/05_legio-septima/triumviratus_passedpawns.patch`](../recipes/05_legio-septima/triumviratus_passedpawns.patch) |
-| MoE-1024 | `9f72946` | [`triumviratus_trainer.patch`](triumviratus_trainer.patch) (superset of the one above) |
+| Consilium | `9f72946` | [`triumviratus_trainer.patch`](triumviratus_trainer.patch) (superset of the one above) |
 
 ## `alea-fork/`
 

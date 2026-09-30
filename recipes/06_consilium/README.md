@@ -1,4 +1,4 @@
-# 06 — MoE-1024 (Triumviratus 8.0, trained 28–29 September 2026)
+# 06 — Consilium (Triumviratus 8.0, trained 28–29 September 2026)
 
 `legio-septima` with its king-relative block split into **four experts by material phase**. The full narrative — why,
 the design, every measurement — is in the engine's
@@ -7,7 +7,7 @@ rerun it.
 
 | | |
 |---|---|
-| File | [`nets/nn-moe-1024.nnue`](../../nets/nn-moe-1024.nnue) (Git LFS, SHA-256 `8fc004b0…`, name provisional) |
+| File | [`nets/nn-consilium.nnue`](../../nets/nn-consilium.nnue) (Git LFS, SHA-256 `8fc004b0…`) |
 | Status | finished: pretraining P (374 epochs × 1 G positions), fine-tunes F3 (80) and F4 (60); the file is the average of F4 epochs 55–59, feature transformer permuted |
 | Result | Triumviratus 8.0 release build against the official 7.0: **+27.3 ± 8.3 Elo** at 15+0.15 (2,000 games) |
 | Architecture | SFNNv16 with `HalfKAv2_hm_P4^`: `Full_Threats + HalfKAv2_hm_P4^ + PP_3Wide + PassedPawns`, L1 1024 |

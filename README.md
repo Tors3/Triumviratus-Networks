@@ -17,12 +17,12 @@ it is a recipe and a record.
 | 3 | [`nn-rubicon-alea-v2.nnue`](nets/nn-rubicon-alea-v2.nnue) | 6.0 | + `PawnPair` | 87,808 | 94.3 MB | [03](recipes/03_rubicon-alea-v2/) |
 | 4 | [`nn-rubicon-alea-v3.nnue`](nets/nn-rubicon-alea-v3.nnue) | 6.0 | + `PassedPawns` | 87,904 | 94.4 MB | [04](recipes/04_rubicon-alea-v3/) |
 | 5 | [`nn-legio-septima.nnue`](nets/nn-legio-septima.nnue) | 7.0 | SFNNv16: `Full_Threats + HalfKAv2_hm^ + PP_3Wide + PassedPawns`, L1 1024 | 86,992 | 92.4 MB | [05](recipes/05_legio-septima/) |
-| 6 | [`nn-moe-1024.nnue`](nets/nn-moe-1024.nnue) | 8.0 | SFNNv16 with the king-relative block split into 4 experts (`HalfKAv2_hm_P4^`), L1 1024 | 154,576 | 170.3 MB | [06](recipes/06_moe-1024/) |
+| 6 | [`nn-consilium.nnue`](nets/nn-consilium.nnue) | 8.0 | SFNNv16 with the king-relative block split into 4 experts (`HalfKAv2_hm_P4^`), L1 1024 | 154,576 | 170.3 MB | [06](recipes/06_consilium/) |
 
 SHA-256 of every file: [`nets/SHA256SUMS`](nets/SHA256SUMS). The `.nnue` of `legio-septima` is byte-identical to the
-one embedded in the Triumviratus 7.0 release. `nn-moe-1024.nnue` is above GitHub's 100 MB file limit and is stored
-with **Git LFS** (`git lfs install` before cloning, or download it from its file page); its name is provisional until
-the network gets one.
+one embedded in the Triumviratus 7.0 release. `nn-consilium.nnue` is above GitHub's 100 MB file limit and is stored
+with **Git LFS** (`git lfs install` before cloning, or download it from its file page).
+
 
 **How they compare**, each measured with the engine it shipped in:
 
@@ -33,7 +33,7 @@ the network gets one.
 | `rubicon-alea-v2` | +18.3 ± 9.9 Elo over v1, network isolated (20+0.2) |
 | `rubicon-alea-v3` | +7.0 ± 6.6 Elo over v2, network isolated (15+0.15) |
 | `legio-septima` | +23.4 ± 9.2 Elo over v3, network isolated (15+0.15) |
-| MoE-1024 | +23.4 ± 12.0 Elo over `legio-septima`, network with its eval-scale calibration and first SPSA, same search (end of F3, 12+0.12); the 8.0 release build with the final network: +27.3 ± 8.3 over the official 7.0 (15+0.15) |
+| Consilium | +23.4 ± 12.0 Elo over `legio-septima`, network with its eval-scale calibration and first SPSA, same search (end of F3, 12+0.12); the 8.0 release build with the final network: +27.3 ± 8.3 over the official 7.0 (15+0.15) |
 
 "Network isolated" means the same engine binary on both sides with only the `.nnue` swapped (or a zero-grafted copy of
 the older net, which evaluates identically but loads in the same binary).
@@ -57,7 +57,7 @@ blocks:
 | `rubicon-alea-v1` | Triumviratus 5.0 / 5.1 |
 | `rubicon-alea-v2` / `v3` | Triumviratus 6.0 (its reader loads both formats) |
 | `legio-septima` | Triumviratus 7.0 and later |
-| MoE-1024 | 8.0 built with `TRIUMV_PSQ_PHASES=4` |
+| Consilium | 8.0 built with `TRIUMV_PSQ_PHASES=4` |
 
 ## Reproducing a network
 
