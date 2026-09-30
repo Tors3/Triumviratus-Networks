@@ -2,3 +2,4 @@
 *.sh text eol=lf
 *.py text eol=lf
 *.patch text eol=lf
+nets/nn-consilium.nnue filter=lfs diff=lfs merge=lfs -text
