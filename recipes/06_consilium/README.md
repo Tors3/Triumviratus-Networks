@@ -43,7 +43,6 @@ vector of the search). Vector version:
 | [`train_moe1024_F4.sh`](train_moe1024_F4.sh) | F4: 60 epochs from F3's end, peak 6e-5, new seed, λ 0.75 |
 | [`avg_perm_F4.sh`](avg_perm_F4.sh) | the final file: snapshots of F4 epochs 55–59, weight average, `.nnue`, feature-transformer permutation |
 | [`export_nets.sh`](export_nets.sh), [`serialize_last.sh`](serialize_last.sh) | `.nnue` from saved checkpoints / from the live checkpoint, on CPU |
-| [`LOG_RUN.md`](LOG_RUN.md) | the run log (in Italian): setup, gate, measurements, launch |
 
 ## Launch
 
