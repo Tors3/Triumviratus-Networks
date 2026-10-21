@@ -31,6 +31,7 @@ vector of the search). Vector version:
 
 | file | what it does |
 |---|---|
+| [`LOG_RUN.md`](LOG_RUN.md) | the run log: machine, data, gate, throughput measurements, launch and first hours |
 | [`setup_moe1024.sh`](setup_moe1024.sh) | environment, patched trainer, engine build with 4 phases |
 | [`download_bt4.sh`](download_bt4.sh) | the 42 BT4-relabelled binpacks, 701 GB |
 | [`make_random_net.py`](make_random_net.py) | random network with `--perturb-phases` for the engine/trainer gate |
