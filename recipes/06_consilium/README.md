@@ -16,6 +16,17 @@ rerun it.
 | Engine | Triumviratus 8.0 built with `-DTRIUMV_PSQ_PHASES=4` |
 | Hardware | 4× RTX 5090 (vast.ai), 192 threads, 251 GB RAM; ≈ 4.97 M positions/s, ≈ 3 $/h; 105 $ for the whole run |
 
+## Strength across training
+
+![Consilium against legio-septima across training](elo_trajectory.png)
+
+Each point is an exported epoch played against `legio-septima` with the same 8.0 search, so only the network changes.
+Early points at 20+0.2, then 30+0.3; from epoch 157 the eval scale is calibrated per phase. The trend of the 30+0.3
+points is +3.8 Elo every 10 epochs and reaches parity near epoch 240; after the λ descent (epochs 292–332) the curve is
+flat around zero, and the F3 fine-tune from epoch 373 brings the gain (+14.5 at 90+0.9 over 720 games, with the SPSA
+vector of the search). Vector version:
+[`elo_trajectory.svg`](elo_trajectory.svg).
+
 ## Files
 
 | file | what it does |

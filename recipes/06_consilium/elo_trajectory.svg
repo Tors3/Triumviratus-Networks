@@ -1,0 +1,250 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 690" width="1200" height="690" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" role="img" aria-label="Consilium against Legio Septima across training: Elo of epoch exports, same 8.0 search, only the network changes. Pretraining P stopped after epoch 373; F3 epochs counted from there">
+<rect width="1200" height="690" fill="#ffffff"/>
+<rect x="136.6" y="92" width="205.6" height="508" fill="#fbf3e4"/>
+<text x="144.6" y="110.0" font-size="11.5" fill="#55534e" text-anchor="start" font-weight="normal">learning rate above 90% of its peak</text>
+<rect x="975.9" y="92" width="184.1" height="508" fill="#e6f2ec"/>
+<text x="983.9" y="110.0" font-size="11.5" fill="#55534e" text-anchor="start" font-weight="normal">F3 fine-tune (from epoch 373):</text>
+<text x="983.9" y="125.0" font-size="11.5" fill="#55534e" text-anchor="start" font-weight="normal">learning rate back to 20%, then to zero</text>
+<line x1="84" y1="584.1" x2="1160" y2="584.1" stroke="#e6e3dc" stroke-width="1"/>
+<text x="74.0" y="588.1" font-size="11.5" fill="#8a877f" text-anchor="end" font-weight="normal">-250</text>
+<line x1="84" y1="504.8" x2="1160" y2="504.8" stroke="#e6e3dc" stroke-width="1"/>
+<text x="74.0" y="508.8" font-size="11.5" fill="#8a877f" text-anchor="end" font-weight="normal">-200</text>
+<line x1="84" y1="425.4" x2="1160" y2="425.4" stroke="#e6e3dc" stroke-width="1"/>
+<text x="74.0" y="429.4" font-size="11.5" fill="#8a877f" text-anchor="end" font-weight="normal">-150</text>
+<line x1="84" y1="346.0" x2="1160" y2="346.0" stroke="#e6e3dc" stroke-width="1"/>
+<text x="74.0" y="350.0" font-size="11.5" fill="#8a877f" text-anchor="end" font-weight="normal">-100</text>
+<line x1="84" y1="266.6" x2="1160" y2="266.6" stroke="#e6e3dc" stroke-width="1"/>
+<text x="74.0" y="270.6" font-size="11.5" fill="#8a877f" text-anchor="end" font-weight="normal">-50</text>
+<line x1="84" y1="187.2" x2="1160" y2="187.2" stroke="#e6e3dc" stroke-width="1"/>
+<text x="74.0" y="191.2" font-size="11.5" fill="#8a877f" text-anchor="end" font-weight="normal">0</text>
+<line x1="84" y1="107.9" x2="1160" y2="107.9" stroke="#e6e3dc" stroke-width="1"/>
+<text x="74.0" y="111.9" font-size="11.5" fill="#8a877f" text-anchor="end" font-weight="normal">+50</text>
+<line x1="84" y1="187.2" x2="1160" y2="187.2" stroke="#8a877f" stroke-width="1.2"/>
+<line x1="84" y1="600" x2="1160" y2="600" stroke="#8a877f" stroke-width="1"/>
+<line x1="84.0" y1="600" x2="84.0" y2="605" stroke="#8a877f" stroke-width="1"/>
+<text x="84.0" y="619.0" font-size="11.5" fill="#8a877f" text-anchor="middle" font-weight="normal">0</text>
+<line x1="203.6" y1="600" x2="203.6" y2="605" stroke="#8a877f" stroke-width="1"/>
+<text x="203.6" y="619.0" font-size="11.5" fill="#8a877f" text-anchor="middle" font-weight="normal">50</text>
+<line x1="323.1" y1="600" x2="323.1" y2="605" stroke="#8a877f" stroke-width="1"/>
+<text x="323.1" y="619.0" font-size="11.5" fill="#8a877f" text-anchor="middle" font-weight="normal">100</text>
+<line x1="442.7" y1="600" x2="442.7" y2="605" stroke="#8a877f" stroke-width="1"/>
+<text x="442.7" y="619.0" font-size="11.5" fill="#8a877f" text-anchor="middle" font-weight="normal">150</text>
+<line x1="562.2" y1="600" x2="562.2" y2="605" stroke="#8a877f" stroke-width="1"/>
+<text x="562.2" y="619.0" font-size="11.5" fill="#8a877f" text-anchor="middle" font-weight="normal">200</text>
+<line x1="681.8" y1="600" x2="681.8" y2="605" stroke="#8a877f" stroke-width="1"/>
+<text x="681.8" y="619.0" font-size="11.5" fill="#8a877f" text-anchor="middle" font-weight="normal">250</text>
+<line x1="801.3" y1="600" x2="801.3" y2="605" stroke="#8a877f" stroke-width="1"/>
+<text x="801.3" y="619.0" font-size="11.5" fill="#8a877f" text-anchor="middle" font-weight="normal">300</text>
+<line x1="920.9" y1="600" x2="920.9" y2="605" stroke="#8a877f" stroke-width="1"/>
+<text x="920.9" y="619.0" font-size="11.5" fill="#8a877f" text-anchor="middle" font-weight="normal">350</text>
+<line x1="1040.4" y1="600" x2="1040.4" y2="605" stroke="#8a877f" stroke-width="1"/>
+<text x="1040.4" y="619.0" font-size="11.5" fill="#8a877f" text-anchor="middle" font-weight="normal">400</text>
+<line x1="1160.0" y1="600" x2="1160.0" y2="605" stroke="#8a877f" stroke-width="1"/>
+<text x="1160.0" y="619.0" font-size="11.5" fill="#8a877f" text-anchor="middle" font-weight="normal">450</text>
+<text x="622.0" y="670.0" font-size="13" fill="#55534e" text-anchor="middle" font-weight="normal">Training epoch (P, then F3 from epoch 373)</text>
+<text x="30" y="346.0" font-size="13" fill="#55534e" text-anchor="middle" transform="rotate(-90 30 346.0)">Elo against Legio Septima</text>
+<text x="74.0" y="642.0" font-size="11" fill="#8a877f" text-anchor="end" font-weight="normal" font-style="italic">lr</text>
+<text x="141.4" y="642.0" font-size="11" fill="#9a7a3c" text-anchor="middle" font-weight="normal">100%</text>
+<text x="275.3" y="642.0" font-size="11" fill="#9a7a3c" text-anchor="middle" font-weight="normal">95%</text>
+<text x="406.8" y="642.0" font-size="11" fill="#9a7a3c" text-anchor="middle" font-weight="normal">84%</text>
+<text x="514.4" y="642.0" font-size="11" fill="#9a7a3c" text-anchor="middle" font-weight="normal">70%</text>
+<text x="622.0" y="642.0" font-size="11" fill="#9a7a3c" text-anchor="middle" font-weight="normal">54%</text>
+<text x="729.6" y="642.0" font-size="11" fill="#9a7a3c" text-anchor="middle" font-weight="normal">38%</text>
+<text x="834.8" y="642.0" font-size="11" fill="#9a7a3c" text-anchor="middle" font-weight="normal">23%</text>
+<text x="942.4" y="642.0" font-size="11" fill="#9a7a3c" text-anchor="middle" font-weight="normal">10%</text>
+<line x1="782.2" y1="92" x2="782.2" y2="600" stroke="#7d74c8" stroke-width="1.2" stroke-dasharray="3 4"/>
+<text x="776.2" y="108.0" font-size="11.5" fill="#5b52a8" text-anchor="end" font-weight="normal">lambda 0.865 to 0.75</text>
+<line x1="877.8" y1="92" x2="877.8" y2="600" stroke="#7d74c8" stroke-width="1.2" stroke-dasharray="3 4"/>
+<text x="871.8" y="108.0" font-size="11.5" fill="#5b52a8" text-anchor="end" font-weight="normal">lambda fixed</text>
+<line x1="210.7" y1="300.1" x2="897.0" y2="126.9" stroke="#b5532c" stroke-width="1.6" stroke-dasharray="7 5"/>
+<text x="442.7" y="279.3" font-size="12" fill="#9a4424" text-anchor="start" font-weight="normal">Linear trend of the 30+0.3 points: +3.8 Elo per 10 epochs, level at about epoch 240</text>
+<line x1="613.0" y1="234.9" x2="631.0" y2="234.9" stroke="#55534e" stroke-width="1.6"/>
+<line x1="622.0" y1="234.9" x2="622.0" y2="226.9" stroke="#55534e" stroke-width="1.6"/>
+<text x="622.0" y="251.9" font-size="11.5" fill="#55534e" text-anchor="middle" font-weight="normal">gate at epoch 225: -30</text>
+<line x1="124.6" y1="600.0" x2="124.6" y2="473.0" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="120.6" y1="473.0" x2="128.6" y2="473.0" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="134.2" y1="519.0" x2="134.2" y2="376.2" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="130.2" y1="519.0" x2="138.2" y2="519.0" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="130.2" y1="376.2" x2="138.2" y2="376.2" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="146.2" y1="463.5" x2="146.2" y2="368.2" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="142.2" y1="463.5" x2="150.2" y2="463.5" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="142.2" y1="368.2" x2="150.2" y2="368.2" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="155.7" y1="412.7" x2="155.7" y2="346.0" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="151.7" y1="412.7" x2="159.7" y2="412.7" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="151.7" y1="346.0" x2="159.7" y2="346.0" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="167.7" y1="384.1" x2="167.7" y2="349.2" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="163.7" y1="384.1" x2="171.7" y2="384.1" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="163.7" y1="349.2" x2="171.7" y2="349.2" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="189.2" y1="341.2" x2="189.2" y2="306.3" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="185.2" y1="341.2" x2="193.2" y2="341.2" stroke="#2a78d6" stroke-width="1.4"/>
+<line x1="185.2" y1="306.3" x2="193.2" y2="306.3" stroke="#2a78d6" stroke-width="1.4"/>
+<circle cx="124.6" cy="552.4" r="5.5" fill="#2a78d6" stroke="#2a78d6" stroke-width="1.6"/>
+<text x="132.6" y="556.4" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-230</text>
+<circle cx="134.2" cy="447.6" r="5.5" fill="#2a78d6" stroke="#2a78d6" stroke-width="1.6"/>
+<text x="142.2" y="451.6" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-164</text>
+<circle cx="146.2" cy="415.9" r="5.5" fill="#2a78d6" stroke="#2a78d6" stroke-width="1.6"/>
+<text x="154.2" y="419.9" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-144</text>
+<circle cx="155.7" cy="379.3" r="5.5" fill="#2a78d6" stroke="#2a78d6" stroke-width="1.6"/>
+<text x="163.7" y="383.3" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-121</text>
+<circle cx="167.7" cy="366.6" r="5.5" fill="#2a78d6" stroke="#2a78d6" stroke-width="1.6"/>
+<text x="175.7" y="370.6" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-113</text>
+<circle cx="189.2" cy="323.8" r="5.5" fill="#2a78d6" stroke="#2a78d6" stroke-width="1.6"/>
+<text x="197.2" y="327.8" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-86</text>
+<line x1="210.7" y1="325.4" x2="210.7" y2="290.4" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="206.7" y1="325.4" x2="214.7" y2="325.4" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="206.7" y1="290.4" x2="214.7" y2="290.4" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="237.0" y1="298.4" x2="237.0" y2="253.9" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="233.0" y1="298.4" x2="241.0" y2="298.4" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="233.0" y1="253.9" x2="241.0" y2="253.9" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="253.8" y1="320.6" x2="253.8" y2="276.2" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="249.8" y1="320.6" x2="257.8" y2="320.6" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="249.8" y1="276.2" x2="257.8" y2="276.2" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="275.3" y1="293.6" x2="275.3" y2="258.7" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="271.3" y1="293.6" x2="279.3" y2="293.6" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="271.3" y1="258.7" x2="279.3" y2="258.7" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="320.7" y1="279.3" x2="320.7" y2="234.9" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="316.7" y1="279.3" x2="324.7" y2="279.3" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="316.7" y1="234.9" x2="324.7" y2="234.9" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="342.2" y1="296.8" x2="342.2" y2="261.9" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="338.2" y1="296.8" x2="346.2" y2="296.8" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="338.2" y1="261.9" x2="346.2" y2="261.9" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="380.5" y1="266.6" x2="380.5" y2="234.9" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="376.5" y1="266.6" x2="384.5" y2="266.6" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="376.5" y1="234.9" x2="384.5" y2="234.9" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="404.4" y1="271.4" x2="404.4" y2="233.3" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="400.4" y1="271.4" x2="408.4" y2="271.4" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="400.4" y1="233.3" x2="408.4" y2="233.3" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="430.7" y1="268.2" x2="430.7" y2="220.6" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="426.7" y1="268.2" x2="434.7" y2="268.2" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="426.7" y1="220.6" x2="434.7" y2="220.6" stroke="#eb6834" stroke-width="1.4"/>
+<polygon points="210.7,301.6 205.2,312.0 216.2,312.0" fill="#eb6834" stroke="#eb6834" stroke-width="1.2"/>
+<text x="218.7" y="311.9" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-76</text>
+<polygon points="237.0,269.8 231.5,280.3 242.5,280.3" fill="#eb6834" stroke="#eb6834" stroke-width="1.2"/>
+<text x="245.0" y="280.2" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-56</text>
+<polygon points="253.8,292.1 248.3,302.5 259.3,302.5" fill="#eb6834" stroke="#eb6834" stroke-width="1.2"/>
+<text x="261.8" y="302.4" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-70</text>
+<polygon points="275.3,269.8 269.8,280.3 280.8,280.3" fill="#eb6834" stroke="#eb6834" stroke-width="1.2"/>
+<text x="283.3" y="280.2" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-56</text>
+<polygon points="320.7,250.8 315.2,261.2 326.2,261.2" fill="#eb6834" stroke="#eb6834" stroke-width="1.2"/>
+<text x="328.7" y="261.1" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-44</text>
+<polygon points="342.2,273.0 336.7,283.4 347.7,283.4" fill="#eb6834" stroke="#eb6834" stroke-width="1.2"/>
+<text x="350.2" y="283.3" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-58</text>
+<polygon points="380.5,244.4 375.0,254.9 386.0,254.9" fill="#eb6834" stroke="#eb6834" stroke-width="1.2"/>
+<text x="388.5" y="254.8" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-40</text>
+<polygon points="404.4,246.0 398.9,256.5 409.9,256.5" fill="#eb6834" stroke="#eb6834" stroke-width="1.2"/>
+<text x="412.4" y="256.3" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-41</text>
+<polygon points="430.7,238.1 425.2,248.5 436.2,248.5" fill="#eb6834" stroke="#eb6834" stroke-width="1.2"/>
+<text x="438.7" y="248.4" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-36</text>
+<line x1="459.4" y1="257.1" x2="459.4" y2="215.8" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="455.4" y1="257.1" x2="463.4" y2="257.1" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="455.4" y1="215.8" x2="463.4" y2="215.8" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="478.5" y1="250.8" x2="478.5" y2="199.9" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="474.5" y1="250.8" x2="482.5" y2="250.8" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="474.5" y1="199.9" x2="482.5" y2="199.9" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="492.9" y1="247.6" x2="492.9" y2="215.8" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="488.9" y1="247.6" x2="496.9" y2="247.6" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="488.9" y1="215.8" x2="496.9" y2="215.8" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="562.2" y1="228.5" x2="562.2" y2="203.1" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="558.2" y1="228.5" x2="566.2" y2="228.5" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="558.2" y1="203.1" x2="566.2" y2="203.1" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="689.0" y1="212.7" x2="689.0" y2="177.7" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="685.0" y1="212.7" x2="693.0" y2="212.7" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="685.0" y1="177.7" x2="693.0" y2="177.7" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="710.5" y1="195.2" x2="710.5" y2="163.4" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="706.5" y1="195.2" x2="714.5" y2="195.2" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="706.5" y1="163.4" x2="714.5" y2="163.4" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="734.4" y1="223.8" x2="734.4" y2="179.3" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="730.4" y1="223.8" x2="738.4" y2="223.8" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="730.4" y1="179.3" x2="738.4" y2="179.3" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="751.1" y1="222.2" x2="751.1" y2="184.1" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="747.1" y1="222.2" x2="755.1" y2="222.2" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="747.1" y1="184.1" x2="755.1" y2="184.1" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="782.2" y1="209.5" x2="782.2" y2="171.4" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="778.2" y1="209.5" x2="786.2" y2="209.5" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="778.2" y1="171.4" x2="786.2" y2="171.4" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="796.6" y1="222.2" x2="796.6" y2="184.1" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="792.6" y1="222.2" x2="800.6" y2="222.2" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="792.6" y1="184.1" x2="800.6" y2="184.1" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="825.2" y1="207.9" x2="825.2" y2="176.1" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="821.2" y1="207.9" x2="829.2" y2="207.9" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="821.2" y1="176.1" x2="829.2" y2="176.1" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="849.2" y1="190.4" x2="849.2" y2="165.0" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="845.2" y1="190.4" x2="853.2" y2="190.4" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="845.2" y1="165.0" x2="853.2" y2="165.0" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="877.8" y1="184.1" x2="877.8" y2="152.3" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="873.8" y1="184.1" x2="881.8" y2="184.1" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="873.8" y1="152.3" x2="881.8" y2="152.3" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="901.8" y1="215.8" x2="901.8" y2="168.2" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="897.8" y1="215.8" x2="905.8" y2="215.8" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="897.8" y1="168.2" x2="905.8" y2="168.2" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="942.4" y1="188.8" x2="942.4" y2="157.1" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="938.4" y1="188.8" x2="946.4" y2="188.8" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="938.4" y1="157.1" x2="946.4" y2="157.1" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="963.9" y1="198.4" x2="963.9" y2="166.6" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="959.9" y1="198.4" x2="967.9" y2="198.4" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="959.9" y1="166.6" x2="967.9" y2="166.6" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="1054.8" y1="201.5" x2="1054.8" y2="169.8" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="1050.8" y1="201.5" x2="1058.8" y2="201.5" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="1050.8" y1="169.8" x2="1058.8" y2="169.8" stroke="#4a3aa7" stroke-width="1.4"/>
+<polygon points="459.4,229.9 464.9,236.5 459.4,243.1 453.9,236.5" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="467.4" y="240.5" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-31</text>
+<polygon points="478.5,218.7 484.0,225.3 478.5,231.9 473.0,225.3" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="486.5" y="229.3" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-24</text>
+<polygon points="492.9,225.1 498.4,231.7 492.9,238.3 487.4,231.7" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="500.9" y="235.7" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-28</text>
+<polygon points="562.2,209.2 567.7,215.8 562.2,222.4 556.7,215.8" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="570.2" y="219.8" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-18</text>
+<polygon points="689.0,188.6 694.5,195.2 689.0,201.8 683.5,195.2" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="697.0" y="199.2" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-5</text>
+<polygon points="710.5,172.7 716.0,179.3 710.5,185.9 705.0,179.3" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="718.5" y="183.3" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">+5</text>
+<polygon points="734.4,194.9 739.9,201.5 734.4,208.1 728.9,201.5" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="742.4" y="205.5" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-9</text>
+<polygon points="751.1,196.5 756.6,203.1 751.1,209.7 745.6,203.1" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="759.1" y="207.1" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-10</text>
+<polygon points="782.2,183.8 787.7,190.4 782.2,197.0 776.7,190.4" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="790.2" y="194.4" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-2</text>
+<polygon points="796.6,196.5 802.1,203.1 796.6,209.7 791.1,203.1" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="804.6" y="207.1" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-10</text>
+<polygon points="825.2,185.4 830.7,192.0 825.2,198.6 819.7,192.0" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="833.2" y="196.0" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-3</text>
+<polygon points="849.2,171.1 854.7,177.7 849.2,184.3 843.7,177.7" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="857.2" y="181.7" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">+6</text>
+<polygon points="877.8,161.6 883.3,168.2 877.8,174.8 872.3,168.2" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="885.8" y="172.2" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">+12</text>
+<polygon points="901.8,185.4 907.3,192.0 901.8,198.6 896.3,192.0" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="909.8" y="196.0" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-3</text>
+<polygon points="942.4,166.4 947.9,173.0 942.4,179.6 936.9,173.0" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="950.4" y="177.0" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">+9</text>
+<polygon points="963.9,175.9 969.4,182.5 963.9,189.1 958.4,182.5" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="971.9" y="186.5" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">+3</text>
+<polygon points="1054.8,179.1 1060.3,185.7 1054.8,192.3 1049.3,185.7" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="1062.8" y="189.7" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">+1</text>
+<line x1="920.9" y1="228.5" x2="920.9" y2="180.9" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="916.9" y1="228.5" x2="924.9" y2="228.5" stroke="#4a3aa7" stroke-width="1.4"/>
+<line x1="916.9" y1="180.9" x2="924.9" y2="180.9" stroke="#4a3aa7" stroke-width="1.4"/>
+<circle cx="920.9" cy="204.7" r="5.5" fill="#ffffff" stroke="#4a3aa7" stroke-width="1.6"/>
+<text x="920.9" y="243.5" font-size="10.5" fill="#55534e" text-anchor="middle" font-weight="normal">-11 at 60+0.6</text>
+<line x1="1076.3" y1="184.1" x2="1076.3" y2="144.4" stroke="#d23f3e" stroke-width="1.4"/>
+<line x1="1072.3" y1="184.1" x2="1080.3" y2="184.1" stroke="#d23f3e" stroke-width="1.4"/>
+<line x1="1072.3" y1="144.4" x2="1080.3" y2="144.4" stroke="#d23f3e" stroke-width="1.4"/>
+<polygon points="1076.3,155.4 1078.6,161.1 1084.7,161.5 1080.0,165.4 1081.5,171.4 1076.3,168.1 1071.1,171.4 1072.6,165.4 1067.9,161.5 1074.0,161.1" fill="#d23f3e" stroke="#d23f3e" stroke-width="1"/>
+<text x="1150.0" y="238.1" font-size="12.5" fill="#d23f3e" text-anchor="end" font-weight="bold">+14.5 at 90+0.9</text>
+<text x="1150.0" y="254.1" font-size="11.5" fill="#55534e" text-anchor="end" font-weight="normal">720 games, LOS 98.8%</text>
+<text x="442.7" y="422.2" font-size="11.5" fill="#8a877f" text-anchor="start" font-weight="normal">Epochs 406 and 415 played with the SPSA vector of the search; pentanomial margins from epoch 200.</text>
+<rect x="614.8" y="469.8" width="330" height="140" rx="4" fill="#ffffff" stroke="#e6e3dc"/>
+<text x="628.8" y="489.8" font-size="11.5" fill="#1d1c1a" text-anchor="start" font-weight="bold">Match time control</text>
+<circle cx="636.8" cy="507.8" r="5" fill="#2a78d6" stroke="#2a78d6" stroke-width="1.6"/>
+<text x="654.8" y="511.8" font-size="12" fill="#55534e" text-anchor="start" font-weight="normal">20+0.2</text>
+<polygon points="636.8,524.1 631.8,533.6 641.8,533.6" fill="#eb6834" stroke="#eb6834" stroke-width="1.2"/>
+<text x="654.8" y="533.8" font-size="12" fill="#55534e" text-anchor="start" font-weight="normal">30+0.3, 1,000-2,000 games each</text>
+<polygon points="636.8,545.8 641.8,551.8 636.8,557.8 631.8,551.8" fill="#4a3aa7" stroke="#4a3aa7" stroke-width="1.2"/>
+<text x="654.8" y="555.8" font-size="12" fill="#55534e" text-anchor="start" font-weight="normal">30+0.3, eval scale calibrated per phase</text>
+<circle cx="636.8" cy="573.8" r="5" fill="#ffffff" stroke="#4a3aa7" stroke-width="1.6"/>
+<text x="654.8" y="577.8" font-size="12" fill="#55534e" text-anchor="start" font-weight="normal">Longer time control (60+0.6)</text>
+<polygon points="636.8,587.8 638.9,593.0 644.4,593.4 640.2,596.9 641.5,602.3 636.8,599.3 632.1,602.3 633.5,596.9 629.2,593.4 634.8,593.0" fill="#d23f3e" stroke="#d23f3e" stroke-width="1"/>
+<text x="654.8" y="599.8" font-size="12" fill="#55534e" text-anchor="start" font-weight="normal">F3 net of epoch 415 at 90+0.9</text>
+<text x="30.0" y="36.0" font-size="20" fill="#1d1c1a" text-anchor="start" font-weight="bold">Consilium against Legio Septima across training</text>
+<text x="30.0" y="60.0" font-size="13" fill="#55534e" text-anchor="start" font-weight="normal">Elo of epoch exports, same 8.0 search, only the network changes. Pretraining P stopped after epoch 373; F3 epochs counted from there</text>
+<rect x="84" y="92" width="1076" height="508" fill="none" stroke="#e6e3dc"/>
+</svg>
