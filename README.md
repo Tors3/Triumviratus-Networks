@@ -46,6 +46,12 @@ the older net, which evaluates identically but loads in the same binary).
 - [`nets/experiments/`](nets/experiments/) — feature blocks that were tried and not shipped. Kept so that a
   negative result can be re-checked. See [`recipes/experiments/`](recipes/experiments/).
 
+### In training: Consilium Plebis
+
+The next network is in training. Its file, recipe and scripts will be published here with the engine release that
+ships it; until then [`charts/consilium-plebis/`](charts/consilium-plebis/) follows the run: training loss, loss on
+held-out positions against Consilium, evaluation scale and Elo of the exports.
+
 ## Using a network
 
 Triumviratus loads a network with the UCI option `EvalFile`. Each network needs an engine that knows its input

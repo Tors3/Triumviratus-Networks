@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+<rect width="960" height="560" fill="#fcfcfb"/>
+<text x="24" y="34" font-size="20" font-weight="600" fill="#0b0b0b">Loss on t91 relative to Consilium, on the same positions</text>
+<text x="24" y="56" font-size="13" fill="#52514e">below zero Consilium Plebis errs less; 120 batches of 8192 positions, paired error about +-0.2%</text>
+<line x1="84" y1="84" x2="106" y2="84" stroke="#2a78d6" stroke-width="2"/>
+<text x="112" y="88" font-size="12" fill="#52514e">lambda 1.0 (evaluation)</text>
+<line x1="344" y1="84" x2="366" y2="84" stroke="#eb6834" stroke-width="2"/>
+<text x="372" y="88" font-size="12" fill="#52514e">lambda 0.75 (training target)</text>
+<line x1="604" y1="84" x2="626" y2="84" stroke="#1baf7a" stroke-width="2"/>
+<text x="632" y="88" font-size="12" fill="#52514e">lambda 0 (game result)</text>
+<line x1="84" y1="479.4" x2="790" y2="479.4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="483.4" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">-4%</text>
+<line x1="84" y1="426.7" x2="790" y2="426.7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="430.7" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">-3%</text>
+<line x1="84" y1="373.9" x2="790" y2="373.9" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="377.9" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">-2%</text>
+<line x1="84" y1="321.1" x2="790" y2="321.1" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="325.1" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">-1%</text>
+<line x1="84" y1="268.3" x2="790" y2="268.3" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="272.3" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">0</text>
+<line x1="84" y1="215.6" x2="790" y2="215.6" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="219.6" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">+1%</text>
+<line x1="84" y1="162.8" x2="790" y2="162.8" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="166.8" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">+2%</text>
+<line x1="84" y1="110.0" x2="790" y2="110.0" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="114.0" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">+3%</text>
+<line x1="84" y1="490" x2="790" y2="490" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="84.0" y1="490" x2="84.0" y2="494" stroke="#c3c2b7" stroke-width="1"/>
+<text x="84.0" y="508" text-anchor="middle" font-size="12" fill="#898781">150</text>
+<line x1="201.7" y1="490" x2="201.7" y2="494" stroke="#c3c2b7" stroke-width="1"/>
+<text x="201.7" y="508" text-anchor="middle" font-size="12" fill="#898781">200</text>
+<line x1="319.3" y1="490" x2="319.3" y2="494" stroke="#c3c2b7" stroke-width="1"/>
+<text x="319.3" y="508" text-anchor="middle" font-size="12" fill="#898781">250</text>
+<line x1="437.0" y1="490" x2="437.0" y2="494" stroke="#c3c2b7" stroke-width="1"/>
+<text x="437.0" y="508" text-anchor="middle" font-size="12" fill="#898781">300</text>
+<line x1="554.7" y1="490" x2="554.7" y2="494" stroke="#c3c2b7" stroke-width="1"/>
+<text x="554.7" y="508" text-anchor="middle" font-size="12" fill="#898781">350</text>
+<line x1="672.3" y1="490" x2="672.3" y2="494" stroke="#c3c2b7" stroke-width="1"/>
+<text x="672.3" y="508" text-anchor="middle" font-size="12" fill="#898781">400</text>
+<line x1="790.0" y1="490" x2="790.0" y2="494" stroke="#c3c2b7" stroke-width="1"/>
+<text x="790.0" y="508" text-anchor="middle" font-size="12" fill="#898781">450</text>
+<line x1="84" y1="268.3" x2="790" y2="268.3" stroke="#52514e" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="786" y="260.3" text-anchor="end" font-size="12" fill="#0b0b0b">Consilium (released network)</text>
+<path d="M121.7,149.2 L157.0,207.4 L187.5,253.3 L204.0,235.2 L225.2,285.2 L309.9,322.2 L615.9,386.3 L754.7,456.7" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="121.7" cy="149.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="157.0" cy="207.4" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="187.5" cy="253.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="204.0" cy="235.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="225.2" cy="285.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="309.9" cy="322.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="615.9" cy="386.3" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="754.7" cy="456.7" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<path d="M121.7,123.3 L157.0,190.0 L187.5,217.7 L204.0,203.5 L225.2,251.2 L309.9,273.4 L615.9,360.8 L754.7,424.7" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="121.7" cy="123.3" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="157.0" cy="190.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="187.5" cy="217.7" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="204.0" cy="203.5" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="225.2" cy="251.2" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="309.9" cy="273.4" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="615.9" cy="360.8" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="754.7" cy="424.7" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<path d="M121.7,161.7 L157.0,207.1 L187.5,199.2 L204.0,195.1 L225.2,218.2 L309.9,213.3 L615.9,284.5 L754.7,312.1" fill="none" stroke="#1baf7a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="121.7" cy="161.7" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="157.0" cy="207.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="187.5" cy="199.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="204.0" cy="195.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="225.2" cy="218.2" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="309.9" cy="213.3" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="615.9" cy="284.5" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="754.7" cy="312.1" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<text x="764.7" y="316.1" font-size="12" fill="#0b0b0b">-0.8% game result</text>
+<text x="764.7" y="428.7" font-size="12" fill="#0b0b0b">-3.0% training target</text>
+<text x="764.7" y="460.7" font-size="12" fill="#0b0b0b">-3.6% evaluation</text>
+<text x="437.0" y="538" text-anchor="middle" font-size="13" fill="#52514e">P epoch</text>
+<text x="22" y="300.0" transform="rotate(-90 22 300.0)" text-anchor="middle" font-size="13" fill="#52514e">t91 loss relative to Consilium</text>
+</svg>
