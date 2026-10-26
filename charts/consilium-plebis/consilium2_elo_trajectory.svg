@@ -201,6 +201,9 @@
 <line x1="919.8" y1="227.1" x2="919.8" y2="175.3" stroke="#eb6834" stroke-width="1.4"/>
 <line x1="915.8" y1="227.1" x2="923.8" y2="227.1" stroke="#eb6834" stroke-width="1.4"/>
 <line x1="915.8" y1="175.3" x2="923.8" y2="175.3" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="973.6" y1="179.6" x2="973.6" y2="151.7" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="969.6" y1="179.6" x2="977.6" y2="179.6" stroke="#eb6834" stroke-width="1.4"/>
+<line x1="969.6" y1="151.7" x2="977.6" y2="151.7" stroke="#eb6834" stroke-width="1.4"/>
 <circle cx="771.9" cy="175.8" r="5.5" fill="#eb6834" stroke="#eb6834" stroke-width="1.6"/>
 <text x="779.9" y="179.8" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">+7</text>
 <circle cx="794.9" cy="170.7" r="5.5" fill="#eb6834" stroke="#eb6834" stroke-width="1.6"/>
@@ -211,6 +214,8 @@
 <text x="849.0" y="179.8" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">+7</text>
 <circle cx="919.8" cy="201.2" r="5.5" fill="#eb6834" stroke="#eb6834" stroke-width="1.6"/>
 <text x="927.8" y="205.2" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">-3</text>
+<circle cx="973.6" cy="165.7" r="5.5" fill="#eb6834" stroke="#eb6834" stroke-width="1.6"/>
+<text x="981.6" y="169.7" font-size="10.5" fill="#55534e" text-anchor="start" font-weight="normal">+11</text>
 <text x="122.4" y="574.6" font-size="11.5" fill="#8a877f" text-anchor="start" font-weight="normal">Opponent: the final Consilium (8.0 release network), same merged 8.1 search.</text>
 <rect x="391.4" y="434.9" width="330" height="74" rx="4" fill="#ffffff" stroke="#e6e3dc"/>
 <text x="405.4" y="454.9" font-size="11.5" fill="#1d1c1a" text-anchor="start" font-weight="bold">Match condition</text>
