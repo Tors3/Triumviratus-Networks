@@ -1,10 +1,11 @@
 # Consilium Plebis: charts of the training run
 
-Consilium Plebis is the network after Consilium, in training since 21/10/2026 (pretraining P, 550 epochs of one
-billion positions). Its architecture is described in the engine repository
+Consilium Plebis is the network after Consilium, in training since 21/10/2026 (pretraining P in epochs of one
+billion positions, then a finetune F). Its architecture is described in the engine repository
 ([`docs/networks/NETWORKS.md`](https://github.com/Tors3/Triumviratus/blob/main/docs/networks/NETWORKS.md)). The network
 file, the recipe and the scripts will be published here with the engine release that ships it; until then, these
-charts follow the run. Updated 26/10/2026, epoch 470.
+charts follow the run. Updated 27/10/2026: P was stopped after epoch 496 of the 550 planned, while the loss was
+still falling, and F started from it; the training-loss charts cover P (epochs 0-496).
 
 ## Training loss
 
