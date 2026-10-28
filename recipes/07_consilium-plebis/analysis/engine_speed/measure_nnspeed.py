@@ -14,7 +14,7 @@ import re
 import statistics
 import subprocess
 
-# Default locations of the measurement machine (PGO roots under C:\rz, the xperf kit's position files).
+# Default locations of the measurement machine (PGO roots under <work>, the xperf kit's position files).
 DEFAULT_BASE = r"<work>\c2pgo_base\motore\x64\Release\base_avx512.exe"
 DEFAULT_C2 = r"<work>\c2pgo_c2\motore\x64\Release\c2_avx512.exe"
 DEFAULT_TOOLS = os.path.join("<project>", "tools", "misure_xperf")
