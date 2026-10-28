@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+<rect width="960" height="600" fill="#fcfcfb"/>
+<text x="24" y="34" font-size="20" font-weight="600" fill="#0b0b0b">Consilium Plebis: loss against LR, P and F</text>
+<text x="24" y="56" font-size="13" fill="#52514e">LR at the middle of each epoch; P from an LR of 30% to its end (epoch 496), F after its 2-epoch rise</text>
+<line x1="84" y1="496.2" x2="920" y2="496.2" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="500.2" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">0.00308</text>
+<line x1="84" y1="438.9" x2="920" y2="438.9" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="442.9" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">0.00310</text>
+<line x1="84" y1="381.7" x2="920" y2="381.7" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="385.7" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">0.00312</text>
+<line x1="84" y1="324.4" x2="920" y2="324.4" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="328.4" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">0.00314</text>
+<line x1="84" y1="267.1" x2="920" y2="267.1" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="271.1" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">0.00316</text>
+<line x1="84" y1="209.8" x2="920" y2="209.8" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="213.8" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">0.00318</text>
+<line x1="84" y1="152.5" x2="920" y2="152.5" stroke="#e1e0d9" stroke-width="1"/>
+<text x="76" y="156.5" text-anchor="end" font-size="12" fill="#898781" style="font-variant-numeric: tabular-nums">0.00320</text>
+<line x1="84" y1="524" x2="920" y2="524" stroke="#c3c2b7" stroke-width="1"/>
+<line x1="84.0" y1="524" x2="84.0" y2="528" stroke="#c3c2b7" stroke-width="1"/>
+<text x="84.0" y="542" text-anchor="middle" font-size="12" fill="#898781">30</text>
+<line x1="223.3" y1="524" x2="223.3" y2="528" stroke="#c3c2b7" stroke-width="1"/>
+<text x="223.3" y="542" text-anchor="middle" font-size="12" fill="#898781">25</text>
+<line x1="362.7" y1="524" x2="362.7" y2="528" stroke="#c3c2b7" stroke-width="1"/>
+<text x="362.7" y="542" text-anchor="middle" font-size="12" fill="#898781">20</text>
+<line x1="502.0" y1="524" x2="502.0" y2="528" stroke="#c3c2b7" stroke-width="1"/>
+<text x="502.0" y="542" text-anchor="middle" font-size="12" fill="#898781">15</text>
+<line x1="641.3" y1="524" x2="641.3" y2="528" stroke="#c3c2b7" stroke-width="1"/>
+<text x="641.3" y="542" text-anchor="middle" font-size="12" fill="#898781">10</text>
+<line x1="780.7" y1="524" x2="780.7" y2="528" stroke="#c3c2b7" stroke-width="1"/>
+<text x="780.7" y="542" text-anchor="middle" font-size="12" fill="#898781">5</text>
+<line x1="920.0" y1="524" x2="920.0" y2="528" stroke="#c3c2b7" stroke-width="1"/>
+<text x="920.0" y="542" text-anchor="middle" font-size="12" fill="#898781">0</text>
+<path d="M87.8,129.2 L95.3,137.9 L102.7,134.9 L110.1,148.1 L117.4,141.2 L124.8,144.0 L132.1,143.4 L139.5,158.6 L146.7,168.7 L154.0,155.1 L161.3,163.9 L168.5,162.9 L175.7,168.5 L182.9,161.5 L190.0,173.1 L197.2,178.4 L204.3,180.3 L211.4,182.2 L218.5,191.8 L225.5,186.5 L232.5,184.6 L239.5,197.0 L246.5,202.4 L253.5,201.0 L260.4,208.7 L267.3,223.9 L274.2,216.7 L281.0,214.3 L287.8,226.0 L294.6,230.2 L301.4,231.3 L308.1,227.2 L314.9,230.9 L321.6,227.1 L328.2,240.4 L334.9,244.7 L341.5,244.0 L348.0,242.4 L354.6,248.4 L361.1,242.2 L367.6,247.7 L374.1,232.4 L380.5,270.5 L386.9,275.8 L393.3,271.8 L399.7,267.6 L406.0,273.2 L412.3,278.0 L418.6,262.4 L424.8,286.5 L431.0,291.4 L437.2,268.4 L443.3,275.1 L449.4,283.3 L455.5,275.8 L461.5,285.4 L467.5,299.5 L473.5,280.4 L479.5,294.6 L485.4,307.4 L491.3,304.9 L497.1,295.1 L502.9,311.1 L508.7,310.7 L514.5,313.5 L520.2,311.3 L525.9,315.0 L531.5,313.9 L537.1,327.1 L542.7,341.8 L548.3,322.6 L553.8,338.4 L559.3,328.5 L564.7,337.4 L570.1,330.8 L575.5,329.3 L580.8,334.5 L586.1,331.3 L591.4,336.3 L596.6,343.5 L601.8,347.3 L606.9,348.0 L612.1,348.3 L617.1,357.6 L622.2,348.1 L627.2,353.3 L632.2,345.7 L637.1,342.6 L642.0,361.4 L646.8,358.6 L651.6,363.5 L656.4,375.7 L661.2,364.9 L665.9,373.6 L670.5,377.2 L675.2,360.7 L679.7,368.0 L684.3,381.2 L688.8,377.5 L693.2,389.4 L697.7,378.0 L702.1,384.2 L706.4,376.4 L710.7,394.1 L719.2,381.9 L723.4,391.8 L727.5,388.0 L731.6,374.2 L735.7,388.9 L739.7,389.9 L743.7,399.4 L747.6,402.9 L751.5,389.1 L755.4,401.9 L759.2,394.3 L763.0,399.1 L766.7,399.8 L770.4,390.6 L774.0,392.9 L777.6,408.7 L781.2,412.7 L784.7,402.4 L788.2,401.7 L791.6,405.0 L795.0,414.7 L798.3,418.3 L801.6,408.7 L804.9,424.7 L808.1,390.9 L811.3,420.0 L814.4,424.2" fill="none" stroke="#2a78d6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M223.7,195.2 L226.2,196.3 L231.4,214.3 L239.0,218.0 L248.8,234.1 L260.8,240.3 L274.7,227.1 L290.3,250.5 L307.2,248.2 L325.1,255.8 L343.7,258.5 L362.7,262.3 L381.6,265.9 L400.3,290.9 L418.2,297.5 L435.1,295.6 L450.6,302.6 L464.5,309.0 L476.5,317.4 L486.4,323.7 L494.0,318.7 L499.1,333.6 L501.7,294.8" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="502.0" cy="321.3" r="3" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="502.0" cy="327.0" r="3" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="502.0" cy="313.6" r="3" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="502.0" cy="324.2" r="3" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="502.0" cy="333.9" r="3" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="502.0" cy="314.3" r="3" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="502.0" cy="312.7" r="3" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="502.0" cy="323.1" r="3" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="502.0" cy="322.2" r="3" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="502.0" cy="330.1" r="3" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<path d="M502.0,330.1 L502.4,319.4 L505.7,309.5 L512.2,324.1 L521.9,327.3 L534.5,344.7 L549.9,352.2 L567.9,344.6 L588.1,365.2 L610.3,367.9 L634.0,377.2 L659.0,383.1 L684.8,388.5 L710.9,396.7 L737.1,421.7 L762.9,434.0 L787.9,427.5 L811.6,433.8 L833.8,445.0 L854.0,458.9 L871.9,464.7 L887.4,459.6 L900.0,477.1 L909.7,445.6 L916.2,478.4 L919.5,490.0" fill="none" stroke="#eb6834" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="919.5" cy="490.0" r="4" fill="#eb6834" stroke="#fcfcfb" stroke-width="2"/>
+<text x="909.5" y="514.0" text-anchor="end" font-size="12" fill="#0b0b0b">F, epoch 59: 0.003082</text>
+<path d="M919.5,490.0 L919.9,483.8 L919.9,494.8 L920.0,493.3" fill="none" stroke="#1baf7a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="919.9" cy="483.8" r="3" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="919.9" cy="494.8" r="3" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="920.0" cy="493.3" r="3" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<circle cx="920.0" cy="493.3" r="4" fill="#1baf7a" stroke="#fcfcfb" stroke-width="2"/>
+<line x1="910.0" y1="357.0" x2="920.0" y2="487.3" stroke="#898781" stroke-width="1"/>
+<text x="920.0" y="353.0" text-anchor="end" font-size="12" fill="#0b0b0b">continuation, epoch 62, LR 0.00%: 0.003081</text>
+<line x1="334.8" y1="436.9" x2="498.0" y2="322.2" stroke="#898781" stroke-width="1"/>
+<text x="334.8" y="450.9" text-anchor="middle" font-size="12" fill="#0b0b0b">F at a flat 15%, epochs 25-34: mean 0.003141</text>
+<circle cx="814.4" cy="424.2" r="4" fill="#2a78d6" stroke="#fcfcfb" stroke-width="2"/>
+<line x1="810.4" y1="459.8" x2="814.4" y2="430.2" stroke="#898781" stroke-width="1"/>
+<text x="814.4" y="472.8" text-anchor="end" font-size="12" fill="#0b0b0b">P, epoch 496, LR 3.8%</text>
+<text x="95.8" y="123.2" text-anchor="start" font-size="12" fill="#52514e">P, epoch 366</text>
+<text x="217.7" y="213.2" text-anchor="end" font-size="12" fill="#52514e">F, epoch 2</text>
+<line x1="84" y1="76" x2="106" y2="76" stroke="#2a78d6" stroke-width="2"/>
+<text x="112.0" y="80.0" text-anchor="start" font-size="12" fill="#52514e">P (epochs 0-496)</text>
+<line x1="234" y1="76" x2="256" y2="76" stroke="#eb6834" stroke-width="2"/>
+<text x="262.0" y="80.0" text-anchor="start" font-size="12" fill="#52514e">F (from P's epoch-496 weights)</text>
+<line x1="484" y1="76" x2="506" y2="76" stroke="#1baf7a" stroke-width="2"/>
+<text x="512.0" y="80.0" text-anchor="start" font-size="12" fill="#52514e">F continuation (from F's end, epochs 60-62)</text>
+<text x="502.0" y="572.0" text-anchor="middle" font-size="13" fill="#52514e">LR (% of P's peak), falling to the right</text>
+<text x="22" y="312.0" transform="rotate(-90 22 312.0)" text-anchor="middle" font-size="13" fill="#52514e">training loss</text>
+</svg>
