@@ -1,0 +1,16 @@
+scaling_fit_vm.py on the 43 BT4 binpacks of P (26/10/2026, VM, routing table of a P export), k grid 20..600
+step 5; output copied from the session log (the run printed to the terminal only).
+positions 1,310,720
+pc 6-9       n    92,457  best k  70  xent 0.3538 (k=380: 0.3659)
+pc 10-15     n   275,400  best k  65  xent 0.3722 (k=380: 0.4014)
+pc 16-23     n   495,872  best k  70  xent 0.3785 (k=380: 0.4220)
+pc 24-32     n   413,549  best k  80  xent 0.4752 (k=380: 0.5165)
+expert 0     n    69,950  best k  65  xent 0.3767 (k=380: 0.3927)
+expert 1     n    68,343  best k  65  xent 0.3879 (k=380: 0.4077)
+expert 2     n   152,746  best k  65  xent 0.4032 (k=380: 0.4338)
+expert 3     n    28,192  best k  65  xent 0.3285 (k=380: 0.3505)
+expert 4     n   178,377  best k  65  xent 0.3880 (k=380: 0.4239)
+expert 5     n   166,241  best k  65  xent 0.3764 (k=380: 0.4171)
+expert 6     n   325,414  best k  70  xent 0.3926 (k=380: 0.4395)
+expert 7     n   288,015  best k  80  xent 0.4727 (k=380: 0.5132)
+all pc>5     n 1,277,278  best k  70  xent 0.4067 (k=380: 0.4441)

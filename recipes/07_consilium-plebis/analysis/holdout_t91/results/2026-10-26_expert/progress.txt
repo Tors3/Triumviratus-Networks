@@ -1,0 +1,6 @@
+15:53:02 nn-consilium attempt 1: stream failed (4 s)
+15:53:06 nn-consilium attempt 2: stream failed (5 s)
+16:02:56 nn-consilium attempt 3: OK (590 s)
+16:03:11 c2_P_ep376_perm attempt 1: stream failed (15 s)
+16:10:56 c2_P_ep435 attempt 1: OK (1.079 s)
+16:17:10 c2_P_ep376_perm attempt 2: OK (840 s)

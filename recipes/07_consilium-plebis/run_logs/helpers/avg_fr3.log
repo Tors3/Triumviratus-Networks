@@ -1,0 +1,24 @@
+[avg_fr3 23:37:10] epoch checkpoints: 3
+  /root/c2/run_fr3/F/lightning_logs/version_2/checkpoints/epoch=58-step=232654.ckpt
+  /root/c2/run_fr3/F/lightning_logs/version_2/checkpoints/epoch=59-step=236468.ckpt
+  /root/c2/run_fr3/F/lightning_logs/version_2/checkpoints/epoch=60-step=240282.ckpt
+/root/c2/run_fr3/F/lightning_logs/version_2/checkpoints/epoch=59-step=236468.ckpt: epoch label 59, global step 236468, 20 model tensors
+/root/c2/run_fr3/F/lightning_logs/version_2/checkpoints/epoch=60-step=240282.ckpt: epoch label 60, global step 240282, 20 model tensors
+averaged 19 floating model tensors over 2 checkpoints -> /root/valfix/FR3_avg2.ckpt
+change against the last checkpoint: largest element 9.537e-07, largest relative norm over tensors 3.763e-07
+/root/c2/run_fr3/F/lightning_logs/version_2/checkpoints/epoch=58-step=232654.ckpt: epoch label 58, global step 232654, 20 model tensors
+/root/c2/run_fr3/F/lightning_logs/version_2/checkpoints/epoch=59-step=236468.ckpt: epoch label 59, global step 236468, 20 model tensors
+/root/c2/run_fr3/F/lightning_logs/version_2/checkpoints/epoch=60-step=240282.ckpt: epoch label 60, global step 240282, 20 model tensors
+averaged 19 floating model tensors over 3 checkpoints -> /root/valfix/FR3_avg3.ckpt
+change against the last checkpoint: largest element 9.537e-07, largest relative norm over tensors 9.092e-07
+8845b60195587c48be46356d7a2758c9  /root/c2/run_fr3/nets/FR3_avg2_step240282.nnue
+e82ee48fbe35fbfbf57680b7ba7eed33  /root/c2/run_fr3/nets/FR3_avg3_step240282.nnue
+reference F_final_step228840.nnue; x1e-3; difference = network minus reference over common batches (paired s.e.)
+network                    batches    lam 1.0     diff     +-      %   lam 0.75     diff     +-      %    lam 0.0     diff     +-      %
+FR3_avg2_step240282.nnue       300     4.1746  +0.0032 0.0003  +0.08     5.0867  +0.0047 0.0004  +0.09    18.9626  +0.0112 0.0007  +0.06
+FR3_avg3_step240282.nnue       300     4.1811  +0.0098 0.0004  +0.23     5.0928  +0.0108 0.0004  +0.21    18.9673  +0.0159 0.0007  +0.08
+F_epoch=60-step=240282.nnue     300     4.1754  +0.0040 0.0003  +0.10     5.0871  +0.0051 0.0003  +0.10    18.9609  +0.0095 0.0006  +0.05
+F_final_step228840.nnue        300     4.1714  +0.0000 0.0000  +0.00     5.0820  +0.0000 0.0000  +0.00    18.9514  +0.0000 0.0000  +0.00
+P_last_ep496.nnue              300     4.1575  -0.0138 0.0011  -0.33     5.0749  -0.0071 0.0012  -0.14    18.9774  +0.0260 0.0020  +0.14
+nn-consilium.nnue              300     4.3206  +0.1493 0.0059  +3.58     5.2469  +0.1649 0.0064  +3.24    19.1793  +0.2279 0.0106  +1.20
+[avg_fr3 23:55:15] done

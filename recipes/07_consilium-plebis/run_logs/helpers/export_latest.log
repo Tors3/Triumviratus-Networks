@@ -1,0 +1,744 @@
+Converting /root/valfix/latest.ckpt to /root/c2/run/nets/P_last_ep486.nnue
+---------------
+ft_bias: 
+-129      | 
+-94       | ##
+-59       | ########################
+-24       | ##################################################
+9         | ################
+44        | ##
+79        | 
+Number of elements: 1024
+Minimum value in layer is -129, occurring 1 times.
+Maximum value in layer is 113, occurring 1 times.
+---------------
+---------------
+Full_Threats ft_weight: 
+-127      | 
+-90       | 
+-54       | ##
+-17       | ##################################################
+18        | ##
+55        | 
+91        | 
+Number of elements: 61243392
+Minimum value in layer is -127, occurring 8284 times.
+Maximum value in layer is 127, occurring 8708 times.
+---------------
+---------------
+Full_Threats psqt_weight: 
+-4762     | 
+-3401     | 
+-2040     | ##
+-679      | ##################################################
+680       | ##
+2041      | 
+3402      | 
+Number of elements: 478464
+Minimum value in layer is -4762, occurring 2 times.
+Maximum value in layer is 4762, occurring 3 times.
+---------------
+---------------
+HalfKAv2_hm_X8^ ft_weight: 
+-127      | ##
+-90       | ####
+-54       | #####################
+-17       | ##################################################
+18        | #####################
+55        | ####
+91        | #
+Number of elements: 184549376
+Minimum value in layer is -127, occurring 998791 times.
+Maximum value in layer is 127, occurring 961389 times.
+---------------
+---------------
+HalfKAv2_hm_X8^ psqt_weight: 
+-4.568e+04| ################
+-3.281e+04| ############
+-1.994e+04| #####################################
+-7070     | ##################################################
+5799      | ####################################
+1.867e+04 | #############
+3.154e+04 | ################
+Number of elements: 1441792
+Minimum value in layer is -45679, occurring 1 times.
+Maximum value in layer is 44407, occurring 1 times.
+---------------
+---------------
+PP_3Wide ft_weight: 
+-127      | 
+-90       | 
+-54       | #
+-17       | ##################################################
+18        | 
+55        | 
+91        | 
+Number of elements: 4669440
+Minimum value in layer is -127, occurring 1945 times.
+Maximum value in layer is 127, occurring 1151 times.
+---------------
+---------------
+PP_3Wide psqt_weight: 
+-4574     | 
+-3244     | 
+-1914     | #
+-584      | ##################################################
+744       | 
+2074      | 
+3404      | 
+Number of elements: 36480
+Minimum value in layer is -4574, occurring 1 times.
+Maximum value in layer is 4733, occurring 1 times.
+---------------
+---------------
+PassedPawns ft_weight: 
+-127      | 
+-90       | 
+-54       | #####
+-17       | ##################################################
+18        | ####
+55        | 
+91        | 
+Number of elements: 98304
+Minimum value in layer is -127, occurring 87 times.
+Maximum value in layer is 127, occurring 165 times.
+---------------
+---------------
+PassedPawns psqt_weight: 
+-3371     | #
+-2561     | ###
+-1752     | #######
+-942      | #############################################
+-133      | ##################################################
+676       | ######################
+1485      | ######
+Number of elements: 768
+Minimum value in layer is -3371, occurring 1 times.
+Maximum value in layer is 2294, occurring 1 times.
+---------------
+---------------
+bucket 0 ls_l1_bias: 
+-5277     | ###############
+-3783     | ##########
+-2289     | #########################
+-795      | ########################################
+699       | ##################################################
+2193      | #####
+3687      | ###############
+Number of elements: 32
+Minimum value in layer is -5277, occurring 1 times.
+Maximum value in layer is 5180, occurring 1 times.
+---------------
+---------------
+bucket 0 ls_l1_weight: 
+-127      | 
+-90       | 
+-54       | #####
+-17       | ##################################################
+18        | #####
+55        | 
+91        | 
+Number of elements: 32768
+Minimum value in layer is -127, occurring 9 times.
+Maximum value in layer is 127, occurring 1 times.
+---------------
+---------------
+bucket 0 ls_l2_bias: 
+-3824     | ###
+-3036     | ###
+-2249     | ######
+-1462     | ######
+-675      | ####################
+111       | ##################################################
+898       | ################
+Number of elements: 32
+Minimum value in layer is -3824, occurring 1 times.
+Maximum value in layer is 1685, occurring 1 times.
+---------------
+---------------
+bucket 0 ls_l2_weight: 
+-127      | 
+-90       | 
+-54       | ####
+-17       | ##################################################
+18        | ####
+55        | 
+91        | 
+Number of elements: 2048
+Minimum value in layer is -127, occurring 4 times.
+Maximum value in layer is 127, occurring 1 times.
+---------------
+---------------
+bucket 0 ls_output_bias: 
+1679      | 
+1680      | 
+1681      | 
+1682      | 
+1683      | ##################################################
+1684      | 
+1685      | 
+Number of elements: 1
+Minimum value in layer is 1683, occurring 1 times.
+Maximum value in layer is 1683, occurring 1 times.
+---------------
+---------------
+bucket 0 ls_output_weight: 
+-127      | ###
+-90       | ########
+-54       | #######################
+-17       | ##################################################
+18        | #########################
+55        | #####
+91        | #####
+Number of elements: 128
+Minimum value in layer is -127, occurring 2 times.
+Maximum value in layer is 127, occurring 2 times.
+---------------
+---------------
+bucket 1 ls_l1_bias: 
+-6166     | ######################
+-4497     | #####
+-2829     | #################################
+-1161     | ############################################
+507       | ##################################################
+2175      | ###########
+3843      | ###########
+Number of elements: 32
+Minimum value in layer is -6166, occurring 1 times.
+Maximum value in layer is 5511, occurring 1 times.
+---------------
+---------------
+bucket 1 ls_l1_weight: 
+-127      | 
+-90       | 
+-54       | ########
+-17       | ##################################################
+18        | #######
+55        | 
+91        | 
+Number of elements: 32768
+Minimum value in layer is -127, occurring 10 times.
+Maximum value in layer is 127, occurring 1 times.
+---------------
+---------------
+bucket 1 ls_l2_bias: 
+-3471     | #######
+-2594     | ##########################################
+-1717     | #####################
+-841      | ############################
+35        | ##################################################
+911       | ##########################################
+1788      | ###################################
+Number of elements: 32
+Minimum value in layer is -3471, occurring 1 times.
+Maximum value in layer is 2664, occurring 1 times.
+---------------
+---------------
+bucket 1 ls_l2_weight: 
+-109      | 
+-81       | 
+-53       | ########
+-25       | ##################################################
+2         | ##############################################
+30        | ###
+58        | 
+Number of elements: 2048
+Minimum value in layer is -109, occurring 1 times.
+Maximum value in layer is 85, occurring 1 times.
+---------------
+---------------
+bucket 1 ls_output_bias: 
+646       | 
+647       | 
+648       | 
+649       | 
+650       | ##################################################
+651       | 
+652       | 
+Number of elements: 1
+Minimum value in layer is 650, occurring 1 times.
+Maximum value in layer is 650, occurring 1 times.
+---------------
+---------------
+bucket 1 ls_output_weight: 
+-127      | ####
+-90       | ####
+-54       | ############################
+-17       | ##################################################
+18        | ####################################
+55        | ###
+91        | ####
+Number of elements: 128
+Minimum value in layer is -127, occurring 3 times.
+Maximum value in layer is 127, occurring 2 times.
+---------------
+---------------
+bucket 2 ls_l1_bias: 
+-5828     | ############
+-4419     | ############
+-3011     | #########################
+-1602     | ###########################################
+-194      | #####################################
+1214      | ##################################################
+2622      | ##################
+Number of elements: 32
+Minimum value in layer is -5828, occurring 1 times.
+Maximum value in layer is 4030, occurring 1 times.
+---------------
+---------------
+bucket 2 ls_l1_weight: 
+-127      | 
+-90       | 
+-54       | #####
+-17       | ##################################################
+18        | ####
+55        | 
+91        | 
+Number of elements: 32768
+Minimum value in layer is -127, occurring 10 times.
+Maximum value in layer is 127, occurring 4 times.
+---------------
+---------------
+bucket 2 ls_l2_bias: 
+-2975     | ##########
+-2229     | #########################
+-1484     | #############################################
+-739      | ##################################################
+6         | ##########
+751       | #####
+1496      | ###############
+Number of elements: 32
+Minimum value in layer is -2975, occurring 1 times.
+Maximum value in layer is 2241, occurring 1 times.
+---------------
+---------------
+bucket 2 ls_l2_weight: 
+-88       | 
+-60       | ###
+-32       | ##############################
+-4        | ##################################################
+23        | #####
+51        | 
+79        | 
+Number of elements: 2048
+Minimum value in layer is -88, occurring 1 times.
+Maximum value in layer is 106, occurring 1 times.
+---------------
+---------------
+bucket 2 ls_output_bias: 
+-1366     | 
+-1364     | 
+-1363     | 
+-1362     | ##################################################
+-1361     | 
+-1360     | 
+-1359     | 
+Number of elements: 1
+Minimum value in layer is -1362, occurring 1 times.
+Maximum value in layer is -1362, occurring 1 times.
+---------------
+---------------
+bucket 2 ls_output_weight: 
+-127      | ####
+-90       | 
+-54       | ##################
+-17       | ##################################################
+18        | ##########################
+55        | ##
+91        | #
+Number of elements: 128
+Minimum value in layer is -127, occurring 3 times.
+Maximum value in layer is 127, occurring 1 times.
+---------------
+---------------
+bucket 3 ls_l1_bias: 
+-5733     | #####################
+-4219     | ##############
+-2705     | ##########################################
+-1191     | ##########################################
+323       | ##################################################
+1837      | ##############
+3351      | ##########################################
+Number of elements: 32
+Minimum value in layer is -5733, occurring 1 times.
+Maximum value in layer is 4864, occurring 1 times.
+---------------
+---------------
+bucket 3 ls_l1_weight: 
+-127      | 
+-90       | 
+-54       | ####
+-17       | ##################################################
+18        | ####
+55        | 
+91        | 
+Number of elements: 32768
+Minimum value in layer is -127, occurring 13 times.
+Maximum value in layer is 127, occurring 4 times.
+---------------
+---------------
+bucket 3 ls_l2_bias: 
+-2759     | ################
+-2037     | ##################################################
+-1316     | ###########################
+-595      | ###########
+125       | #################################
+846       | ######################
+1567      | ################
+Number of elements: 32
+Minimum value in layer is -2759, occurring 1 times.
+Maximum value in layer is 2288, occurring 1 times.
+---------------
+---------------
+bucket 3 ls_l2_weight: 
+-94       | 
+-71       | 
+-49       | ###
+-27       | #############################
+-4        | ##################################################
+17        | #########
+39        | 
+Number of elements: 2048
+Minimum value in layer is -94, occurring 1 times.
+Maximum value in layer is 61, occurring 1 times.
+---------------
+---------------
+bucket 3 ls_output_bias: 
+-417      | 
+-415      | 
+-414      | 
+-413      | ##################################################
+-412      | 
+-411      | 
+-410      | 
+Number of elements: 1
+Minimum value in layer is -413, occurring 1 times.
+Maximum value in layer is -413, occurring 1 times.
+---------------
+---------------
+bucket 3 ls_output_weight: 
+-95       | ###
+-63       | ###########
+-31       | ##################################################
+0         | ##################################################
+32        | ##############
+64        | ###
+96        | ###
+Number of elements: 128
+Minimum value in layer is -95, occurring 1 times.
+Maximum value in layer is 127, occurring 1 times.
+---------------
+---------------
+bucket 4 ls_l1_bias: 
+-5478     | ###########
+-3751     | ################
+-2024     | ##################################################
+-297      | ######################################
+1430      | ######################################
+3157      | ###########
+4884      | ###########
+Number of elements: 32
+Minimum value in layer is -5478, occurring 1 times.
+Maximum value in layer is 6610, occurring 1 times.
+---------------
+---------------
+bucket 4 ls_l1_weight: 
+-127      | 
+-90       | 
+-54       | ####
+-17       | ##################################################
+18        | ###
+55        | 
+91        | 
+Number of elements: 32768
+Minimum value in layer is -127, occurring 12 times.
+Maximum value in layer is 127, occurring 5 times.
+---------------
+---------------
+bucket 4 ls_l2_bias: 
+-2435     | ##################################################
+-1908     | ###############################
+-1381     | #####################################
+-854      | #########################
+-327      | ######
+200       | #########################
+727       | #########################
+Number of elements: 32
+Minimum value in layer is -2435, occurring 1 times.
+Maximum value in layer is 1253, occurring 1 times.
+---------------
+---------------
+bucket 4 ls_l2_weight: 
+-75       | 
+-56       | #
+-37       | ##########
+-18       | ###########################################
+0         | ##################################################
+18        | ##########
+37        | #
+Number of elements: 2048
+Minimum value in layer is -75, occurring 1 times.
+Maximum value in layer is 55, occurring 1 times.
+---------------
+---------------
+bucket 4 ls_output_bias: 
+2466      | 
+2467      | 
+2468      | 
+2469      | 
+2470      | ##################################################
+2471      | 
+2472      | 
+Number of elements: 1
+Minimum value in layer is 2470, occurring 1 times.
+Maximum value in layer is 2470, occurring 1 times.
+---------------
+---------------
+bucket 4 ls_output_weight: 
+-127      | #
+-90       | ###
+-54       | ##########################
+-17       | ##################################################
+18        | ######################
+55        | ######
+91        | #
+Number of elements: 128
+Minimum value in layer is -127, occurring 1 times.
+Maximum value in layer is 127, occurring 1 times.
+---------------
+---------------
+bucket 5 ls_l1_bias: 
+-7117     | ####
+-5489     | #########
+-3862     | #########
+-2234     | ##################################################
+-607      | #############
+1020      | ########################################
+2647      | ##################
+Number of elements: 32
+Minimum value in layer is -7117, occurring 1 times.
+Maximum value in layer is 4274, occurring 1 times.
+---------------
+---------------
+bucket 5 ls_l1_weight: 
+-127      | 
+-90       | 
+-54       | ###
+-17       | ##################################################
+18        | ###
+55        | 
+91        | 
+Number of elements: 32768
+Minimum value in layer is -127, occurring 12 times.
+Maximum value in layer is 127, occurring 4 times.
+---------------
+---------------
+bucket 5 ls_l2_bias: 
+-2631     | ############
+-1840     | ##################################################
+-1049     | #########################
+-259      | ################
+531       | ################
+1321      | ########
+2112      | ####
+Number of elements: 32
+Minimum value in layer is -2631, occurring 1 times.
+Maximum value in layer is 2902, occurring 1 times.
+---------------
+---------------
+bucket 5 ls_l2_weight: 
+-77       | 
+-57       | #
+-37       | ########
+-18       | #################################################
+1         | ##################################################
+20        | ######
+40        | 
+Number of elements: 2048
+Minimum value in layer is -77, occurring 2 times.
+Maximum value in layer is 59, occurring 1 times.
+---------------
+---------------
+bucket 5 ls_output_bias: 
+3084      | 
+3085      | 
+3086      | 
+3087      | 
+3088      | ##################################################
+3089      | 
+3090      | 
+Number of elements: 1
+Minimum value in layer is 3088, occurring 1 times.
+Maximum value in layer is 3088, occurring 1 times.
+---------------
+---------------
+bucket 5 ls_output_weight: 
+-120      | 
+-84       | ###
+-49       | ########################
+-13       | ##################################################
+21        | ###############
+57        | 
+92        | ##
+Number of elements: 128
+Minimum value in layer is -120, occurring 1 times.
+Maximum value in layer is 127, occurring 1 times.
+---------------
+---------------
+bucket 6 ls_l1_bias: 
+-5246     | ###########
+-3686     | #################################
+-2127     | ################
+-567      | ############################################
+991       | ##################################################
+2551      | ################
+4110      | #####
+Number of elements: 32
+Minimum value in layer is -5246, occurring 1 times.
+Maximum value in layer is 5669, occurring 1 times.
+---------------
+---------------
+bucket 6 ls_l1_weight: 
+-127      | 
+-90       | 
+-54       | ####
+-17       | ##################################################
+18        | ###
+55        | 
+91        | 
+Number of elements: 32768
+Minimum value in layer is -127, occurring 15 times.
+Maximum value in layer is 127, occurring 8 times.
+---------------
+---------------
+bucket 6 ls_l2_bias: 
+-3250     | ##################
+-2498     | ##################
+-1747     | ###############################
+-996      | ##################################################
+-244      | ##################
+506       | ###########################################
+1257      | ##################
+Number of elements: 32
+Minimum value in layer is -3250, occurring 1 times.
+Maximum value in layer is 2008, occurring 1 times.
+---------------
+---------------
+bucket 6 ls_l2_weight: 
+-78       | 
+-56       | 
+-34       | ##########
+-12       | ##################################################
+10        | #############
+32        | #
+54        | 
+Number of elements: 2048
+Minimum value in layer is -78, occurring 1 times.
+Maximum value in layer is 75, occurring 1 times.
+---------------
+---------------
+bucket 6 ls_output_bias: 
+3416      | 
+3417      | 
+3418      | 
+3419      | 
+3420      | ##################################################
+3421      | 
+3422      | 
+Number of elements: 1
+Minimum value in layer is 3420, occurring 1 times.
+Maximum value in layer is 3420, occurring 1 times.
+---------------
+---------------
+bucket 6 ls_output_weight: 
+-127      | 
+-92       | ##
+-57       | ##############
+-22       | ##################################################
+12        | ########################
+47        | 
+82        | ##
+Number of elements: 128
+Minimum value in layer is -127, occurring 1 times.
+Maximum value in layer is 116, occurring 1 times.
+---------------
+---------------
+bucket 7 ls_l1_bias: 
+-5190     | ##########
+-3922     | ##########
+-2654     | ####################
+-1386     | ####################
+-118      | #########################
+1149      | ##################################################
+2417      | #########################
+Number of elements: 32
+Minimum value in layer is -5190, occurring 1 times.
+Maximum value in layer is 3684, occurring 1 times.
+---------------
+---------------
+bucket 7 ls_l1_weight: 
+-127      | 
+-90       | 
+-54       | #####
+-17       | ##################################################
+18        | #####
+55        | 
+91        | 
+Number of elements: 32768
+Minimum value in layer is -127, occurring 14 times.
+Maximum value in layer is 127, occurring 6 times.
+---------------
+---------------
+bucket 7 ls_l2_bias: 
+-3191     | ##########
+-2456     | #########################
+-1721     | ####################
+-986      | ##################################################
+-251      | ##########
+483       | ##############################
+1218      | ###############
+Number of elements: 32
+Minimum value in layer is -3191, occurring 1 times.
+Maximum value in layer is 1952, occurring 1 times.
+---------------
+---------------
+bucket 7 ls_l2_weight: 
+-57       | 
+-37       | ######
+-18       | ##############################################
+0         | ##################################################
+19        | ######
+38        | 
+57        | 
+Number of elements: 2048
+Minimum value in layer is -57, occurring 1 times.
+Maximum value in layer is 76, occurring 1 times.
+---------------
+---------------
+bucket 7 ls_output_bias: 
+907       | 
+908       | 
+909       | 
+910       | 
+911       | ##################################################
+912       | 
+913       | 
+Number of elements: 1
+Minimum value in layer is 911, occurring 1 times.
+Maximum value in layer is 911, occurring 1 times.
+---------------
+---------------
+bucket 7 ls_output_weight: 
+-127      | ##
+-95       | 
+-63       | ########
+-32       | ##################################################
+0         | ###########################################
+30        | ########
+62        | ###
+Number of elements: 128
+Minimum value in layer is -127, occurring 2 times.
+Maximum value in layer is 93, occurring 1 times.
+---------------
+Wrote /root/c2/run/nets/P_last_ep486.nnue
+EXPORTED /root/c2/run/nets/P_last_ep486.nnue

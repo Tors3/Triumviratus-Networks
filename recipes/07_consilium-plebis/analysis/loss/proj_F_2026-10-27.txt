@@ -1,0 +1,19 @@
+linear in LR: residual sd 3.25e-6, learning g -0.065e-6/ep
+   F ep32 LR 15.00%  0.003141
+   F ep34 LR 15.00%  0.003141
+   F ep40 LR 13.28%  0.003135
+   F ep45 LR  9.37%  0.003121
+   F ep50 LR  4.74%  0.003104
+   F ep55 LR  1.17%  0.003092
+   F ep59 LR  0.02%  0.003087
+   F mean ep55-59 0.003089; P continued to LR 0 at ep549 0.003088; P at ep496 fit 0.003104
+quadratic in LR: residual sd 2.76e-6, learning g -0.056e-6/ep
+   F ep32 LR 15.00%  0.003140
+   F ep34 LR 15.00%  0.003140
+   F ep40 LR 13.28%  0.003134
+   F ep45 LR  9.37%  0.003121
+   F ep50 LR  4.74%  0.003108
+   F ep55 LR  1.17%  0.003098
+   F ep59 LR  0.02%  0.003095
+   F mean ep55-59 0.003096; P continued to LR 0 at ep549 0.003095; P at ep496 fit 0.003108
+P ep496 0.003105, P mean ep492-496 0.003109

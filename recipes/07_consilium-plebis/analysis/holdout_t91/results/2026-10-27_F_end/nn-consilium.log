@@ -1,0 +1,18 @@
+DDP rank: 0, world size: 1
+[loader] concurrency=2  reader=1  worker(feature)=1
+nn-consilium.nnue: batch 25/300
+nn-consilium.nnue: batch 50/300
+nn-consilium.nnue: batch 75/300
+nn-consilium.nnue: batch 100/300
+nn-consilium.nnue: batch 125/300
+nn-consilium.nnue: batch 150/300
+nn-consilium.nnue: batch 175/300
+nn-consilium.nnue: batch 200/300
+nn-consilium.nnue: batch 225/300
+nn-consilium.nnue: batch 250/300
+nn-consilium.nnue: batch 275/300
+nn-consilium.nnue: batch 300/300
+
+300 batches x 8192 positions of t91_sample.binpack per network (x1e-3, +- s.e.)
+network                                 kind       lambda 1.0           lambda 0.75          lambda 0.0           
+nn-consilium.nnue                       consilium   4.3206 +-0.0126   5.2469 +-0.0137  19.1793 +-0.0356  

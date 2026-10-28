@@ -1,0 +1,3 @@
+09:30:30 c2_P_ep435 attempt 1: stream failed (4 s)
+09:43:40 nn-consilium attempt 1: OK (795 s)
+09:47:07 c2_P_ep435 attempt 2: OK (997 s)

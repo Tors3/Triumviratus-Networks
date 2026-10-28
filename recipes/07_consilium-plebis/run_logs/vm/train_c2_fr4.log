@@ -1,0 +1,77 @@
+=== F 2 EP AT 0.0003% + 3 EP TO 0.00001% Tue Oct 27 23:27:29 UTC 2026 from the continuation's end (epoch label 60, step 240282), ROOT=/root/c2/run_fr4, F_EPOCHS=65 NNUE_LR_PIECES=7628:0.1494:1:lin;87722:1:0.6:cos;38140:0.6:0.6:lin;95350:0.6:0.00016:cos;11442:0.00016:0:cos;7628:0.000012:0.000012:lin;11442:0.000012:0.0000004:cos
+=== Tue Oct 27 23:27:31 UTC 2026 2 GPU, 43 binpacks (654G), batch 262144, workers/rank 28, P 550 ep (2161025 steps, lr 5.6569e-04), F 65 ep (255393 steps, lr 1.4142e-04)
+[F] resuming from /root/c2/run_fr4/F/lightning_logs/version_0/checkpoints/last.ckpt
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[ddp_init] Successfully set CPU affinity to cores [16, 144, 17, 145, 18, 146, 19, 147, 20, 148, 21, 149, 22, 150, 23, 151, 24, 152, 25, 153, 26, 154, 27, 155, 28, 156, 29, 157, 30, 158, 31, 159] for LOCAL_RANK 0 (NUMA node 1)
+[Launcher] Intercepted requests: threads=1, workers=28
+[Launcher] Affinity binding   : True
+[Launcher] Applied constraints : threads=1, workers=28
+[Launcher] Executing target    : train.py --num-workers 28 --threads 1 /data/bt4/T60T70wIsRightFarseerT60T74T75T76.split_0.relabel-BT4-tf13tune.binpack /data/bt4/T60T70wIsRightFarseerT60T74T75T76.split_1.relabel-BT4-tf13tune.binpack /data/bt4/T60T70wIsRightFarseerT60T74T75T76.split_2.relabel-BT4-tf13tune.binpack /data/bt4/T60T70wIsRightFarseerT60T74T75T76.split_3.relabel-BT4-tf13tune.binpack /data/bt4/T60T70wIsRightFarseerT60T74T75T76.split_4.relabel-BT4-tf13tune.binpack /data/bt4/dfrc_n5000.relabel-BT4-tf13tune.binpack /data/bt4/fishpack32.relabel-BT4-tf13tune.binpack /data/bt4/leela96-filt-v2.min.split_0.relabel-BT4-tf13tune.binpack /data/bt4/leela96-filt-v2.min.split_1.relabel-BT4-tf13tune.binpack /data/bt4/leela96-filt-v2.min.split_2.relabel-BT4-tf13tune.binpack /data/bt4/leela96-filt-v2.min.split_3.relabel-BT4-tf13tune.binpack /data/bt4/leela96-filt-v2.min.split_4.relabel-BT4-tf13tune.binpack /data/bt4/multinet_pv-2_diff-100_nodes-5000.relabel-BT4-tf13tune.binpack /data/bt4/nodes5000pv2_UHO.relabel-BT4-tf13tune.binpack /data/bt4/tb5dtm.binpack /data/bt4/test60-2021-11-nov-12tb7p.min-v2.relabel-BT4-tf13tune.binpack /data/bt4/test60-2021-12-dec-12tb7p.min-v2.relabel-BT4-tf13tune.binpack /data/bt4/test77-2021-12-dec-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack /data/bt4/test78-2022-01-to-05-jantomay-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack /data/bt4/test78-2022-06-to-09-juntosep-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack /data/bt4/test79-2022-04-apr-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack /data/bt4/test79-2022-05-may-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack /data/bt4/test80-2022-06-jun-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack /data/bt4/test80-2022-07-jul-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack /data/bt4/test80-2022-08-aug-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack /data/bt4/test80-2022-09-sep-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack /data/bt4/test80-2022-10-oct-16tb7p.v6-dd.relabel-BT4-tf13tune.binpack /data/bt4/test80-2022-11-nov-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack /data/bt4/test80-2023-01-jan-16tb7p.v6-sk20.min.relabel-BT4-tf13tune.binpack /data/bt4/test80-2023-02-feb-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack /data/bt4/test80-2023-03-mar-2tb7p.v6-sk16.min.relabel-BT4-tf13tune.binpack /data/bt4/test80-2023-04-apr-2tb7p.v6-sk16.min.relabel-BT4-tf13tune.binpack /data/bt4/test80-2023-05-may-2tb7p.v6.min.relabel-BT4-tf13tune.binpack /data/bt4/test80-2023-06-jun-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack /data/bt4/test80-2023-07-jul-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack /data/bt4/test80-2023-08-aug-2tb7p.v6.min.relabel-BT4-tf13tune.binpack /data/bt4/test80-2023-09-sep-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack /data/bt4/test80-2023-10-oct-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack /data/bt4/test80-2023-11-nov-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack /data/bt4/test80-2023-12-dec-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack /data/bt4/test80-2024-01-jan-2tb7p.min-v2.v6.relabel.binpack /data/bt4/test80-2024-02-feb-2tb7p.min-v2.v6.relabel.binpack /data/bt4/wrongIsRight_nodes5000pv2.relabel-BT4-tf13tune.binpack --features Full_Threats+HalfKAv2_hm_X8^+PP_3Wide+PassedPawns --pawn-king-hidden 256 --l1 1024 --accelerator cuda --epoch-size 1000000000 --random-fen-skipping 2 --early-fen-skipping -1 --soft-early-fen-skipping 20 --ply-x1 0 --ply-y1 0.25 --ply-x2 6 --ply-y2 0.40 --ply-x3 10 --ply-y3 0.60 --ply-x4 18 --ply-y4 0.90 --pc-y0 0.0 --pc-y1 0.60 --pc-y2 1.0 --pc-y3 0.95 --pc-y4 0.75 --lambda-cycle-jitter --jitter-lambda-sample 0.0035 --jitter-lambda-batch 0.0070 --jitter-decay-lambda-batch 0.999 --one-cycle-final-div 1000 --validation-size 1000000 --check-val-every-n-epoch 100000 --save-last-network True --seed 42 --router-em-transitions /root/c2/nnue-pytorch/c2_transitions.npz --batch-size 262144 --max-epochs 65 --lr 1.4142e-04 --one-cycle-steps 255393 --one-cycle-warmup-pct 0.01 --network-save-period 1 --save-top-k -1 --default-root-dir /root/c2/run_fr4/F --resume-from-checkpoint /root/c2/run_fr4/F/lightning_logs/version_0/checkpoints/last.ckpt --start-lambda 0.75 --end-lambda 0.75 --lambda-cycle-delta 0 --lambda-schedule-steps 1 --router-em-epochs 0
+[ddp_init] Successfully set CPU affinity to cores [0, 128, 1, 129, 2, 130, 3, 131, 4, 132, 5, 133, 6, 134, 7, 135, 8, 136, 9, 137, 10, 138, 11, 139, 12, 140, 13, 141, 14, 142, 15, 143] for LOCAL_RANK 1 (NUMA node 0)
+batch_size(global)=262144 | n_devices=2 | batch_size(per_gpu)=131072
+Loss parameters:
+LossParams(in_offset=270, out_offset=270, in_scaling=340, out_scaling=380, lambda_config=LambdaConfig(start_lambda=0.75, end_lambda=0.75, jitter_lambda_sample=0.0035, jitter_lambda_batch=0.007, jitter_decay_lambda_batch=0.999, lambda_=1.0, lambda_schedule_steps=1, lambda_cycle_warmup_pct=0.3, lambda_cycle_delta=0.0, lambda_cycle_jitter=True), pow_exp=2.5, qp_asymmetry=0.0, w1=0.0, w2=0.5, tb_remap_base=4000.0, tb_remap_scale=4000.0, tb_remap_decay=0.85)
+Feature set: Full_Threats+HalfKAv2_hm_X8^+PP_3Wide+PassedPawns
+Num inputs: 261072
+Training with: ('/data/bt4/T60T70wIsRightFarseerT60T74T75T76.split_0.relabel-BT4-tf13tune.binpack', '/data/bt4/T60T70wIsRightFarseerT60T74T75T76.split_1.relabel-BT4-tf13tune.binpack', '/data/bt4/T60T70wIsRightFarseerT60T74T75T76.split_2.relabel-BT4-tf13tune.binpack', '/data/bt4/T60T70wIsRightFarseerT60T74T75T76.split_3.relabel-BT4-tf13tune.binpack', '/data/bt4/T60T70wIsRightFarseerT60T74T75T76.split_4.relabel-BT4-tf13tune.binpack', '/data/bt4/dfrc_n5000.relabel-BT4-tf13tune.binpack', '/data/bt4/fishpack32.relabel-BT4-tf13tune.binpack', '/data/bt4/leela96-filt-v2.min.split_0.relabel-BT4-tf13tune.binpack', '/data/bt4/leela96-filt-v2.min.split_1.relabel-BT4-tf13tune.binpack', '/data/bt4/leela96-filt-v2.min.split_2.relabel-BT4-tf13tune.binpack', '/data/bt4/leela96-filt-v2.min.split_3.relabel-BT4-tf13tune.binpack', '/data/bt4/leela96-filt-v2.min.split_4.relabel-BT4-tf13tune.binpack', '/data/bt4/multinet_pv-2_diff-100_nodes-5000.relabel-BT4-tf13tune.binpack', '/data/bt4/nodes5000pv2_UHO.relabel-BT4-tf13tune.binpack', '/data/bt4/tb5dtm.binpack', '/data/bt4/test60-2021-11-nov-12tb7p.min-v2.relabel-BT4-tf13tune.binpack', '/data/bt4/test60-2021-12-dec-12tb7p.min-v2.relabel-BT4-tf13tune.binpack', '/data/bt4/test77-2021-12-dec-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test78-2022-01-to-05-jantomay-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test78-2022-06-to-09-juntosep-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test79-2022-04-apr-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test79-2022-05-may-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2022-06-jun-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2022-07-jul-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2022-08-aug-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2022-09-sep-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2022-10-oct-16tb7p.v6-dd.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2022-11-nov-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2023-01-jan-16tb7p.v6-sk20.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2023-02-feb-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2023-03-mar-2tb7p.v6-sk16.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2023-04-apr-2tb7p.v6-sk16.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2023-05-may-2tb7p.v6.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2023-06-jun-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2023-07-jul-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2023-08-aug-2tb7p.v6.min.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2023-09-sep-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2023-10-oct-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2023-11-nov-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2023-12-dec-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack', '/data/bt4/test80-2024-01-jan-2tb7p.min-v2.v6.relabel.binpack', '/data/bt4/test80-2024-02-feb-2tb7p.min-v2.v6.relabel.binpack', '/data/bt4/wrongIsRight_nodes5000pv2.relabel-BT4-tf13tune.binpack')
+Validating with: None
+Seed 42
+DataloaderSkipConfig(filtered=True, wld_filtered=True, random_fen_skipping=2, early_fen_skipping=-1, soft_early_fen_skipping=20, simple_eval_skipping=-1, param_index=0, pc_y0=0.0, pc_y1=0.6, pc_y2=1.0, pc_y3=0.95, pc_y4=0.75, ply_x1=0.0, ply_y1=0.25, ply_x2=6.0, ply_y2=0.4, ply_x3=10.0, ply_y3=0.6, ply_x4=18.0, ply_y4=0.9)
+Using log dir /root/c2/run_fr4/F/lightning_logs/version_2
+Using 28 workers for C++ data loader.
+Set torch num_threads to 1 threads.
+
+[OptimizerConfig] Using rangerlite optimizer with lr: 0.00014142.
+[configure_optimizers] NNUE_LR_PIECES=7628:0.1494:1:lin;87722:1:0.6:cos;38140:0.6:0.6:lin;95350:0.6:0.00016:cos;11442:0.00016:0:cos;7628:0.000012:0.000012:lin;11442:0.000012:0.0000004:cos
+[OptimizerConfig] Using rangerlite optimizer with lr: 0.00014142.
+[configure_optimizers] NNUE_LR_PIECES=7628:0.1494:1:lin;87722:1:0.6:cos;38140:0.6:0.6:lin;95350:0.6:0.00016:cos;11442:0.00016:0:cos;7628:0.000012:0.000012:lin;11442:0.000012:0.0000004:cos
+NNUE_WORKER_THREAD_RATIO=0.25 (default compilato 0.14)
+[loader] concurrency=28  reader=21  worker(feature)=7
+------------------------------------------------------------
+NNUE_WORKER_THREAD_RATIO=0.25 (default compilato 0.14)
+[loader] concurrency=28  reader=21  worker(feature)=7
+Epoch 60 (Train):  20%|   763/3814  [03:19<13:17,   3.82it/s, train_loss=0.00305, v_num=version_2]
+Epoch 60 (Train):  40%|  1526/3814  [06:23<09:35,   3.98it/s, train_loss=0.00307, v_num=version_2]
+Epoch 60 (Train):  60%|  2289/3814  [09:29<06:19,   4.02it/s, train_loss=0.00310, v_num=version_2]
+Epoch 60 (Train):  80%|  3052/3814  [12:36<03:08,   4.03it/s, train_loss=0.00312, v_num=version_2]
+Epoch 60 (Train): 100%|  3814/3814  [15:39<00:00,   4.06it/s, train_loss=0.00305, v_num=version_2]
+/venv/main/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  return func(*args, **kwargs)
+Epoch 60 (Train): [train_loss_epoch=0.00308]
+------------------------------------------------------------
+Epoch 61 (Train):  20%|   763/3814  [03:04<12:16,   4.14it/s, train_loss=0.00307, v_num=version_2]
+W1027 23:46:59.659000 38428 site-packages/torch/distributed/elastic/agent/server/api.py:739] Received 15 death signal, shutting down workers
+W1027 23:46:59.664000 38428 site-packages/torch/distributed/elastic/multiprocessing/api.py:1012] Sending process 38498 closing signal SIGTERM
+W1027 23:46:59.665000 38428 site-packages/torch/distributed/elastic/multiprocessing/api.py:1012] Sending process 38499 closing signal SIGTERM
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/venv/main/lib/python3.12/site-packages/torch/distributed/run.py", line 994, in <module>
+    main()
+  File "/venv/main/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/distributed/run.py", line 990, in main
+    run(args)
+  File "/venv/main/lib/python3.12/site-packages/torch/distributed/run.py", line 981, in run
+    elastic_launch(
+  File "/venv/main/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 170, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 308, in launch_agent
+    result = agent.run()
+             ^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/distributed/elastic/metrics/api.py", line 134, in wrapper
+    result = f(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/distributed/elastic/agent/server/api.py", line 731, in run
+    result = self._invoke_run(role)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/venv/main/lib/python3.12/site-packages/torch/distributed/elastic/agent/server/api.py", line 908, in _invoke_run
+    time.sleep(monitor_interval)
+  File "/venv/main/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/api.py", line 86, in _terminate_process_handler
+    raise SignalException(f"Process {os.getpid()} got signal: {sigval}", sigval=sigval)
+torch.distributed.elastic.multiprocessing.api.SignalException: Process 38428 got signal: 15

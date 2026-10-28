@@ -10,6 +10,7 @@ Every network is trained with Stockfish's [`nnue-pytorch`](https://github.com/of
 | `rubicon-alea-v2`, `v3`, experiments | `89d5725` ("Towards Perfect Cross Eval (#477)") | [`alea-fork/`](alea-fork/) |
 | `legio-septima` | `9f72946` (2026-07-26) | [`../recipes/05_legio-septima/triumviratus_passedpawns.patch`](../recipes/05_legio-septima/triumviratus_passedpawns.patch) |
 | Consilium | `9f72946` | [`triumviratus_trainer.patch`](triumviratus_trainer.patch) (superset of the one above) |
+| Consilium Plebis | `9f72946` | [`consilium_plebis_trainer.patch`](consilium_plebis_trainer.patch) (the whole trainer of the run) and, for the finetune F, [`consilium_plebis_F_piecewise_lr.patch`](consilium_plebis_F_piecewise_lr.patch) |
 
 ## `alea-fork/`
 
@@ -39,3 +40,17 @@ Adds `PassedPawns`, the four-expert `HalfKAv2_hm_P4^` feature set and the `NNUE_
 **Before any run:** `cross_check_eval.py` (upstream) on a random network, engine against trainer. For the MoE, build
 the random net with `make_random_net.py --perturb-phases`: with all per-phase deltas at zero a wrong phase index is
 invisible.
+
+## `consilium_plebis_trainer.patch`
+
+```bash
+git clone https://github.com/official-stockfish/nnue-pytorch && cd nnue-pytorch
+git checkout 9f72946529c4187d3679014036cd22c3be419716
+patch -p1 < ../trainer/consilium_plebis_trainer.patch
+patch -p1 < ../trainer/consilium_plebis_F_piecewise_lr.patch   # only for the finetune F
+```
+The whole trainer of the Consilium Plebis run: the `HalfKAv2_hm_X8^` block with 8 experts per perspective and its
+routing table (`RTB1` section; the EM rounds of `trainer/router_em.py` moved under 1% of the cells in the run), HalfKA clipped to int8, the
+pawn-king subnetwork (`PKN1` section), the gates (`c2_gate_loader.py`, `c2_gate_int.py`) and the fixed-lambda holdout
+loss (`c2_val_loss_fixed.py`). The second patch adds `PiecewiseLR`, the LR schedule of F set by `NNUE_LR_PIECES`
+(stepped every optimizer step). Recipe and commands: [`../recipes/07_consilium-plebis/`](../recipes/07_consilium-plebis/).

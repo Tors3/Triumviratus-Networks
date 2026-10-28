@@ -1,0 +1,8 @@
+DDP rank: 0, world size: 1
+[loader] concurrency=2  reader=1  worker(feature)=1
+c2_P_ep246.nnue: batch 50/120
+c2_P_ep246.nnue: batch 100/120
+
+120 batches x 8192 positions of t91_sample.binpack per network (x1e-3, +- s.e.)
+network                                 kind       lambda 1.0           lambda 0.75          lambda 0.0           
+c2_P_ep246.nnue                         c2          4.3050 +-0.0199   5.2405 +-0.0220  18.2714 +-0.0487  

@@ -1,0 +1,58 @@
+Converting /root/c2/run/nets/F_final_step228840.nnue to /root/c2/run/nets/F_final_step228840_perm.nnue
+Gathering activation data...
+[ft_perm.py] WARNING: Overwriting dataloader config to ensure some level of fen skipping and filtering, which are important for performance and correctness of ft perm finding.
+[ft_perm.py]   Before overwrites: DataloaderSkipConfig(filtered=True, wld_filtered=True, random_fen_skipping=0, early_fen_skipping=-1, soft_early_fen_skipping=20, simple_eval_skipping=-1, param_index=0, pc_y0=0.0, pc_y1=0.4, pc_y2=1.0, pc_y3=1.0, pc_y4=0.75, ply_x1=0.0, ply_y1=0.1, ply_x2=6.0, ply_y2=0.15, ply_x3=10.0, ply_y3=0.25, ply_x4=18.0, ply_y4=0.75)
+[ft_perm.py]   After overwrites:  DataloaderSkipConfig(filtered=True, wld_filtered=True, random_fen_skipping=10, early_fen_skipping=-1, soft_early_fen_skipping=20, simple_eval_skipping=-1, param_index=0, pc_y0=0.0, pc_y1=0.4, pc_y2=1.0, pc_y3=1.0, pc_y4=0.75, ply_x1=0.0, ply_y1=0.1, ply_x2=6.0, ply_y2=0.15, ply_x3=10.0, ply_y3=0.25, ply_x4=18.0, ply_y4=0.75)
+DDP rank: 0, world size: 1
+[loader] concurrency=4  reader=3  worker(feature)=1
+Processed 0 positions.
+Processed 1024 positions.
+Processed 2048 positions.
+Processed 3072 positions.
+Processed 4096 positions.
+Processed 5120 positions.
+Processed 6144 positions.
+Processed 7168 positions.
+Processed 8192 positions.
+Processed 9216 positions.
+Processed 10240 positions.
+Processed 11264 positions.
+Processed 12288 positions.
+Processed 13312 positions.
+Processed 14336 positions.
+Processed 15360 positions.
+Processed 16384 positions.
+Processed 17408 positions.
+Processed 18432 positions.
+Processed 19456 positions.
+Processed 20480 positions.
+Processed 21504 positions.
+Processed 22528 positions.
+Processed 23552 positions.
+Processed 24576 positions.
+Processed 25600 positions.
+Processed 26624 positions.
+Processed 27648 positions.
+Processed 28672 positions.
+Processed 29696 positions.
+Processed 30720 positions.
+Processed 31744 positions.
+Processed 32768 positions.
+Processed 33792 positions.
+Processed 34816 positions.
+Processed 35840 positions.
+Processed 36864 positions.
+Processed 37888 positions.
+Processed 38912 positions.
+Processed 39936 positions.
+Processed 40960 positions.
+Processed 41984 positions.
+Processed 43008 positions.
+Processed 44032 positions.
+Processed 45056 positions.
+Processed 46080 positions.
+Processed 47104 positions.
+Processed 48128 positions.
+Processed 49152 positions.
+Processed 50176 positions.
+Processed 51200 positions.

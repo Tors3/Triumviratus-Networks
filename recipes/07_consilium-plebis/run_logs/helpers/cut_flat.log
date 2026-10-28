@@ -1,0 +1,7 @@
+[cut_flat 08:18:36] waiting for a new /root/c2/run/F/lightning_logs/version_0/checkpoints/last.ckpt (now 08:06:55)
+[cut_flat 08:22:11] checkpoint written (5919423079 bytes), stopping torchrun 9312
+[cut_flat 08:22:26] GPU memory used: 0 MiB
+[cut_flat 08:22:30] checkpoint epoch 32, global step 125862
+[cut_flat 08:22:30] copy: /root/valfix/F_last_step125862.ckpt
+[cut_flat 08:22:30] resuming F with F_EPOCHS=59
+[cut_flat 08:22:30] started pid 13253

@@ -1,0 +1,4 @@
+CKPT 21:38:01
+EXPORTED /root/c2/run/nets/P_last_ep486.nnue 8ab44cf181708f2839e821703965d735 21:38:30
+PERM_DONE /root/c2/run/nets/P_last_ep486_perm.nnue rc=0 808b0e1a352910d047a5e00da4835c6e 21:55:07
+ALL DONE

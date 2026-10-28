@@ -18,10 +18,13 @@ it is a recipe and a record.
 | 4 | [`nn-rubicon-alea-v3.nnue`](nets/nn-rubicon-alea-v3.nnue) | 6.0 | + `PassedPawns` | 87,904 | 94.4 MB | [04](recipes/04_rubicon-alea-v3/) |
 | 5 | [`nn-legio-septima.nnue`](nets/nn-legio-septima.nnue) | 7.0 | SFNNv16: `Full_Threats + HalfKAv2_hm^ + PP_3Wide + PassedPawns`, L1 1024 | 86,992 | 92.4 MB | [05](recipes/05_legio-septima/) |
 | 6 | [`nn-consilium.nnue`](nets/nn-consilium.nnue) | 8.0 | SFNNv16 with the king-relative block split into 4 experts (`HalfKAv2_hm_P4^`), L1 1024 | 154,576 | 170.3 MB | [06](recipes/06_consilium/) |
+| 7 | [`nn-consilium-plebis.nnue`](https://github.com/Tors3/Triumviratus-Networks/releases/download/consilium-plebis/nn-consilium-plebis.nnue) | 8.1 | SFNNv16 with 8 king-relative experts per perspective, chosen by the material each side faces (`HalfKAv2_hm_X8^`, int8), plus a pawn-king subnetwork, L1 1024 | 244,688 (+ 256 pawn-king) | 255.7 MB | [07](recipes/07_consilium-plebis/) |
 
 SHA-256 of every file: [`nets/SHA256SUMS`](nets/SHA256SUMS). The `.nnue` of `legio-septima` is byte-identical to the
 one embedded in the Triumviratus 7.0 release. `nn-consilium.nnue` is above GitHub's 100 MB file limit and is stored
-with **Git LFS** (`git lfs install` before cloning, or download it from its file page).
+with **Git LFS** (`git lfs install` before cloning, or download it from its file page). `nn-consilium-plebis.nnue` is
+attached to the release [`consilium-plebis`](https://github.com/Tors3/Triumviratus-Networks/releases/tag/consilium-plebis)
+of this repository, with its float weights (SHA-256 `b069fc089421bdf2dfcc5d7ea4de2345d7af4795cd996373c07d5f5cf67e0670`).
 
 
 **How they compare**, each measured with the engine it shipped in:
@@ -34,6 +37,7 @@ with **Git LFS** (`git lfs install` before cloning, or download it from its file
 | `rubicon-alea-v3` | +7.0 ± 6.6 Elo over v2, network isolated (15+0.15) |
 | `legio-septima` | +23.4 ± 9.2 Elo over v3, network isolated (15+0.15) |
 | Consilium | +23.4 ± 12.0 Elo over `legio-septima`, network with its eval-scale calibration and first SPSA, same search (end of F3, 12+0.12); the 8.0 release build with the final network: +27.3 ± 8.3 over the official 7.0 (15+0.15) |
+| Consilium Plebis | +10.3 ± 4.3 Elo over Consilium, 30k nodes per move, the same search source on both sides built for each network (8,332 games) |
 
 "Network isolated" means the same engine binary on both sides with only the `.nnue` swapped (or a zero-grafted copy of
 the older net, which evaluates identically but loads in the same binary).
@@ -46,11 +50,11 @@ the older net, which evaluates identically but loads in the same binary).
 - [`nets/experiments/`](nets/experiments/) — feature blocks that were tried and not shipped. Kept so that a
   negative result can be re-checked. See [`recipes/experiments/`](recipes/experiments/).
 
-### In training: Consilium Plebis
+### Charts of the Consilium Plebis run
 
-The next network is in training. Its file, recipe and scripts will be published here with the engine release that
-ships it; until then [`charts/consilium-plebis/`](charts/consilium-plebis/) follows the run: training loss, loss on
-held-out positions against Consilium, evaluation scale and Elo of the exports.
+[`charts/consilium-plebis/`](charts/consilium-plebis/): training loss of the pretraining P, the finetune F and its
+continuation, loss on held-out positions against Consilium, evaluation scale and Elo of the exports. The same charts
+and their scripts are in the recipe, [`recipes/07_consilium-plebis/`](recipes/07_consilium-plebis/).
 
 ## Using a network
 
@@ -64,6 +68,7 @@ blocks:
 | `rubicon-alea-v2` / `v3` | Triumviratus 6.0 (its reader loads both formats) |
 | `legio-septima` | Triumviratus 7.0 and later |
 | Consilium | 8.0 built with `TRIUMV_PSQ_PHASES=4` |
+| Consilium Plebis | Triumviratus 8.1 (its default network file, `nn-consilium-plebis.nnue` beside the binary) |
 
 ## Reproducing a network
 

@@ -1,0 +1,25 @@
+# planned 43 files, missing 11
+missing: 11 files, 265.6 GB
+[02:06:38] START  multinet_pv-2_diff-100_nodes-5000.relabel-BT4-tf13tune.binpack
+[02:06:38] START  dfrc_n5000.relabel-BT4-tf13tune.binpack
+[02:06:38] START  test78-2022-01-to-05-jantomay-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[02:06:38] START  nodes5000pv2_UHO.relabel-BT4-tf13tune.binpack
+[02:06:38] START  test80-2023-09-sep-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack
+[02:06:38] START  leela96-filt-v2.min.split_0.relabel-BT4-tf13tune.binpack
+[02:06:38] START  T60T70wIsRightFarseerT60T74T75T76.split_3.relabel-BT4-tf13tune.binpack
+[02:06:38] START  leela96-filt-v2.min.split_1.relabel-BT4-tf13tune.binpack
+[02:06:38] START  leela96-filt-v2.min.split_2.relabel-BT4-tf13tune.binpack
+[02:06:38] START  leela96-filt-v2.min.split_4.relabel-BT4-tf13tune.binpack
+[02:06:38] START  leela96-filt-v2.min.split_3.relabel-BT4-tf13tune.binpack
+[02:12:04] OK     test80-2023-09-sep-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack
+[02:12:44] OK     test78-2022-01-to-05-jantomay-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[02:12:48] OK     leela96-filt-v2.min.split_0.relabel-BT4-tf13tune.binpack
+[02:12:50] OK     leela96-filt-v2.min.split_1.relabel-BT4-tf13tune.binpack
+[02:12:51] OK     leela96-filt-v2.min.split_3.relabel-BT4-tf13tune.binpack
+[02:12:57] OK     leela96-filt-v2.min.split_2.relabel-BT4-tf13tune.binpack
+[02:12:57] OK     T60T70wIsRightFarseerT60T74T75T76.split_3.relabel-BT4-tf13tune.binpack
+[02:13:00] OK     leela96-filt-v2.min.split_4.relabel-BT4-tf13tune.binpack
+[02:13:02] OK     multinet_pv-2_diff-100_nodes-5000.relabel-BT4-tf13tune.binpack
+[02:13:15] OK     dfrc_n5000.relabel-BT4-tf13tune.binpack
+[02:20:38] OK     nodes5000pv2_UHO.relabel-BT4-tf13tune.binpack
+=== done: 43 binpacks, 654G

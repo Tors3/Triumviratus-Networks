@@ -1,0 +1,132 @@
+=== tb5dtm
+Hint: The `hf-cli` skill is not installed. Run `hf skills add -g` to teach your AI agents how to use the `hf` CLI.
+-rw-rw-r-- 1 root root 139519453 Oct 21 01:45 /data/bt4/tb5dtm.binpack
+=== BT4 corpus (701 GB)
+# TOTALE: 701.1 GB su 850
+    vondele/linrock_relabel_1      test80-2022-10-oct-16tb7p.v6-dd.relabel-BT4-tf13tune.binpack       69.1 GB
+    vondele/linrock_relabel_2      test80-2023-06-jun-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack    18.0 GB
+    vondele/linrock_relabel_2      test80-2023-07-jul-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack    16.5 GB
+    vondele/linrock_relabel_2      test80-2023-05-may-2tb7p.v6.min.relabel-BT4-tf13tune.binpack       15.3 GB
+    vondele/linrock_relabel_2      test80-2023-04-apr-2tb7p.v6-sk16.min.relabel-BT4-tf13tune.binpack   15.1 GB
+    vondele/linrock_relabel_2      test80-2023-03-mar-2tb7p.v6-sk16.min.relabel-BT4-tf13tune.binpack   14.7 GB
+    vondele/linrock_relabel_1      test80-2022-07-jul-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack   13.7 GB
+    vondele/linrock_relabel_1      test80-2022-11-nov-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack   13.3 GB
+    vondele/linrock_relabel_1      test80-2022-06-jun-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack   12.9 GB
+    vondele/linrock_relabel_2      test80-2023-01-jan-16tb7p.v6-sk20.min.relabel-BT4-tf13tune.binpack   12.7 GB
+    vondele/linrock_relabel_1      test80-2022-09-sep-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack   11.9 GB
+    vondele/linrock_relabel_1      test80-2022-08-aug-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack   10.9 GB
+    vondele/linrock_relabel_2      test80-2023-02-feb-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack   10.4 GB
+    xushawn/test80-bt4-relabel     test80-2024-01-jan-2tb7p.min-v2.v6.relabel.binpack                  9.3 GB
+    vondele/linrock_relabel_2      test80-2023-09-sep-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack     8.6 GB
+    xushawn/test80-bt4-relabel     test80-2024-02-feb-2tb7p.min-v2.v6.relabel.binpack                  8.4 GB
+    vondele/linrock_relabel_2      test80-2023-12-dec-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack     8.0 GB
+    vondele/linrock_relabel_2      test80-2023-10-oct-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack     8.0 GB
+    vondele/linrock_relabel_2      test80-2023-08-aug-2tb7p.v6.min.relabel-BT4-tf13tune.binpack        7.3 GB
+    vondele/linrock_relabel_2      test80-2023-11-nov-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack     7.2 GB
+    vondele/from_kaggle_2_relabel  T60T70wIsRightFarseerT60T74T75T76.split_4.relabel-BT4-tf13tune.binpack   22.2 GB
+    vondele/from_kaggle_2_relabel  T60T70wIsRightFarseerT60T74T75T76.split_1.relabel-BT4-tf13tune.binpack   22.1 GB
+    vondele/from_kaggle_2_relabel  T60T70wIsRightFarseerT60T74T75T76.split_2.relabel-BT4-tf13tune.binpack   22.1 GB
+    vondele/from_kaggle_2_relabel  T60T70wIsRightFarseerT60T74T75T76.split_0.relabel-BT4-tf13tune.binpack   22.1 GB
+    vondele/from_kaggle_2_relabel  T60T70wIsRightFarseerT60T74T75T76.split_3.relabel-BT4-tf13tune.binpack   22.1 GB
+    vondele/linrock_relabel_1      test60-2021-11-nov-12tb7p.min-v2.relabel-BT4-tf13tune.binpack       3.4 GB
+    vondele/linrock_relabel_1      test60-2021-12-dec-12tb7p.min-v2.relabel-BT4-tf13tune.binpack       3.2 GB
+    vondele/from_kaggle_1_relabel  leela96-filt-v2.min.split_0.relabel-BT4-tf13tune.binpack           19.6 GB
+    vondele/from_kaggle_1_relabel  leela96-filt-v2.min.split_2.relabel-BT4-tf13tune.binpack           19.5 GB
+    vondele/from_kaggle_1_relabel  leela96-filt-v2.min.split_3.relabel-BT4-tf13tune.binpack           19.5 GB
+    vondele/from_kaggle_1_relabel  leela96-filt-v2.min.split_4.relabel-BT4-tf13tune.binpack           19.5 GB
+    vondele/from_kaggle_1_relabel  leela96-filt-v2.min.split_1.relabel-BT4-tf13tune.binpack           19.5 GB
+    vondele/master-binpacks_relabel nodes5000pv2_UHO.relabel-BT4-tf13tune.binpack                      44.2 GB
+    vondele/master-binpacks_relabel dfrc_n5000.relabel-BT4-tf13tune.binpack                            41.0 GB
+    vondele/master-binpacks_relabel multinet_pv-2_diff-100_nodes-5000.relabel-BT4-tf13tune.binpack     30.5 GB
+    vondele/linrock_relabel_1      test78-2022-01-to-05-jantomay-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack   21.5 GB
+    vondele/linrock_relabel_1      test77-2021-12-dec-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack   18.4 GB
+    vondele/linrock_relabel_1      test78-2022-06-to-09-juntosep-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack   10.6 GB
+    vondele/linrock_relabel_1      test79-2022-04-apr-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack    8.5 GB
+    vondele/master-binpacks_relabel wrongIsRight_nodes5000pv2.relabel-BT4-tf13tune.binpack              7.8 GB
+    vondele/linrock_relabel_1      test79-2022-05-may-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack    6.5 GB
+    vondele/master-binpacks_relabel fishpack32.relabel-BT4-tf13tune.binpack                             5.9 GB
+[+] pianificati 652 GB, liberi 1018 GB
+[01:45:52] START  test80-2022-10-oct-16tb7p.v6-dd.relabel-BT4-tf13tune.binpack
+[01:45:52] START  test80-2023-06-jun-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack
+[01:45:52] START  test80-2023-07-jul-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack
+[01:45:52] START  test80-2023-04-apr-2tb7p.v6-sk16.min.relabel-BT4-tf13tune.binpack
+[01:45:52] START  test80-2023-05-may-2tb7p.v6.min.relabel-BT4-tf13tune.binpack
+[01:45:52] START  test80-2023-03-mar-2tb7p.v6-sk16.min.relabel-BT4-tf13tune.binpack
+[01:45:52] START  test80-2022-07-jul-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[01:45:52] START  test80-2022-06-jun-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[01:45:52] START  test80-2023-01-jan-16tb7p.v6-sk20.min.relabel-BT4-tf13tune.binpack
+[01:45:52] START  test80-2022-11-nov-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[01:45:52] START  test80-2022-08-aug-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[01:45:52] START  test80-2022-09-sep-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[01:48:28] OK     test80-2022-06-jun-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[01:48:28] START  test80-2023-02-feb-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[01:48:31] OK     test80-2022-08-aug-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[01:48:31] START  test80-2024-01-jan-2tb7p.min-v2.v6.relabel.binpack
+[01:48:33] OK     test80-2023-01-jan-16tb7p.v6-sk20.min.relabel-BT4-tf13tune.binpack
+[01:48:33] START  test80-2023-09-sep-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack
+[01:48:33] OK     test80-2022-09-sep-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[01:48:33] START  test80-2024-02-feb-2tb7p.min-v2.v6.relabel.binpack
+[01:48:41] OK     test80-2022-11-nov-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[01:48:41] START  test80-2023-12-dec-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack
+[01:48:41] OK     test80-2023-03-mar-2tb7p.v6-sk16.min.relabel-BT4-tf13tune.binpack
+[01:48:41] OK     test80-2022-07-jul-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[01:48:41] START  test80-2023-10-oct-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack
+[01:48:41] START  test80-2023-08-aug-2tb7p.v6.min.relabel-BT4-tf13tune.binpack
+[01:48:50] OK     test80-2023-07-jul-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack
+[01:48:50] START  test80-2023-11-nov-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack
+[01:48:51] OK     test80-2023-04-apr-2tb7p.v6-sk16.min.relabel-BT4-tf13tune.binpack
+[01:48:51] START  T60T70wIsRightFarseerT60T74T75T76.split_4.relabel-BT4-tf13tune.binpack
+[01:48:51] OK     test80-2023-05-may-2tb7p.v6.min.relabel-BT4-tf13tune.binpack
+[01:48:51] START  T60T70wIsRightFarseerT60T74T75T76.split_1.relabel-BT4-tf13tune.binpack
+[01:48:55] OK     test80-2023-06-jun-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack
+[01:48:55] START  T60T70wIsRightFarseerT60T74T75T76.split_2.relabel-BT4-tf13tune.binpack
+[01:54:59] OK     test80-2024-01-jan-2tb7p.min-v2.v6.relabel.binpack
+[01:54:59] START  T60T70wIsRightFarseerT60T74T75T76.split_0.relabel-BT4-tf13tune.binpack
+[01:55:01] OK     test80-2023-02-feb-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[01:55:01] START  T60T70wIsRightFarseerT60T74T75T76.split_3.relabel-BT4-tf13tune.binpack
+[01:55:03] OK     test80-2023-10-oct-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack
+[01:55:03] START  test60-2021-11-nov-12tb7p.min-v2.relabel-BT4-tf13tune.binpack
+[01:55:05] OK     test80-2023-08-aug-2tb7p.v6.min.relabel-BT4-tf13tune.binpack
+[01:55:05] START  test60-2021-12-dec-12tb7p.min-v2.relabel-BT4-tf13tune.binpack
+[01:55:09] OK     test80-2023-11-nov-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack
+[01:55:09] START  leela96-filt-v2.min.split_0.relabel-BT4-tf13tune.binpack
+[01:55:27] OK     T60T70wIsRightFarseerT60T74T75T76.split_4.relabel-BT4-tf13tune.binpack
+[01:55:27] START  leela96-filt-v2.min.split_2.relabel-BT4-tf13tune.binpack
+[01:55:31] OK     T60T70wIsRightFarseerT60T74T75T76.split_1.relabel-BT4-tf13tune.binpack
+[01:55:31] START  leela96-filt-v2.min.split_3.relabel-BT4-tf13tune.binpack
+[01:55:34] OK     T60T70wIsRightFarseerT60T74T75T76.split_2.relabel-BT4-tf13tune.binpack
+[01:55:34] START  leela96-filt-v2.min.split_4.relabel-BT4-tf13tune.binpack
+[01:55:54] OK     test80-2023-12-dec-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack
+[01:55:54] START  leela96-filt-v2.min.split_1.relabel-BT4-tf13tune.binpack
+[01:55:57] OK     test60-2021-11-nov-12tb7p.min-v2.relabel-BT4-tf13tune.binpack
+[01:55:57] START  nodes5000pv2_UHO.relabel-BT4-tf13tune.binpack
+[01:56:05] OK     test80-2022-10-oct-16tb7p.v6-dd.relabel-BT4-tf13tune.binpack
+[01:56:05] START  dfrc_n5000.relabel-BT4-tf13tune.binpack
+[01:56:12] OK     test80-2024-02-feb-2tb7p.min-v2.v6.relabel.binpack
+[01:56:12] START  multinet_pv-2_diff-100_nodes-5000.relabel-BT4-tf13tune.binpack
+[01:56:54] OK     test60-2021-12-dec-12tb7p.min-v2.relabel-BT4-tf13tune.binpack
+[01:56:54] START  test78-2022-01-to-05-jantomay-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[01:57:34] FALLITO test80-2023-09-sep-2tb7p.min-v2.v6.relabel-BT4-tf13tune.binpack (rilancia: riprende)
+[01:57:34] START  test77-2021-12-dec-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[02:02:09] FALLITO leela96-filt-v2.min.split_2.relabel-BT4-tf13tune.binpack (rilancia: riprende)
+[02:02:09] START  test78-2022-06-to-09-juntosep-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[02:02:13] FALLITO dfrc_n5000.relabel-BT4-tf13tune.binpack (rilancia: riprende)
+[02:02:13] START  test79-2022-04-apr-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[02:02:44] OK     T60T70wIsRightFarseerT60T74T75T76.split_0.relabel-BT4-tf13tune.binpack
+[02:02:44] START  wrongIsRight_nodes5000pv2.relabel-BT4-tf13tune.binpack
+[02:03:53] OK     test79-2022-04-apr-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[02:03:53] START  test79-2022-05-may-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[02:04:03] OK     test78-2022-06-to-09-juntosep-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[02:04:03] START  fishpack32.relabel-BT4-tf13tune.binpack
+[02:04:10] OK     wrongIsRight_nodes5000pv2.relabel-BT4-tf13tune.binpack
+[02:04:17] OK     fishpack32.relabel-BT4-tf13tune.binpack
+[02:04:18] OK     test79-2022-05-may-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[02:04:19] OK     test77-2021-12-dec-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack
+[02:05:13] FALLITO T60T70wIsRightFarseerT60T74T75T76.split_3.relabel-BT4-tf13tune.binpack (rilancia: riprende)
+[02:05:15] FALLITO leela96-filt-v2.min.split_3.relabel-BT4-tf13tune.binpack (rilancia: riprende)
+[02:05:30] FALLITO leela96-filt-v2.min.split_1.relabel-BT4-tf13tune.binpack (rilancia: riprende)
+[02:05:32] FALLITO leela96-filt-v2.min.split_4.relabel-BT4-tf13tune.binpack (rilancia: riprende)
+[02:05:32] FALLITO leela96-filt-v2.min.split_0.relabel-BT4-tf13tune.binpack (rilancia: riprende)
+[02:05:37] FALLITO nodes5000pv2_UHO.relabel-BT4-tf13tune.binpack (rilancia: riprende)
+[02:05:41] FALLITO multinet_pv-2_diff-100_nodes-5000.relabel-BT4-tf13tune.binpack (rilancia: riprende)
+[02:06:19] FALLITO test78-2022-01-to-05-jantomay-16tb7p.v6-dd.min.relabel-BT4-tf13tune.binpack (rilancia: riprende)

@@ -1,0 +1,800 @@
+diff -ruN a/consilium/cn.cpp b/consilium/cn.cpp
+--- a/consilium/cn.cpp	2026-10-21 02:30:19.000000000 +0200
++++ b/consilium/cn.cpp	2026-10-21 11:14:38.000000000 +0200
+@@ -72,7 +72,7 @@
+ struct CnProf {
+     unsigned long long cyc[8] = {}, cnt[8] = {};
+     ~CnProf() {
+-        static const char* name[8] = {"evaluate", "refreshH", "gatherO", "apply", "forward", "rowsO", "rowsOnet", "chain"};
++        static const char* name[8] = {"evaluate", "refreshH", "gatherO", "apply", "forward", "pkcompute", "nnz4", "chain"};
+         for (int i = 0; i < 8; i++)
+             if (cnt[i])
+                 std::fprintf(stderr, "cnprof %-9s calls %12llu  cycles/call %8.1f  total Mcyc %10.1f\n", name[i], cnt[i],
+@@ -99,6 +99,9 @@
+ // ExpertFix replaces it at the start of a search (consilium_bridge nn_set_phase_map).
+ unsigned char g_phase_map[33] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2,
+                                  2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3};
++#ifdef TRIUMV_C2
++std::uint8_t g_router[ROUTER_CELLS];
++#endif
+ 
+ namespace {
+ 
+@@ -416,11 +419,30 @@
+         n16a += add;
+         n16s += 1 - add;
+     }
++#ifdef TRIUMV_C2
++    void pushH(int r, int sign) { push8(net->wHka[r], sign > 0); }
++#else
+     void pushH(int r, int sign) { push16(net->wHka[r], sign > 0); }
++#endif
+     void pushP(int r, int sign) { push8(net->wPP[r], sign > 0); }
+     void pushS(int r, int sign) { push8(net->wPas[r], sign > 0); }
+ };
+ 
++#ifdef TRIUMV_C2
++// Consilium-2: the expert of perspective p, from the routing table over the non-pawn material signature of the side
++// and of its opponent (the trainer's router::cell). Pawns never enter the key.
++inline int side_sig(const Board& b, int c) {
++    return router_sig(CN_POPCNT(b.bb[KNIGHT + 6 * c]), CN_POPCNT(b.bb[BISHOP + 6 * c]), CN_POPCNT(b.bb[ROOK + 6 * c]),
++                      CN_POPCNT(b.bb[QUEEN + 6 * c]));
++}
++#ifdef CN_C2_ONE_EXPERT
++// Cost diagnosis only (21/10/2026): every perspective on expert 0, so no expert change ever forces a refresh.
++inline int expert_of(const Board&, int) { return 0; }
++#else
++inline int expert_of(const Board& b, int p) { return g_router[side_sig(b, p) * ROUTER_SIG + side_sig(b, p ^ 1)]; }
++#endif
++#endif
++
+ // Context of one perspective: everything an index needs besides the piece and square.
+ struct Persp {
+     int p, ksq, phase, mh, mo, oo;
+@@ -429,7 +451,11 @@
+     const std::int8_t  (*pd)[64];
+     Persp(int p_, const Board& b) : p(p_) {
+         ksq   = CN_LSB(b.bb[KING + 6 * p]);
++#ifdef TRIUMV_C2
++        phase = expert_of(b, p);
++#else
+         phase = g_phase_map[CN_POPCNT(b.occ[2])];
++#endif
+         mh    = mirror_hka(ksq);
+         mo    = mirror_oth(ksq);
+         oo    = orient(p, mo);
+@@ -772,8 +798,18 @@
+     return r;
+ }
+ 
++// Consilium-2: the forward also takes the 32 outputs of the pawn-king subnetwork (units of the l1 sums), added to the
++// l1 sums before the activations and the skip.
++#ifdef TRIUMV_C2
++    #define CN_PK_PARAM , const std::int32_t* pk
++    #define CN_PK_ARG(x) , x
++#else
++    #define CN_PK_PARAM
++    #define CN_PK_ARG(x)
++#endif
++
+ // Reference forward, plain C++ (spec 5 as written).
+-Out forward_scalar(const Net& net, const Acc& us, const Acc& them, int bucket) {
++Out forward_scalar(const Net& net, const Acc& us, const Acc& them, int bucket CN_PK_PARAM) {
+     alignas(64) std::uint8_t l0[L1];
+     const Acc* side[2] = {&us, &them};
+     for (int i = 0; i < 2; i++)
+@@ -786,6 +822,9 @@
+     std::int32_t x1[L2];
+     for (int o = 0; o < L2; o++) {
+         std::int32_t sum = st.b1[o];
++#ifdef TRIUMV_C2
++        sum += pk[o];
++#endif
+         for (int i = 0; i < L1; i++) sum += st.w1[o][i] * l0[i];
+         x1[o] = sum;
+     }
+@@ -876,15 +915,20 @@
+     return r;
+ }
+ 
+-Out forward_simd(const Net& net, const Acc& us, const Acc& them, int bucket) {
++Out forward_simd(const Net& net, const Acc& us, const Acc& them, int bucket CN_PK_PARAM) {
+     CN_TIME(4);
+     alignas(64) std::uint8_t l0[L1];
+     alignas(64) std::int32_t nz[L1 / 4 + 16];
+     int n = l0_side(us, l0, nz, 0, 0);
+     n     = l0_side(them, l0 + L1H, nz, n, L1H / 4);
++    CN_COUNT(6, n);   // -DCN_PROF: non-zero groups of 4 inputs per forward (the "cycles/call" column is the mean)
+     const Stack&        st = net.stack[bucket];
+     const std::int32_t* in = reinterpret_cast<const std::int32_t*>(l0);
+     __m512i a0 = _mm512_loadu_si512(st.b1), a1 = _mm512_loadu_si512(st.b1 + 16);
++#ifdef TRIUMV_C2
++    a0 = _mm512_add_epi32(a0, _mm512_loadu_si512(pk));
++    a1 = _mm512_add_epi32(a1, _mm512_loadu_si512(pk + 16));
++#endif
+     __m512i a2 = _mm512_setzero_si512(), a3 = a2;
+     int i = 0;
+ #if CN_DOT_CHAINS >= 3 && defined(USE_VNNI)
+@@ -1026,7 +1070,7 @@
+     return r;
+ }
+ 
+-Out forward_simd(const Net& net, const Acc& us, const Acc& them, int bucket) {
++Out forward_simd(const Net& net, const Acc& us, const Acc& them, int bucket CN_PK_PARAM) {
+     CN_TIME(4);
+     alignas(64) std::uint8_t l0[L1];
+     alignas(64) std::int32_t nz[L1 / 4 + 8];
+@@ -1038,6 +1082,9 @@
+     __m256i a[4], b[4];
+     for (int k = 0; k < 4; k++) {
+         a[k] = _mm256_loadu_si256((const __m256i*)(st.b1 + 8 * k));
++#ifdef TRIUMV_C2
++        a[k] = _mm256_add_epi32(a[k], _mm256_loadu_si256((const __m256i*)(pk + 8 * k)));
++#endif
+         b[k] = _mm256_setzero_si256();
+     }
+     int i = 0;
+@@ -1078,7 +1125,9 @@
+     return forward_tail_avx2(st, x1, us, them, bucket);
+ }
+ #else
+-Out forward_simd(const Net& net, const Acc& us, const Acc& them, int bucket) { return forward_scalar(net, us, them, bucket); }
++Out forward_simd(const Net& net, const Acc& us, const Acc& them, int bucket CN_PK_PARAM) {
++    return forward_scalar(net, us, them, bucket CN_PK_ARG(pk));
++}
+ #endif
+ 
+ #ifdef CN_SCALAR
+@@ -1110,6 +1159,170 @@
+     return g_bucket_override >= 0 ? g_bucket_override : (CN_POPCNT(b.occ[2]) - 1) / 4;
+ }
+ 
++#ifdef TRIUMV_C2
++// ================================================================ pawn-king subnetwork (Consilium-2)
++//
++// Inputs from the side to move's view, squares as the trainer numbers them (a1 = 0) and flipped vertically when Black
++// moves: engine square e (a8 = 0) -> e ^ 56 for White, e for Black. 0-63 own pawns, 64-127 enemy pawns, 128-191 own
++// king, 192-255 enemy king. h = clamp(b1 + sum of W1 rows, 0, 127); out = b2 + W2 h, in the units of the l1 sums.
++// The trainer keeps the weights on this integer grid, so the result is the trainer's exactly.
++//
++// SIMD (21/10/2026; a miss cost ~2,900 cycles with the plain loops, 3% of the evaluation time): the hidden layer in
++// registers, its bytes put back in natural order after packus (which interleaves the 128-bit lanes), the output with
++// the forward's broadcast of 4 inputs against pkW2g. Integer sums of the same terms: the result is unchanged (the
++// u8 x s8 pairs cannot saturate: h <= 127, |W2| <= 127). -DCN_PK_SCALAR keeps the plain loops, the reference.
++void pawn_king_compute(const Net& net, const Board& b, std::int32_t* out) {
++    CN_TIME(5);
++    const int us = b.stm, flip = us ? 0 : 56;
++    const u64 own = b.bb[PAWN + 6 * us], opp = b.bb[PAWN + 6 * (us ^ 1)];
++    const int k0 = 128 + (CN_LSB(b.bb[KING + 6 * us]) ^ flip), k1 = 192 + (CN_LSB(b.bb[KING + 6 * (us ^ 1)]) ^ flip);
++#if defined(USE_AVX512) && !defined(CN_PK_SCALAR)
++    constexpr int R = PK_H / 32;
++    __m512i       h[R];
++    for (int k = 0; k < R; k++) h[k] = _mm512_load_si512(net.pkB1 + 32 * k);
++    auto add = [&](int idx) {
++        const std::int16_t* w = net.pkW1[idx];
++        for (int k = 0; k < R; k++) h[k] = _mm512_add_epi16(h[k], _mm512_load_si512(w + 32 * k));
++    };
++    for (u64 x = own; x; x &= x - 1) add(0 + (CN_LSB(x) ^ flip));
++    for (u64 x = opp; x; x &= x - 1) add(64 + (CN_LSB(x) ^ flip));
++    add(k0);
++    add(k1);
++    alignas(64) std::uint8_t a[PK_H];
++    const __m512i zero = _mm512_setzero_si512(), top = _mm512_set1_epi16(127);
++    const __m512i order = _mm512_set_epi64(7, 5, 3, 1, 6, 4, 2, 0);
++    for (int k = 0; k < R / 2; k++) {
++        const __m512i x0 = _mm512_min_epi16(_mm512_max_epi16(h[2 * k], zero), top);
++        const __m512i x1 = _mm512_min_epi16(_mm512_max_epi16(h[2 * k + 1], zero), top);
++        _mm512_store_si512(a + 64 * k, _mm512_permutexvar_epi64(order, _mm512_packus_epi16(x0, x1)));
++    }
++    // Four independent chains per half: one chain of 64 dependent products waited on the latency of each one.
++    const std::int32_t* in = reinterpret_cast<const std::int32_t*>(a);
++    __m512i c0[4], c1[4];
++    for (int c = 0; c < 4; c++) c0[c] = c1[c] = _mm512_setzero_si512();
++    for (int g = 0; g < PK_H / 4; g += 4)
++        for (int c = 0; c < 4; c++) {
++            const __m512i  x = _mm512_set1_epi32(in[g + c]);
++            const __m512i* w = reinterpret_cast<const __m512i*>(net.pkW2g[g + c]);
++            c0[c] = dot4(c0[c], x, _mm512_load_si512(w));
++            c1[c] = dot4(c1[c], x, _mm512_load_si512(w + 1));
++        }
++    const __m512i o0 = _mm512_add_epi32(_mm512_load_si512(net.pkB2),
++                                        _mm512_add_epi32(_mm512_add_epi32(c0[0], c0[1]), _mm512_add_epi32(c0[2], c0[3])));
++    const __m512i o1 = _mm512_add_epi32(_mm512_load_si512(net.pkB2 + 16),
++                                        _mm512_add_epi32(_mm512_add_epi32(c1[0], c1[1]), _mm512_add_epi32(c1[2], c1[3])));
++    _mm512_storeu_si512(out, o0);
++    _mm512_storeu_si512(out + 16, o1);
++#elif defined(USE_AVX2) && !defined(CN_PK_SCALAR)
++    constexpr int R = PK_H / 16;
++    __m256i       h[R];
++    for (int k = 0; k < R; k++) h[k] = _mm256_load_si256(reinterpret_cast<const __m256i*>(net.pkB1 + 16 * k));
++    auto add = [&](int idx) {
++        const std::int16_t* w = net.pkW1[idx];
++        for (int k = 0; k < R; k++)
++            h[k] = _mm256_add_epi16(h[k], _mm256_load_si256(reinterpret_cast<const __m256i*>(w + 16 * k)));
++    };
++    for (u64 x = own; x; x &= x - 1) add(0 + (CN_LSB(x) ^ flip));
++    for (u64 x = opp; x; x &= x - 1) add(64 + (CN_LSB(x) ^ flip));
++    add(k0);
++    add(k1);
++    alignas(64) std::uint8_t a[PK_H];
++    const __m256i zero = _mm256_setzero_si256(), top = _mm256_set1_epi16(127);
++    for (int k = 0; k < R / 2; k++) {
++        const __m256i x0 = _mm256_min_epi16(_mm256_max_epi16(h[2 * k], zero), top);
++        const __m256i x1 = _mm256_min_epi16(_mm256_max_epi16(h[2 * k + 1], zero), top);
++        _mm256_store_si256(reinterpret_cast<__m256i*>(a + 32 * k),
++                           _mm256_permute4x64_epi64(_mm256_packus_epi16(x0, x1), 0xD8));
++    }
++    // Two chains per quarter (8 accumulators), as on AVX-512.
++    const std::int32_t* in = reinterpret_cast<const std::int32_t*>(a);
++    __m256i o[2][4];
++    for (int k = 0; k < 4; k++) o[0][k] = o[1][k] = _mm256_setzero_si256();
++    for (int g = 0; g < PK_H / 4; g += 2)
++        for (int c = 0; c < 2; c++) {
++            const __m256i  x = _mm256_set1_epi32(in[g + c]);
++            const __m256i* w = reinterpret_cast<const __m256i*>(net.pkW2g[g + c]);
++            for (int k = 0; k < 4; k++) o[c][k] = dot8(o[c][k], x, _mm256_load_si256(w + k));
++        }
++    for (int k = 0; k < 4; k++)
++        _mm256_storeu_si256(reinterpret_cast<__m256i*>(out + 8 * k),
++                            _mm256_add_epi32(_mm256_load_si256(reinterpret_cast<const __m256i*>(net.pkB2 + 8 * k)),
++                                             _mm256_add_epi32(o[0][k], o[1][k])));
++#else
++    alignas(64) std::int16_t h[PK_H];
++    std::memcpy(h, net.pkB1, sizeof(h));
++    auto add = [&](int idx) {
++        const std::int16_t* w = net.pkW1[idx];
++        for (int j = 0; j < PK_H; j++) h[j] = std::int16_t(h[j] + w[j]);
++    };
++    for (u64 x = own; x; x &= x - 1) add(0 + (CN_LSB(x) ^ flip));
++    for (u64 x = opp; x; x &= x - 1) add(64 + (CN_LSB(x) ^ flip));
++    add(k0);
++    add(k1);
++    alignas(64) std::uint8_t a[PK_H];
++    for (int j = 0; j < PK_H; j++) a[j] = std::uint8_t(h[j] < 0 ? 0 : h[j] > 127 ? 127 : h[j]);
++    for (int o = 0; o < L2; o++) {
++        std::int32_t s = net.pkB2[o];
++        for (int j = 0; j < PK_H; j++) s += std::int32_t(a[j]) * net.pkW2[o][j];
++        out[o] = s;
++    }
++#endif
++}
++
++    #ifdef CN_PKSTATS
++struct PkStats {
++    unsigned long long hit = 0, miss = 0;
++    ~PkStats() {
++        if (hit + miss)
++            std::fprintf(stderr, "cn pawn-king cache: %llu hits, %llu misses (%.2f%% hits)\n", hit, miss,
++                         100.0 * hit / double(hit + miss));
++    }
++};
++PkStats g_pkStats;
++        #define CN_PK_COUNT(f) (g_pkStats.f++)
++    #else
++        #define CN_PK_COUNT(f) ((void)0)
++    #endif
++
++// Cache key: the pawns of both colours, the king squares and the side to move (bit 15 marks a valid entry).
++inline std::uint32_t pk_kings(const Board& b) {
++    return std::uint32_t(CN_LSB(b.bb[KING])) | std::uint32_t(CN_LSB(b.bb[KING + 6])) << 6 | std::uint32_t(b.stm) << 12
++         | 1u << 15;
++}
++inline std::size_t pk_index(const Board& b) {
++    const u64 key = (b.bb[PAWN] * 0x9E3779B97F4A7C15ULL) ^ (b.bb[PAWN + 6] * 0xC2B2AE3D27D4EB4FULL)
++                  ^ (u64(pk_kings(b)) * 0x165667B19E3779F9ULL);
++    return std::size_t((key ^ (key >> 29)) & (PK_CACHE - 1));
++}
++
++// The subnetwork's outputs for the board, from the thread's cache (exact key) or computed and stored.
++const std::int32_t* pawn_king(const Net& net, Handle& h, const Board& b) {
++#ifdef CN_C2_PK_OFF
++    // Cost diagnosis only (21/10/2026): the subnetwork contributes nothing and costs nothing.
++    (void)net, (void)h, (void)b;
++    alignas(64) static const std::int32_t zero[L2] = {};
++    return zero;
++#endif
++    if (h.pkNet != net.contentHash) {
++        std::memset(static_cast<void*>(h.pkc), 0, sizeof(h.pkc));
++        h.pkNet = net.contentHash;
++    }
++    const u64           wp = b.bb[PAWN], bp = b.bb[PAWN + 6];
++    const std::uint32_t kk = pk_kings(b);
++    PkEntry&            e  = h.pkc[pk_index(b)];
++    if (e.kk == kk && e.wp == wp && e.bp == bp) {
++        CN_PK_COUNT(hit);
++        return e.out;
++    }
++    CN_PK_COUNT(miss);
++    pawn_king_compute(net, b, e.out);
++    e.wp = wp;
++    e.bp = bp;
++    e.kk = kk;
++    return e.out;
++}
++#endif
++
+ // ================================================================ file (spec 1)
+ 
+ struct Reader {
+@@ -1172,7 +1385,12 @@
+ constexpr std::uint32_t VERSION = 0x6A448AFA;
+ 
+ std::uint32_t feature_hash() {
++#ifdef TRIUMV_C2
++    // Full_Threats, HalfKAv2_hm_X8 ("X8C1"), PP_3Wide, PassedPawns (trainer: model/modules/features/*.py HASH).
++    const std::uint32_t blocks[4] = {0x2E6B9D04u, 0x7F234CB8u ^ 0x58384331u, 0x86F2B1DDu, 0x50535344u};
++#else
+     const std::uint32_t blocks[4] = {0x2E6B9D04u, 0x7F234CB8u ^ 0x50484134u, 0x86F2B1DDu, 0x50535344u};
++#endif
+     std::uint32_t h = 0;
+     for (std::uint32_t bh : blocks) h = ((h << 1) | (h >> 31)) ^ bh;
+     return h;
+@@ -1237,8 +1455,13 @@
+         });
+     };
+     auto same = [](int row) { return row; };
++#ifdef TRIUMV_C2
++    using HkaFile = std::int8_t;   // Consilium-2: HalfKA exported in int8 (raw), like the threat rows
++#else
++    using HkaFile = std::int16_t;
++#endif
+     ok = ok && block(std::int8_t{}, net->wThr, ROWS_THR, [](int row) { return thr_slot(row); })
+-            && block(std::int16_t{}, net->wHka, ROWS_HKA, same) && block(std::int8_t{}, net->wPP, ROWS_PP, same)
++            && block(HkaFile{}, net->wHka, ROWS_HKA, same) && block(std::int8_t{}, net->wPP, ROWS_PP, same)
+             && block(std::int8_t{}, net->wPas, ROWS_PAS, same);
+     if (!ok) return fail("feature transformer tensors");
+     for (int b = 0; b < NBUCKETS; b++) {
+@@ -1255,7 +1478,26 @@
+             for (int o = 0; o < L3; o++)
+                 for (int k = 0; k < 4; k++) s.w2g[g][o][k] = s.w2[o][4 * g + k];
+     }
++#ifdef TRIUMV_C2
++    // Section RTB1: the routing table (cell -> expert). Section PKN1: the pawn-king subnetwork.
++    if (r.u32() != 0x52544231u) return fail("router section (RTB1)");
++    if (r.u32() != std::uint32_t(ROUTER_CELLS) || r.u32() != std::uint32_t(NEXPERTS)) return fail("router size");
++    ok = r.tensor(net->router, ROUTER_CELLS);
++    for (int c = 0; ok && c < ROUTER_CELLS; c++) ok = net->router[c] < NEXPERTS;
++    if (!ok) return fail("router table");
++    if (r.u32() != 0x504B4E31u) return fail("pawn-king section (PKN1)");
++    if (r.u32() != std::uint32_t(PK_H) || r.u32() != std::uint32_t(L2)) return fail("pawn-king size");
++    ok = r.tensor(net->pkB1, PK_H) && r.tensor(&net->pkW1[0][0], std::size_t(PK_INPUTS) * PK_H)
++      && r.tensor(net->pkB2, L2) && r.tensor(&net->pkW2[0][0], std::size_t(L2) * PK_H);
++    if (!ok) return fail("pawn-king tensors");
++    for (int g = 0; g < PK_H / 4; g++)
++        for (int o = 0; o < L2; o++)
++            for (int k = 0; k < 4; k++) net->pkW2g[g][o][k] = net->pkW2[o][4 * g + k];
++#endif
+     if (r.p != size) return fail("trailing bytes");
++#ifdef TRIUMV_C2
++    std::memcpy(g_router, net->router, sizeof(g_router));   // the make and Persp read this copy
++#endif
+     // Name of the shared-memory copy: FNV-1a over 8-byte words (it only has to tell networks apart), plus the tail.
+     std::uint64_t h = 1469598103934665603ULL ^ std::uint64_t(size);
+     std::size_t   i = 0;
+@@ -1322,11 +1564,17 @@
+ #ifndef CN_NO_MAKE_PREFETCH
+     for (int p = 0; p < 2; p++) {
+         const int           ksq  = CN_LSB(bb[KING + 6 * p]);
++#ifdef TRIUMV_C2
++        const int           base = ((phase >> (4 * p)) & 15) * HKA_PHASE_ROWS + g_kb[p][ksq];
++        using Row = std::int8_t;
++#else
+         const int           base = phase * HKA_PHASE_ROWS + g_kb[p][ksq];
++        using Row = std::int16_t;
++#endif
+         const std::int16_t (*hk)[64] = g_hk[p][mirror_hka(ksq)];
+-        const std::int16_t* r0 = net.wHka[base + hk[pc][from]];
+-        const std::int16_t* r1 = net.wHka[base + hk[toPc][to]];
+-        const std::int16_t* r2 = net.wHka[base + hk[capPc][capSq]];
++        const Row* r0 = net.wHka[base + hk[pc][from]];
++        const Row* r1 = net.wHka[base + hk[toPc][to]];
++        const Row* r2 = net.wHka[base + hk[capPc][capSq]];
+         CN_PREFETCH(r0);
+         CN_PREFETCH(r0 + L1);
+         CN_PREFETCH(r1);
+@@ -1342,13 +1590,22 @@
+ Out evaluate_refresh(const Net& net, const Board& b, Acc acc[2]) {
+     refresh_one(net, b, 0, acc[0]);
+     refresh_one(net, b, 1, acc[1]);
+-    return CN_FORWARD(net, acc[b.stm], acc[b.stm ^ 1], bucket_of(b));
++#ifdef TRIUMV_C2
++    alignas(64) std::int32_t pk[L2];
++    pawn_king_compute(net, b, pk);
++#endif
++    return CN_FORWARD(net, acc[b.stm], acc[b.stm ^ 1], bucket_of(b) CN_PK_ARG(pk));
+ }
+ 
+ namespace {
+ 
+ // Does move i force a refresh of perspective p? A king move of p (new bucket, maybe new mirror) or a phase change.
++#ifdef TRIUMV_C2
++// Consilium-2: the expert changes per perspective (phaseChanged bit p, written by the make).
++inline bool barrier(const NnDirtyPiece& dp, int p) { return dp.pc == KING + 6 * p || ((dp.phaseChanged >> p) & 1); }
++#else
+ inline bool barrier(const NnDirtyPiece& dp, int p) { return dp.pc == KING + 6 * p || dp.phaseChanged; }
++#endif
+ 
+ // A refresh in one pass: the cache entry brought to the board (the HalfKA rows that differ, LH, written back to the
+ // entry), then the threat, pawn-pair and passed-pawn rows of the board (LO, all int8 and added) on top of it into the
+@@ -1358,6 +1615,23 @@
+     return _mm256_load_si256(reinterpret_cast<const __m256i*>(static_cast<const char*>(row) + bytes));
+ }
+ 
++#ifdef TRIUMV_C2
++// The int8 rows of a list (added and removed) on R registers of W int16 values from column t, with their PSQT tails.
++template <int R, int W, bool WithPsqt>
++inline void add_sub_i8(const RowList& L, __m512i* r, __m256i& ps, int t) {
++    for (int i = 0; i < L.n8a; i++) {
++        for (int k = 0; k < R; k++)
++            r[k] = _mm512_add_epi16(r[k], _mm512_cvtepi8_epi16(_mm256_load_si256((const __m256i*)(L.a8[i] + t + k * W))));
++        if (WithPsqt) ps = _mm256_add_epi32(ps, psqt_of(L.a8[i], L1));
++    }
++    for (int i = 0; i < L.n8s; i++) {
++        for (int k = 0; k < R; k++)
++            r[k] = _mm512_sub_epi16(r[k], _mm512_cvtepi8_epi16(_mm256_load_si256((const __m256i*)(L.s8[i] + t + k * W))));
++        if (WithPsqt) ps = _mm256_sub_epi32(ps, psqt_of(L.s8[i], L1));
++    }
++}
++#endif
++
+ template <bool WithPsqt>
+ inline void refresh_tile(const RowList& LH, const RowList& LO, Acc& entry, Acc& dst, int t) {
+     constexpr int R = 16, W = 32;
+@@ -1372,6 +1646,10 @@
+         for (int k = 0; k < R; k++) r[k] = _mm512_sub_epi16(r[k], _mm512_load_si512(LH.s16[i] + t + k * W));
+         if (WithPsqt) ps = _mm256_sub_epi32(ps, psqt_of(LH.s16[i], 2 * L1));
+     }
++#ifdef TRIUMV_C2
++    // Consilium-2: the HalfKA rows are int8 (in the 8-bit lists of LH).
++    add_sub_i8<R, W, WithPsqt>(LH, r, ps, t);
++#endif
+     for (int k = 0; k < R; k++) _mm512_storeu_si512(entry.v + t + k * W, r[k]);
+     if (WithPsqt) _mm256_storeu_si256((__m256i*)entry.psqt, ps);
+     for (int i = 0; i < LO.n8a; i++) {
+@@ -1422,6 +1700,9 @@
+         for (int k = 0; k < R; k++) ev[k] = _mm512_sub_epi16(ev[k], _mm512_load_si512(LP.s16[i] + t + k * W));
+         if (WithPsqt) ep = _mm256_sub_epi32(ep, psqt_of(LP.s16[i], 2 * L1));
+     }
++#ifdef TRIUMV_C2
++    add_sub_i8<R, W, WithPsqt>(LP, ev, ep, t);
++#endif
+     for (int k = 0; k < R; k++) {
+         _mm512_storeu_si512(ePar.v + t + k * W, ev[k]);
+         sv[k] = _mm512_sub_epi16(sv[k], ev[k]);
+@@ -1440,6 +1721,9 @@
+         for (int k = 0; k < R; k++) ev[k] = _mm512_sub_epi16(ev[k], _mm512_load_si512(LN.s16[i] + t + k * W));
+         if (WithPsqt) ep = _mm256_sub_epi32(ep, psqt_of(LN.s16[i], 2 * L1));
+     }
++#ifdef TRIUMV_C2
++    add_sub_i8<R, W, WithPsqt>(LN, ev, ep, t);
++#endif
+     for (int k = 0; k < R; k++) {
+         _mm512_storeu_si512(eNew.v + t + k * W, ev[k]);
+         sv[k] = _mm512_add_epi16(sv[k], ev[k]);
+@@ -1490,6 +1774,14 @@
+ 
+ Out evaluate(const Net& net, Handle& h, const Board& b) {
+     CN_TIME(0);
++#ifdef TRIUMV_C2
++    {   // The pawn-king entry is read at the end: asked for now, so it arrives under the accumulator work (21/10/2026).
++        const char* e = reinterpret_cast<const char*>(&h.pkc[pk_index(b)]);
++        CN_PREFETCH(e);
++        CN_PREFETCH(e + 64);
++        CN_PREFETCH(e + 128);
++    }
++#endif
+     NnStack&  S   = h.stack;
+     const int top = S.size - 1;
+     static_assert(3 * sizeof(RowList) <= sizeof(h.scratch), "Handle::scratch too small for 3 row lists");
+@@ -1587,7 +1879,10 @@
+             S.st[top].computed[p] |= 1;
+         }
+     }
+-    return CN_FORWARD(net, h.acc[top][b.stm], h.acc[top][b.stm ^ 1], bucket_of(b));
++#ifdef TRIUMV_C2
++    const std::int32_t* pk = pawn_king(net, h, b);
++#endif
++    return CN_FORWARD(net, h.acc[top][b.stm], h.acc[top][b.stm ^ 1], bucket_of(b) CN_PK_ARG(pk));
+ }
+ 
+ bool same_accumulators(const Handle& h, const Acc acc[2]) {
+diff -ruN a/consilium/cn.h b/consilium/cn.h
+--- a/consilium/cn.h	2026-10-21 02:30:19.000000000 +0200
++++ b/consilium/cn.h	2026-10-21 11:14:31.000000000 +0200
+@@ -27,7 +27,18 @@
+ 
+ // ---------------------------------------------------------------- network shape (specification, sec. 1-2)
+ constexpr int L1 = 1024, L1H = L1 / 2, L2 = 32, L3 = 32, NPSQT = 8, NBUCKETS = 8;
+-constexpr int ROWS_THR = 59808, ROWS_HKA = 4 * 32 * 704, ROWS_PP = 4560, ROWS_PAS = 96;
++// -DTRIUMV_C2 (Consilium-2, 21/10/2026; docs/rete/ARCHITETTURA_CONSILIUM2_2026-10-21.md): 8 experts chosen per
++// perspective by the routing table of the network (non-pawn material signature), HalfKA rows in int8, and the
++// pawn-king subnetwork added to the l1 outputs. Without it: Consilium (8.0), 4 experts by piece count, int16 HalfKA.
++#ifdef TRIUMV_C2
++constexpr int NEXPERTS = 8;
++constexpr int ROUTER_SIG = 54, ROUTER_CELLS = ROUTER_SIG * ROUTER_SIG;   // cell = sig(own) * 54 + sig(opponent)
++constexpr int PK_INPUTS = 256, PK_H = 256, PK_ACTIVE = 18;              // pawn-king subnetwork
++constexpr int PK_CACHE = 8192;                                          // entries per thread (power of two)
++#else
++constexpr int NEXPERTS = 4;
++#endif
++constexpr int ROWS_THR = 59808, ROWS_HKA = NEXPERTS * 32 * 704, ROWS_PP = 4560, ROWS_PAS = 96;
+ constexpr int HKA_PHASE_ROWS = 32 * 704;
+ constexpr int ROW16 = L1 + 32;   // int16 row: 2048 bytes of weights + 64 bytes (8 int32 PSQT + padding)
+ constexpr int ROW8  = L1 + 64;   // int8 row: 1024 bytes of weights + 64 bytes
+@@ -53,11 +64,23 @@
+     // second line per row was ~4% of the engine in the 17/10 profile).
+     // (Widening the int8 blocks to int16 at load, one add per register instead of two, was measured on 17/10: +60%
+     // L3 misses, -10% speed in the middlegame.)
++#ifdef TRIUMV_C2
++    std::int8_t  wHka[ROWS_HKA][ROW8];   // int8 like the threat rows (trained inside +-127/256)
++#else
+     std::int16_t wHka[ROWS_HKA][ROW16];
++#endif
+     std::int8_t  wThr[ROWS_THR][ROW8];   // stored in the order of thr_slot (cn.cpp)
+     std::int8_t  wPP[ROWS_PP][ROW8];
+     std::int8_t  wPas[ROWS_PAS][ROW8];
+     Stack        stack[NBUCKETS];
++#ifdef TRIUMV_C2
++    std::uint8_t router[ROUTER_CELLS];                // cell -> expert (section RTB1 of the file)
++    alignas(64) std::int16_t pkB1[PK_H];              // pawn-king subnetwork (section PKN1)
++    alignas(64) std::int16_t pkW1[PK_INPUTS][PK_H];   // one row per input
++    alignas(64) std::int32_t pkB2[L2];
++    alignas(64) std::int8_t  pkW2[L2][PK_H];
++    alignas(64) std::int8_t  pkW2g[PK_H / 4][L2][4];  // SIMD product: pkW2g[g][o][k] = pkW2[o][4g + k]
++#endif
+     std::uint64_t contentHash;   // FNV-1a of the file bytes, names the shared-memory copy
+ };
+ 
+@@ -89,11 +112,25 @@
+ 
+ // Per-thread state: the dirty stack the engine writes, one accumulator per stack state and perspective (bit 1 of
+ // NnState::computed[p]), the refresh cache, room for the row lists of one evaluation.
++#ifdef TRIUMV_C2
++// Pawn-king cache entry: the exact key (pawns of both colours, king squares, side to move, bit 15 = valid) and the 32
++// outputs of the subnetwork for it. Three cache lines exactly (21/10/2026: 148 bytes unaligned touched up to four).
++struct alignas(64) PkEntry {
++    std::uint64_t wp, bp;
++    std::uint32_t kk;
++    std::int32_t  out[L2];
++};
++#endif
++
+ struct alignas(64) Handle {
+     NnStack       stack;
+     Acc           acc[NN_STACK_SIZE][2];
+     std::uint64_t cacheNet;           // contentHash of the network the cache was built from (0 = empty)
+-    KingCacheEntry    kcache[2][64][4];
++    KingCacheEntry    kcache[2][64][NEXPERTS];
++#ifdef TRIUMV_C2
++    std::uint64_t pkNet;              // contentHash of the network the pawn-king cache was built from
++    PkEntry       pkc[PK_CACHE];
++#endif
+     alignas(64) unsigned char scratch[4 * 50 * 1024];
+ };
+ 
+@@ -108,11 +145,19 @@
+ Out  evaluate_refresh(const Net& net, const Board& b, Acc acc[2]);  // from scratch, both perspectives
+ bool same_accumulators(const Handle& h, const Acc acc[2]);       // nnueverify: top of the stack == refresh
+ // Memory hint from the make: the HalfKA rows of a move (board before the move, phase after it). No state changes.
++// TRIUMV_C2: phase = expert of White | expert of Black << 4.
+ void prefetch_move(const Net& net, const std::uint64_t* bb, int phase, int pc, int from, int toPc, int to, int capPc,
+                    int capSq);
+ 
+ extern int g_bucket_override;     // EvalBucketOverride probe: -1 normal, 0..7 forces the output bucket
+ extern unsigned char g_phase_map[33];   // expert per piece count (ExpertFix: set by the search at each start)
++#ifdef TRIUMV_C2
++// Routing table of the last network loaded (copied at load: the make and Persp read it without the Net).
++extern std::uint8_t g_router[ROUTER_CELLS];
++inline int router_sig(int n, int b, int r, int q) {
++    return (n < 2 ? n : 2) * 18 + (b < 2 ? b : 2) * 6 + (r < 2 ? r : 2) * 2 + (q < 1 ? q : 1);
++}
++#endif
+ 
+ }  // namespace cn
+ 
+diff -ruN a/consilium_bridge.cpp b/consilium_bridge.cpp
+--- a/consilium_bridge.cpp	2026-10-21 02:30:19.000000000 +0200
++++ b/consilium_bridge.cpp	2026-10-21 02:36:47.000000000 +0200
+@@ -92,7 +92,11 @@
+ 
+ }  // namespace cnb
+ 
+-#define CN_DEFAULT_NET_FILE "nn-consilium.nnue"
++#ifdef TRIUMV_C2
++    #define CN_DEFAULT_NET_FILE "nn-consilium2.nnue"   // Consilium-2: another format, another default name
++#else
++    #define CN_DEFAULT_NET_FILE "nn-consilium.nnue"
++#endif
+ 
+ // GCC and clang builds from the Makefile (Linux, Android, MinGW): the default network is embedded with incbin when it
+ // sits at the build root (the Makefile sets NNUE_EMBEDDING_OFF otherwise). incbin.h is Dale Weiler's public-domain
+@@ -100,7 +104,7 @@
+ #if !defined(_MSC_VER) && !defined(NNUE_EMBEDDING_OFF) && !defined(UNIVERSAL_BINARY) && !defined(TRIUMV_EMBED_RESOURCE)
+     #define INCBIN_SILENCE_BITCODE_WARNING
+     #include "incbin/incbin.h"
+-INCBIN(EmbeddedNNUE, "nn-consilium.nnue");
++INCBIN(EmbeddedNNUE, CN_DEFAULT_NET_FILE);
+     #define TRIUMV_EMBED_INCBIN
+ #endif
+ 
+@@ -515,6 +519,10 @@
+ 
+ NnStack* nn_pos_stack(void* handle) { return &static_cast<CnPos*>(handle)->h->stack; }
+ 
++#ifdef TRIUMV_C2
++const unsigned char* nn_router_table(void) { return cn::g_router; }
++#endif
++
+ void nn_prefetch_move(const unsigned long long* bb, int phase, int pc, int from, int toPc, int to, int capPc,
+                       int capSq) {
+     if (g_cn_view)
+diff -ruN a/consilium_bridge.h b/consilium_bridge.h
+--- a/consilium_bridge.h	2026-10-21 02:30:19.000000000 +0200
++++ b/consilium_bridge.h	2026-10-21 02:36:42.000000000 +0200
+@@ -96,6 +96,15 @@
+ // The handle's dirty stack, written directly by the engine's make and unmake.
+ NnStack* nn_pos_stack(void* handle);
+ 
++#ifdef TRIUMV_C2
++// Consilium-2: the routing table of the loaded network (2,916 cells -> expert 0..7), for the make. The cell of a
++// perspective is cn_sig(own side) * 54 + cn_sig(opponent); the signature counts N, B, R (capped at 2) and Q (at 1).
++const unsigned char* nn_router_table(void);
++static inline int cn_sig(int n, int b, int r, int q) {
++    return (n < 2 ? n : 2) * 18 + (b < 2 ? b : 2) * 6 + (r < 2 ? r : 2) * 2 + (q < 1 ? q : 1);
++}
++#endif
++
+ // Memory hint from the make (board before the move, bb[12] as above; phase = material band after the move): asks for
+ // the network rows the move will change, so they are in cache when the child evaluates. Changes no state. Without a
+ // capture capPc/capSq repeat pc/from; a promotion arrives as toPc.
+diff -ruN a/io.cpp b/io.cpp
+--- a/io.cpp	2026-10-21 02:30:19.000000000 +0200
++++ b/io.cpp	2026-10-21 12:33:10.000000000 +0200
+@@ -312,6 +312,19 @@
+         return;
+     }
+ 
++    // 21/10/2026: the side NOT to move must not be in check either. Otherwise the side to move can capture the king
++    // (the generator produces the move and the make accepts it), and one ply later the board has a missing king, the
++    // state rejected above: get_ls1b_index(0) = -1 as a king square in the generator and the make, keys and occupancies
++    // out of step, the network reading rows outside its tables. Found with nnperft on 4k3/8/8/3qq3/8/8/8/QQ2K3 b (the
++    // queen on e5 checks e1 with Black to move): accumulator mismatches, then an access violation in consilium/cn.cpp.
++    if (is_square_attacked(get_ls1b_index(bitboards[side == white ? k : K]), side))
++    {
++        printf("info string FEN rifiutata (il lato che non ha il tratto e' sotto scacco): uso la posizione iniziale\n");
++        fflush(stdout);
++        parse_fen(start_position);
++        return;
++    }
++
+     // E.p. fantasma: se nessun pedone del lato al tratto puo' realmente catturare
+     // sulla casa dichiarata, quella casa cambia la chiave Zobrist senza cambiare
+     // la posizione -> la stessa posizione prende due chiavi e la TT non si
+diff -ruN a/search/06_nndirty.inc b/search/06_nndirty.inc
+--- a/search/06_nndirty.inc	2026-10-21 02:30:19.000000000 +0200
++++ b/search/06_nndirty.inc	2026-10-21 09:01:49.000000000 +0200
+@@ -304,9 +304,46 @@
+     dp.add_pc = (std::uint8_t)promoted;
+     dp.add_sq = (std::uint8_t)(promoted ? target : NN_SQ_NONE);
+   }
++#if defined(TRIUMV_C2) && defined(CN_C2_ONE_EXPERT)
++  dp.phase = 0;  // cost diagnosis only (21/10/2026): one expert, no refresh on material changes
++  dp.phaseChanged = 0;
++#elif defined(TRIUMV_C2)
++  // Consilium-2: the expert of each perspective comes from the network's routing table over the non-pawn material
++  // signatures (consilium/cn.h router_sig). Only a capture or a promotion changes material, so other moves copy the
++  // parent's experts (the root's state has none: computed from the board).
++  if (cap != -1 || promoted || S.size < 3) {
++    const unsigned char *rt = nn_router_table();
++    int n[2], bsh[2], r[2], q[2];
++    for (int c = 0; c < 2; c++) {
++      n[c] = count_bits(td.bitboards[N + 6 * c]);
++      bsh[c] = count_bits(td.bitboards[B + 6 * c]);
++      r[c] = count_bits(td.bitboards[R + 6 * c]);
++      q[c] = count_bits(td.bitboards[Q + 6 * c]);
++    }
++    const int e0w = rt[cn_sig(n[0], bsh[0], r[0], q[0]) * 54 + cn_sig(n[1], bsh[1], r[1], q[1])];
++    const int e0b = rt[cn_sig(n[1], bsh[1], r[1], q[1]) * 54 + cn_sig(n[0], bsh[0], r[0], q[0])];
++    auto dec = [&](int pc, int d) {
++      const int t = pc % 6, c = pc / 6;
++      if (t == N) n[c] += d;
++      else if (t == B) bsh[c] += d;
++      else if (t == R) r[c] += d;
++      else if (t == Q) q[c] += d;
++    };
++    if (cap != -1) dec(cap, -1);
++    if (promoted) dec(promoted, 1);
++    const int e1w = rt[cn_sig(n[0], bsh[0], r[0], q[0]) * 54 + cn_sig(n[1], bsh[1], r[1], q[1])];
++    const int e1b = rt[cn_sig(n[1], bsh[1], r[1], q[1]) * 54 + cn_sig(n[0], bsh[0], r[0], q[0])];
++    dp.phase = (std::uint8_t)(e1w | e1b << 4);
++    dp.phaseChanged = (std::uint8_t)((e0w != e1w) | (e0b != e1b) << 1);
++  } else {
++    dp.phase = S.st[S.size - 2].dp.phase;
++    dp.phaseChanged = 0;
++  }
++#else
+   const int pieces = count_bits(td.occupancies[both]);
+   dp.phase = g_nn_phase_map[pieces - (cap != -1)];
+   dp.phaseChanged = g_nn_phase_map[pieces] != dp.phase;
++#endif
+   // Minacce e pedoni: nn_dirty_catch_up, solo se si arriva a una valutazione.
+   // Prefetch of the network rows this move changes (19/10/2026): the memory latency runs under the hash probe and the
+   // rest of the child node instead of at the start of its evaluation. Without a capture the third row repeats the
+diff -ruN a/search/16_tdperft.inc b/search/16_tdperft.inc
+--- a/search/16_tdperft.inc	2026-10-21 02:30:19.000000000 +0200
++++ b/search/16_tdperft.inc	2026-10-21 04:28:33.000000000 +0200
+@@ -168,9 +168,11 @@
+ // mailbox (come tdperft) e, dalla v2, che la pila delle dirty abbia uno stato per ogni mossa fatta dalla radice.
+ static U64 nnp_evals = 0;
+ static int nnp_moves = 0;  // mosse (non nulle) fatte dalla radice
++static bool nnp_lean = false;  // nnspeed: only the evaluation, no checks
+ static inline void nnp_eval(ThreadData &td) {
+   td_nn_eval(td);
+   nnp_evals++;
++  if (nnp_lean) return;
+   tdp_check_keys(td);
+   if (td.nnstack->size != 1 + nnp_moves) {
+     if (tdp_key_mism < 5) printf("info string NN STACK MISMATCH stati=%d mosse=%d\n", td.nnstack->size, nnp_moves);
+@@ -229,4 +231,43 @@
+          (unsigned long long)tdp_key_mism);
+   fflush(stdout);
+ }
++
++// `nnspeed N <fen file>` (21/10/2026, cost of Consilium-2): nnperft's tree (evaluation at the leaves and at one internal
++// node in three, a null move at one internal node in five) WITHOUT the verification and the key checks, from every
++// position of the file. The tree depends only on the move generator, so two networks do exactly the same work and the
++// time per evaluation compares their inference (incremental updates through make/unmake included, as in a search).
++void td_nnspeed_driver(int depth, const char *path) {
++  extern void parse_fen(const char *fen);
++  FILE *f = fopen(path, "r");
++  if (!f) {
++    printf("info string nnspeed: cannot open %s\n", path);
++    fflush(stdout);
++    return;
++  }
++  char line[512];
++  U64 leaves = 0, evals = 0;
++  int npos = 0;
++  nnp_lean = true;
++  const auto t0 = std::chrono::steady_clock::now();
++  while (fgets(line, sizeof line, f)) {
++    size_t len = strlen(line);
++    while (len && (line[len - 1] == '\n' || line[len - 1] == '\r')) line[--len] = 0;
++    if (!len) continue;
++    parse_fen(line);
++    ThreadData &td = thread_data[0];
++    copy_board_to_thread(td);
++    nn_root_sync(td);
++    nnp_evals = 0;
++    nnp_moves = 0;
++    leaves += nnp_rec(td, depth);
++    evals += nnp_evals;
++    npos++;
++  }
++  const double ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - t0).count();
++  nnp_lean = false;
++  fclose(f);
++  printf("nnspeed %d positions %d nodes %llu evals %llu time %.0f ms %.2f ns/eval\n", depth, npos,
++         (unsigned long long)leaves, (unsigned long long)evals, ms, evals ? 1e6 * ms / double(evals) : 0.0);
++  fflush(stdout);
++}
+ #endif  // TRIUMV_FROZEN
+diff -ruN a/uci_mt.cpp b/uci_mt.cpp
+--- a/uci_mt.cpp	2026-10-21 02:30:19.000000000 +0200
++++ b/uci_mt.cpp	2026-10-21 04:28:42.000000000 +0200
+@@ -1165,6 +1165,15 @@
+         }
+         // DIAGNOSTIC: "nnperft N" - perft che valuta con la rete e confronta catena incrementale e refresh completo
+         // (search/16_tdperft.inc). Solo build di sviluppo.
++        // DIAGNOSTIC: "nnspeed N <fen file>" - the same tree without the checks, from every FEN of the file: time per
++        // evaluation on work that does not depend on the network (21/10/2026, cost of Consilium-2).
++        else if (strncmp(input, "nnspeed ", 8) == 0)
++        {
++            extern void td_nnspeed_driver(int depth, const char *path);
++            int d = 0;
++            char path[1024] = {0};
++            if (sscanf(input + 8, "%d %1023s", &d, path) == 2) td_nnspeed_driver(d, path);
++        }
+         else if (strncmp(input, "nnperft ", 8) == 0)
+         {
+             extern void td_nnperft_driver(int depth);

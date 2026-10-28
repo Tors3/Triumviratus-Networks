@@ -1,0 +1,28 @@
+DDP rank: 0, world size: 1
+[loader] concurrency=2  reader=1  worker(feature)=1
+c2_P_ep166.nnue: batch 50/120
+c2_P_ep166.nnue: batch 100/120
+DDP rank: 0, world size: 1
+[loader] concurrency=2  reader=1  worker(feature)=1
+c2_P_ep181.nnue: batch 50/120
+c2_P_ep181.nnue: batch 100/120
+DDP rank: 0, world size: 1
+[loader] concurrency=2  reader=1  worker(feature)=1
+c2_P_ep194.nnue: batch 50/120
+c2_P_ep194.nnue: batch 100/120
+DDP rank: 0, world size: 1
+[loader] concurrency=2  reader=1  worker(feature)=1
+c2_P_ep201.nnue: batch 50/120
+c2_P_ep201.nnue: batch 100/120
+DDP rank: 0, world size: 1
+[loader] concurrency=2  reader=1  worker(feature)=1
+c2_P_ep210.nnue: batch 50/120
+c2_P_ep210.nnue: batch 100/120
+
+120 batches x 8192 positions of t91_sample.binpack per network (x1e-3, +- s.e.)
+network                                 kind       lambda 1.0           lambda 0.75          lambda 0.0           
+c2_P_ep166.nnue                         c2          4.4476 +-0.0205   5.3896 +-0.0224  18.4485 +-0.0490  
+c2_P_ep181.nnue                         c2          4.3996 +-0.0202   5.3234 +-0.0222  18.2928 +-0.0479  
+c2_P_ep194.nnue                         c2          4.3618 +-0.0198   5.2958 +-0.0218  18.3200 +-0.0486  
+c2_P_ep201.nnue                         c2          4.3767 +-0.0208   5.3099 +-0.0228  18.3340 +-0.0488  
+c2_P_ep210.nnue                         c2          4.3355 +-0.0204   5.2625 +-0.0223  18.2548 +-0.0486  

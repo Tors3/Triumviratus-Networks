@@ -1,0 +1,12 @@
+[after_fr3 22:41:08] waiting for the end of the continuation (/root/c2/run_fr3/F.done)
+[after_fr3b 23:23:29] waiting for the end of the continuation (/root/c2/run_fr3/F.done)
+1d3d71430c8950f7131aee4d74ada728  /root/c2/run_fr3/nets/F_epoch=60-step=240282.nnue
+7f5267974f657a5631c012846a69f9d9  /root/c2/run_fr3/F/lightning_logs/version_2/checkpoints/epoch=60-step=240282.ckpt
+[after_fr3b 23:27:10] final epoch exported: /root/c2/run_fr3/nets/F_epoch=60-step=240282.nnue
+reference F_final_step228840.nnue; x1e-3; difference = network minus reference over common batches (paired s.e.)
+network                    batches    lam 1.0     diff     +-      %   lam 0.75     diff     +-      %    lam 0.0     diff     +-      %
+F_epoch=60-step=240282.nnue     300     4.1754  +0.0040 0.0003  +0.10     5.0871  +0.0051 0.0003  +0.10    18.9609  +0.0095 0.0006  +0.05
+F_final_step228840.nnue        300     4.1714  +0.0000 0.0000  +0.00     5.0820  +0.0000 0.0000  +0.00    18.9514  +0.0000 0.0000  +0.00
+P_last_ep496.nnue              300     4.1575  -0.0138 0.0011  -0.33     5.0749  -0.0071 0.0012  -0.14    18.9774  +0.0260 0.0020  +0.14
+nn-consilium.nnue              300     4.3206  +0.1493 0.0059  +3.58     5.2469  +0.1649 0.0064  +3.24    19.1793  +0.2279 0.0106  +1.20
+[after_fr3b 23:36:57] t91 done
