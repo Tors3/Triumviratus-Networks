@@ -56,6 +56,22 @@ the older net, which evaluates identically but loads in the same binary).
 continuation, loss on held-out positions against Consilium, evaluation scale and Elo of the exports. The same charts
 and their scripts are in the recipe, [`recipes/07_consilium-plebis/`](recipes/07_consilium-plebis/).
 
+### The next network: future training direction (not in training now)
+
+No network is being trained now. [`design/next_network_design.svg`](design/next_network_design.svg) is the design the
+next training will follow. It comes from the lessons of Consilium Plebis: offline studies of what its experts, PSQT
+and pawn blocks contribute, judged on game results, and speed measurements of the engine (November 2026).
+- six king-relative experts with the queen as a boundary (eight today);
+- feature rows of exactly 1024 bytes, with the PSQT in a 24 KB piece-square table outside them;
+- a 128-unit pawn-king block active only in the pawn endgames;
+- sixteen layer stacks: piece count × queens on the board;
+- the score-to-probability map of the training target refitted on our data.
+
+The reasons and the measurements are in the engine repository,
+[`docs/networks/NETWORKS.md`](https://github.com/Tors3/Triumviratus/blob/main/docs/networks/NETWORKS.md#the-next-network--future-training-direction-not-in-training-now).
+
+<p align="center"><img src="design/next_network_design.svg" alt="Design of the next Triumviratus network" width="100%"></p>
+
 ## Using a network
 
 Triumviratus loads a network with the UCI option `EvalFile`. Each network needs an engine that knows its input
