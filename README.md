@@ -58,8 +58,8 @@ and their scripts are in the recipe, [`recipes/07_consilium-plebis/`](recipes/07
 
 ### The next network: future training direction (not in training now)
 
-No network is being trained now. [`design/next_network_design.svg`](design/next_network_design.svg) is the design (architecture `TRANN5`) the
-next training will follow. It comes from the lessons of Consilium Plebis: offline studies of what its experts, PSQT
+No network is being trained now. [`design/next_network_design.svg`](design/next_network_design.svg) is the design of **Lex Hortensia** (architecture `TRANN5`),
+which the next training will follow. It comes from the lessons of Consilium Plebis: offline studies of what its experts, PSQT
 and pawn blocks contribute, judged on game results, and speed measurements of the engine (November 2026).
 - six king-relative experts with the queen as a boundary (eight today);
 - feature rows of exactly 1024 bytes, with the PSQT in a 24 KB piece-square table outside them;
