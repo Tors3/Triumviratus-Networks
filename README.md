@@ -64,7 +64,7 @@ and pawn blocks contribute, judged on game results, and speed measurements of th
 - six king-relative experts with the queen as a boundary (eight today);
 - feature rows of exactly 1024 bytes, with the PSQT in a 24 KB piece-square table outside them;
 - a 128-unit pawn-king block active only in the pawn endgames;
-- sixteen layer stacks: piece count × queens on the board;
+- 32 layer stacks: piece count × which side has a queen;
 - the score-to-probability map of the training target refitted on our data.
 
 The reasons and the measurements are in the engine repository,
