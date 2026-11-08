@@ -65,7 +65,7 @@ and pawn blocks contribute, judged on game results, and speed measurements of th
 - feature rows of exactly 1024 bytes, with the PSQT in a 24 KB piece-square table outside them;
 - a 128-unit pawn-king block active only in the pawn endgames;
 - 32 layer stacks: piece count × which side has a queen;
-- the score-to-probability map of the training target refitted on our data.
+- the score-to-probability map of the training target unchanged: a refit on our data gained only about 0.2%.
 
 The reasons and the measurements are in the engine repository,
 [`docs/networks/NETWORKS.md`](https://github.com/Tors3/Triumviratus/blob/main/docs/networks/NETWORKS.md#the-next-network--future-training-direction-not-in-training-now).
