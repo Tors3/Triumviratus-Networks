@@ -10,7 +10,8 @@ it is a recipe and a record.
 
 **Support the training.** Every network here was trained on rented GPUs. If you want to help the next ones, any
 contribution is welcome, even 1 €:
-[![Support Triumviratus on Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20Triumviratus-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/triumviratus)
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/triumviratus)
 
 ## The networks
 
