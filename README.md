@@ -8,6 +8,10 @@ measurements that decided what shipped.
 The idea is the one of Stockfish's own networks and test-configuration repositories: a network is not only a file,
 it is a recipe and a record.
 
+**Support the training.** Every network here was trained on rented GPUs. If you want to help the next ones, any
+contribution is welcome, even 1 €:
+[![Support Triumviratus on Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20Triumviratus-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/triumviratus)
+
 ## The networks
 
 | # | Network | Release | Architecture | Inputs | Size | Recipe |
