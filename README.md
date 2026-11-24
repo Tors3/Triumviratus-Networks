@@ -18,6 +18,7 @@ contribution is welcome, even 1 €:
 > **File:** [`nn-lex-hortensia.nnue`](https://github.com/Tors3/Triumviratus-Networks/releases/download/lex-hortensia/nn-lex-hortensia.nnue)
 > (205.6 MB, release [`lex-hortensia`](https://github.com/Tors3/Triumviratus-Networks/releases/tag/lex-hortensia),
 > SHA-256 `5a33b3786b608819434cd8fc500054e94effa78509eb69ba0a9c089740a9590c`)
+>
 > **Engine:** the network of Triumviratus 9.0, embedded as the default network in the engine's `dev` branch.
 
 **Lex Hortensia** (architecture `TRANN5`) is trained and published (24 November 2026). It follows Consilium Plebis,
