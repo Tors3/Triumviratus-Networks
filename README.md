@@ -24,12 +24,16 @@ contribution is welcome, even 1 €:
 | 5 | [`nn-legio-septima.nnue`](nets/nn-legio-septima.nnue) | 7.0 | SFNNv16: `Full_Threats + HalfKAv2_hm^ + PP_3Wide + PassedPawns`, L1 1024 | 86,992 | 92.4 MB | [05](recipes/05_legio-septima/) |
 | 6 | [`nn-consilium.nnue`](nets/nn-consilium.nnue) | 8.0 | SFNNv16 with the king-relative block split into 4 experts (`HalfKAv2_hm_P4^`), L1 1024 | 154,576 | 170.3 MB | [06](recipes/06_consilium/) |
 | 7 | [`nn-consilium-plebis.nnue`](https://github.com/Tors3/Triumviratus-Networks/releases/download/consilium-plebis/nn-consilium-plebis.nnue) | 8.1 | SFNNv16 with 8 king-relative experts per perspective, chosen by the material each side faces (`HalfKAv2_hm_X8^`, int8), plus a pawn-king subnetwork, L1 1024 | 244,688 (+ 256 pawn-king) | 255.7 MB | [07](recipes/07_consilium-plebis/) |
+| 8 | [`nn-lex-hortensia.nnue`](https://github.com/Tors3/Triumviratus-Networks/releases/download/lex-hortensia/nn-lex-hortensia.nnue) | 9.0 | `TRANN5`: 6 king-relative experts per perspective with the queen as a boundary, 1024-byte feature rows with the PSQT in a 24 KB piece-square table, a gated pawn-king block, 32 layer stacks, L1 1024 | 199,632 (+ 128 pawn-king) | 205.6 MB | to follow |
 
 SHA-256 of every file: [`nets/SHA256SUMS`](nets/SHA256SUMS). The `.nnue` of `legio-septima` is byte-identical to the
 one embedded in the Triumviratus 7.0 release. `nn-consilium.nnue` is above GitHub's 100 MB file limit and is stored
 with **Git LFS** (`git lfs install` before cloning, or download it from its file page). `nn-consilium-plebis.nnue` is
 attached to the release [`consilium-plebis`](https://github.com/Tors3/Triumviratus-Networks/releases/tag/consilium-plebis)
 of this repository, with its float weights (SHA-256 `b069fc089421bdf2dfcc5d7ea4de2345d7af4795cd996373c07d5f5cf67e0670`).
+`nn-lex-hortensia.nnue` is attached to the release [`lex-hortensia`](https://github.com/Tors3/Triumviratus-Networks/releases/tag/lex-hortensia)
+(SHA-256 `5a33b3786b608819434cd8fc500054e94effa78509eb69ba0a9c089740a9590c`); it is the network embedded in the
+`dev` branch of the engine, which will become Triumviratus 9.0.
 
 
 **How they compare**, each measured with the engine it shipped in:
@@ -61,10 +65,10 @@ the older net, which evaluates identically but loads in the same binary).
 continuation, loss on held-out positions against Consilium, evaluation scale and Elo of the exports. The same charts
 and their scripts are in the recipe, [`recipes/07_consilium-plebis/`](recipes/07_consilium-plebis/).
 
-### The next network: future training direction (not in training now)
+### Lex Hortensia: the design
 
 No network is being trained now. [`design/next_network_design.svg`](design/next_network_design.svg) is the design of **Lex Hortensia** (architecture `TRANN5`),
-which the next training will follow. It comes from the lessons of Consilium Plebis: offline studies of what its experts, PSQT
+the network trained after Consilium Plebis and published here on 24 November 2026. It comes from the lessons of Consilium Plebis: offline studies of what its experts, PSQT
 and pawn blocks contribute, judged on game results, and speed measurements of the engine (November 2026).
 - six king-relative experts with the queen as a boundary (eight today);
 - feature rows of exactly 1024 bytes, with the PSQT in a 24 KB piece-square table outside them;
@@ -90,6 +94,7 @@ blocks:
 | `legio-septima` | Triumviratus 7.0 and later |
 | Consilium | 8.0 built with `TRIUMV_PSQ_PHASES=4` |
 | Consilium Plebis | Triumviratus 8.1 (its default network file, `nn-consilium-plebis.nnue` beside the binary) |
+| Lex Hortensia | the `dev` branch of Triumviratus (future 9.0), where it is the default network |
 
 ## Reproducing a network
 
