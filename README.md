@@ -13,6 +13,28 @@ contribution is welcome, even 1 €:
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/triumviratus)
 
+## The current network: Lex Hortensia
+
+> **File:** [`nn-lex-hortensia.nnue`](https://github.com/Tors3/Triumviratus-Networks/releases/download/lex-hortensia/nn-lex-hortensia.nnue)
+> (205.6 MB, release [`lex-hortensia`](https://github.com/Tors3/Triumviratus-Networks/releases/tag/lex-hortensia),
+> SHA-256 `5a33b3786b608819434cd8fc500054e94effa78509eb69ba0a9c089740a9590c`)
+> **Engine:** the network of Triumviratus 9.0, embedded as the default network in the engine's `dev` branch.
+
+**Lex Hortensia** (architecture `TRANN5`) is trained and published (24 November 2026). It follows Consilium Plebis,
+the network of 8.1, and its design comes from the lessons of that network: offline studies of what its experts, PSQT
+and pawn blocks contribute, judged on game results, and speed measurements of the engine.
+- six king-relative experts per perspective with the queen as a boundary (eight in Consilium Plebis);
+- feature rows of exactly 1024 bytes, with the PSQT in a 24 KB piece-square table outside them;
+- a 128-unit pawn-king block active only in the pawn endgames;
+- 32 layer stacks: piece count × which side has a queen;
+- the score-to-probability map of the training target unchanged: a refit on our data gained only about 0.2%.
+
+The reasons and the measurements behind the design are in the engine repository,
+[`docs/networks/NETWORKS.md`](https://github.com/Tors3/Triumviratus/blob/main/docs/networks/NETWORKS.md#the-next-network--future-training-direction-not-in-training-now).
+The recipe and the game measurements will follow with the 9.0 release. No network is being trained now.
+
+<p align="center"><img src="design/next_network_design.svg" alt="Design of Lex Hortensia (TRANN5)" width="100%"></p>
+
 ## The networks
 
 | # | Network | Release | Architecture | Inputs | Size | Recipe |
@@ -64,22 +86,6 @@ the older net, which evaluates identically but loads in the same binary).
 [`charts/consilium-plebis/`](charts/consilium-plebis/): training loss of the pretraining P, the finetune F and its
 continuation, loss on held-out positions against Consilium, evaluation scale and Elo of the exports. The same charts
 and their scripts are in the recipe, [`recipes/07_consilium-plebis/`](recipes/07_consilium-plebis/).
-
-### Lex Hortensia: the design
-
-No network is being trained now. [`design/next_network_design.svg`](design/next_network_design.svg) is the design of **Lex Hortensia** (architecture `TRANN5`),
-the network trained after Consilium Plebis and published here on 24 November 2026. It comes from the lessons of Consilium Plebis: offline studies of what its experts, PSQT
-and pawn blocks contribute, judged on game results, and speed measurements of the engine (November 2026).
-- six king-relative experts with the queen as a boundary (eight today);
-- feature rows of exactly 1024 bytes, with the PSQT in a 24 KB piece-square table outside them;
-- a 128-unit pawn-king block active only in the pawn endgames;
-- 32 layer stacks: piece count × which side has a queen;
-- the score-to-probability map of the training target unchanged: a refit on our data gained only about 0.2%.
-
-The reasons and the measurements are in the engine repository,
-[`docs/networks/NETWORKS.md`](https://github.com/Tors3/Triumviratus/blob/main/docs/networks/NETWORKS.md#the-next-network--future-training-direction-not-in-training-now).
-
-<p align="center"><img src="design/next_network_design.svg" alt="Design of the next Triumviratus network" width="100%"></p>
 
 ## Using a network
 
